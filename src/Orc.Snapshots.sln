@@ -43,12 +43,24 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orc.Snapshots.Example.NET46
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core.Xaml", "Core.Xaml", "{65294978-6CC3-4B6C-9139-DAA1794C3A17}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Orc.Snapshots.Xaml.Shared", "Orc.Snapshots.Xaml\Orc.Snapshots.Xaml.Shared\Orc.Snapshots.Xaml.Shared.shproj", "{1940594A-7C07-4417-BDDD-0B6931CA00A8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orc.Snapshots.Xaml.NET40", "Orc.Snapshots.Xaml\Orc.Snapshots.Xaml.NET40\Orc.Snapshots.Xaml.NET40.csproj", "{7AF50048-6441-44E2-A6A0-E183E65125A7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orc.Snapshots.Xaml.NET45", "Orc.Snapshots.Xaml\Orc.Snapshots.Xaml.NET45\Orc.Snapshots.Xaml.NET45.csproj", "{720B314B-2647-4888-AB96-37C526C7F0C5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orc.Snapshots.Xaml.NET46", "Orc.Snapshots.Xaml\Orc.Snapshots.Xaml.NET46\Orc.Snapshots.Xaml.NET46.csproj", "{5D2EBFBB-1B04-4E65-B708-7E417F636D66}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Orc.Snapshots.Tests\Orc.Snapshots.Tests.Shared\Orc.Snapshots.Tests.Shared.projitems*{0e4e4047-a81e-4e7c-a0f4-3bd81444b99d}*SharedItemsImports = 4
+		Orc.Snapshots.Xaml\Orc.Snapshots.Xaml.Shared\Orc.Snapshots.Xaml.Shared.projitems*{1940594a-7c07-4417-bddd-0b6931ca00a8}*SharedItemsImports = 13
 		Orc.Snapshots\Orc.Snapshots.Shared\Orc.Snapshots.Shared.projitems*{2c732685-7edc-4640-95e0-ee50a43e223e}*SharedItemsImports = 4
 		Orc.Snapshots.Tests\Orc.Snapshots.Tests.Shared\Orc.Snapshots.Tests.Shared.projitems*{46192429-1ba8-4534-b010-a38c025e8707}*SharedItemsImports = 4
 		Orc.Snapshots.Example\Orc.Snapshots.Example.Shared\Orc.Snapshots.Example.Shared.projitems*{572487d7-803c-4248-a665-c9376a620503}*SharedItemsImports = 4
+		Orc.Snapshots.Xaml\Orc.Snapshots.Xaml.Shared\Orc.Snapshots.Xaml.Shared.projitems*{5d2ebfbb-1b04-4e65-b708-7e417f636d66}*SharedItemsImports = 4
+		Orc.Snapshots.Xaml\Orc.Snapshots.Xaml.Shared\Orc.Snapshots.Xaml.Shared.projitems*{720b314b-2647-4888-ab96-37c526c7f0c5}*SharedItemsImports = 4
+		Orc.Snapshots.Xaml\Orc.Snapshots.Xaml.Shared\Orc.Snapshots.Xaml.Shared.projitems*{7af50048-6441-44e2-a6a0-e183e65125a7}*SharedItemsImports = 4
 		Orc.Snapshots.Tests\Orc.Snapshots.Tests.Shared\Orc.Snapshots.Tests.Shared.projitems*{ae246ff9-bee2-4dcb-a8d3-5b3b21bcfaf6}*SharedItemsImports = 4
 		Orc.Snapshots.Example\Orc.Snapshots.Example.Shared\Orc.Snapshots.Example.Shared.projitems*{af9fd050-cc3a-495d-ab09-b549745a72f6}*SharedItemsImports = 13
 		Orc.Snapshots.Example\Orc.Snapshots.Example.Shared\Orc.Snapshots.Example.Shared.projitems*{bb22dde1-e68d-4f97-9895-d9e6713d5297}*SharedItemsImports = 4
@@ -99,6 +111,18 @@ Global
 		{D0379A8B-3382-45C0-B76A-B0E8606AA5E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0379A8B-3382-45C0-B76A-B0E8606AA5E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0379A8B-3382-45C0-B76A-B0E8606AA5E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AF50048-6441-44E2-A6A0-E183E65125A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AF50048-6441-44E2-A6A0-E183E65125A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AF50048-6441-44E2-A6A0-E183E65125A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AF50048-6441-44E2-A6A0-E183E65125A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{720B314B-2647-4888-AB96-37C526C7F0C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{720B314B-2647-4888-AB96-37C526C7F0C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{720B314B-2647-4888-AB96-37C526C7F0C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{720B314B-2647-4888-AB96-37C526C7F0C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D2EBFBB-1B04-4E65-B708-7E417F636D66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D2EBFBB-1B04-4E65-B708-7E417F636D66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D2EBFBB-1B04-4E65-B708-7E417F636D66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D2EBFBB-1B04-4E65-B708-7E417F636D66}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -120,5 +144,9 @@ Global
 		{AE246FF9-BEE2-4DCB-A8D3-5B3B21BCFAF6} = {D3EA1078-BF3D-4709-871C-AAFF70B95045}
 		{D0379A8B-3382-45C0-B76A-B0E8606AA5E3} = {672BFA2E-9F93-496F-B188-40579FB5D301}
 		{65294978-6CC3-4B6C-9139-DAA1794C3A17} = {A8A1A4EE-E04A-43AB-90C9-41E7B82EE1E5}
+		{1940594A-7C07-4417-BDDD-0B6931CA00A8} = {65294978-6CC3-4B6C-9139-DAA1794C3A17}
+		{7AF50048-6441-44E2-A6A0-E183E65125A7} = {65294978-6CC3-4B6C-9139-DAA1794C3A17}
+		{720B314B-2647-4888-AB96-37C526C7F0C5} = {65294978-6CC3-4B6C-9139-DAA1794C3A17}
+		{5D2EBFBB-1B04-4E65-B708-7E417F636D66} = {65294978-6CC3-4B6C-9139-DAA1794C3A17}
 	EndGlobalSection
 EndGlobal
