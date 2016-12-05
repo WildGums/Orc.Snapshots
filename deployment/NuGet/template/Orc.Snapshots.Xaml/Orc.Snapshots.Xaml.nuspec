@@ -1,0 +1,31 @@
+﻿<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>Orc.Snapshots.Xaml</id>
+    <version>[VERSION]</version>
+    <title>Orc.Snapshots.Xaml</title>
+    <authors>WildGums</authors>
+    <owners>WildGums</owners>
+
+	<description>
+	  WPF library for Orc.Snapshots.
+	</description>
+	<summary>
+	</summary>
+
+	<tags>orc snapshot snapshots</tags>
+
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <copyright>Copyright WildGums 2010 - 2016</copyright>
+
+	<language>en-US</language>
+	<projectUrl>https://github.com/WildGums/Orc.Snapshots</projectUrl>
+	<!--<licenseUrl>http://catel.codeplex.com/license</licenseUrl>-->
+	<!--<iconUrl>http://www.catenalogic.com/catel.png</iconUrl>-->
+    
+    <dependencies>
+      <dependency id="Orc.Snapshots" version="[VERSION]" />
+      <dependency id="Catel.MVVM" version="[replaced]" />
+    </dependencies>
+  </metadata>
+</package>
