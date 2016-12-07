@@ -10,13 +10,23 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)..\..\SolutionAssemblyInfo.cs" />
-	<Compile Include="$(MSBuildThisFileDirectory)..\..\MethodTimeLogger.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\MethodTimeLogger.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)EventArgs\SnapshotEventArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)EventArgs\SnapshotProviderEventArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Exceptions\InvalidSnapshotException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Exceptions\SnapshotException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Exceptions\SnapshotManagementInitializationException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\ISnapshotManagerExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Managers\Interfaces\ISnapshotManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Managers\SnapshotManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Interfaces\ISnapshot.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Snapshot.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ModuleInitializer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)Models\Interfaces\" />
-    <Folder Include="$(MSBuildThisFileDirectory)Providers\Interfaces\" />
-    <Folder Include="$(MSBuildThisFileDirectory)Services\Interfaces\" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\Interfaces\ISnapshotProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\SnapshotProviderBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\SnapshotStorageServiceBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\FileSystemSnapshotStorageService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\Interfaces\ISnapshotStorageService.cs" />
   </ItemGroup>
 </Project>
