@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
@@ -10,8 +10,22 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)..\..\SolutionAssemblyInfo.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)\DummyFacts.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Managers\SnapshotManagerFacts.Add.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Managers\SnapshotManagerFacts.CreateSnapshotAsync.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Managers\SnapshotManagerFacts.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Managers\SnapshotManagerFacts.LoadAsync.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Managers\SnapshotManagerFacts.Remove.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Managers\SnapshotManagerFacts.RemoveProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Managers\SnapshotManagerFacts.RestoreSnapshotsAsync.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Managers\SnapshotManagerFacts.SaveAsync.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Providers\TestSnapshotProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ModuleInitializer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)Managers\SnapshotManagerFacts.AddProvider.cs" />
   </ItemGroup>
 </Project>
