@@ -18,6 +18,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Managers\SnapshotManagerFacts.RemoveProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Managers\SnapshotManagerFacts.RestoreSnapshotsAsync.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Managers\SnapshotManagerFacts.SaveAsync.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\SnapshotFacts.InitializesFromBytesAsync.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\SnapshotFacts.GetAllBytesAsync.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\SnapshotFacts.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\SnapshotFacts.GetData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\SnapshotFacts.SetData.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Providers\TestSnapshotProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ModuleInitializer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Properties\AssemblyInfo.cs" />

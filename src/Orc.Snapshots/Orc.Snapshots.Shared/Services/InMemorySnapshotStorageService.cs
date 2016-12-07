@@ -84,7 +84,7 @@ namespace Orc.Snapshots
 
             Log.Debug($"Saving snapshot '{snapshot}' to '{source}'");
 
-            var bytes = ConvertSnapshotToBytes(snapshot);
+            var bytes = await ConvertSnapshotToBytesAsync(snapshot);
             if (bytes != null)
             {
                 _snapshots[source] = bytes;

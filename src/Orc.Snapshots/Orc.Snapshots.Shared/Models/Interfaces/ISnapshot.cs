@@ -7,14 +7,16 @@
 
 namespace Orc.Snapshots
 {
+    using System.Threading.Tasks;
+
     public interface ISnapshot
     {
         #region Properties
         string Title { get; set; }
-
-        byte[] Data { get; }
         #endregion
 
+        Task InitializeFromBytesAsync(byte[] bytes);
+        Task<byte[]> GetAllBytesAsync();
         byte[] GetData(string key);
         void SetData(string key, byte[] data);
     }

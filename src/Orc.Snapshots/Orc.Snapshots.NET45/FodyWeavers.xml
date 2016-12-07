@@ -1,7 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Weavers VerifyAssembly="true">
-  <ModuleInit />
-  <Catel />
-  <Obsolete />
-  <MethodTimer />
+  <ModuleInit/>
+  <Catel/>
+  <Obsolete/>
+  <MethodTimer/>
+  <Costura>
+    <IncludeAssemblies>
+      DotNetZip
+    </IncludeAssemblies>
+  </Costura>
 </Weavers>

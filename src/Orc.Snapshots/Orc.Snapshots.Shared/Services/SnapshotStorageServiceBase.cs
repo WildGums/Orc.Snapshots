@@ -59,7 +59,7 @@ namespace Orc.Snapshots
             return snapshot;
         }
 
-        protected virtual byte[] ConvertSnapshotToBytes(ISnapshot snapshot)
+        protected virtual async Task<byte[]> ConvertSnapshotToBytesAsync(ISnapshot snapshot)
         {
             var bytes = new List<byte>();
 
@@ -67,7 +67,9 @@ namespace Orc.Snapshots
             bytes.AddRange(titleBytes);
 
             bytes.AddRange(SeparatorBytes);
-            bytes.AddRange(snapshot.Data);
+
+            var snapshotBytes = await snapshot.GetAllBytesAsync();
+            bytes.AddRange(snapshotBytes);
 
             return bytes.ToArray();
         }
