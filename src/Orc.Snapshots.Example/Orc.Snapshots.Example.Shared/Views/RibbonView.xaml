@@ -8,19 +8,20 @@
                    xmlns:views="clr-namespace:Orc.Snapshots.Views;assembly=Orc.Snapshots.Xaml"
                    xmlns:orchestra="https://github.com/orcomp/orchestra"
                    xmlns:ribbon="clr-namespace:Orc.Snapshots.Example"
+                   xmlns:orc="http://www.wildgums.net.au/orc"
                    mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="300">
-    
+
     <fluent:Ribbon>
         <fluent:Ribbon.Tabs>
             <fluent:RibbonTabItem Header="View">
                 <fluent:RibbonGroupBox Header="Snapshots">
                     <fluent:SplitButton Header="Create snapshot" LargeIcon="{orchestra:FontImage {x:Static ribbon:FontAwesome.Plus}}"
                                         ClosePopupOnMouseDown="True" Command="{Binding CreateSnapshot}">
-                        <views:SnapshotsView />
+                        <views:SnapshotsView Width="300" />
                     </fluent:SplitButton>
                 </fluent:RibbonGroupBox>
             </fluent:RibbonTabItem>
         </fluent:Ribbon.Tabs>
     </fluent:Ribbon>
-    
+
 </catel:UserControl>

@@ -20,7 +20,6 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)FontAwesome.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Logging\TextBoxLogListener.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Company.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Person.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Project.cs" />

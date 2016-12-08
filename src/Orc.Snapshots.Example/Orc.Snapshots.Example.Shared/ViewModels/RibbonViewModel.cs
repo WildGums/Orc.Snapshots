@@ -42,6 +42,7 @@ namespace Orc.Snapshots.Example.ViewModels
 
         private async Task OnCreateSnapshotExecuteAsync()
         {
+            // In theory, we shouldn't have to use this one
             var snapshot = new Snapshot();
 
             if (_uiVisualizerService.ShowDialog<SnapshotViewModel>(snapshot) ?? false)
@@ -60,9 +61,7 @@ namespace Orc.Snapshots.Example.ViewModels
                     _snapshotManager.Remove(existingSnapshot);
                 }
 
-                _snapshotManager.Add(snapshot);
-
-                await _snapshotManager.SaveAsync();
+                await _snapshotManager.CreateSnapshotAndSaveAsync(snapshot.Title);
             }
         }
         #endregion

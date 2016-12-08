@@ -41,7 +41,7 @@ namespace Orc.Snapshots.Snapshots.Providers
             {
                 var company = _project.Company;
 
-                company.Name = await reader.ReadToEndAsync();
+                company.Name = await reader.ReadLineAsync();
             }
         }
     }

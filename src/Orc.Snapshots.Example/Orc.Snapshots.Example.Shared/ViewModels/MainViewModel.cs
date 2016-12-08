@@ -25,10 +25,33 @@ namespace Orc.Snapshots.Example.ViewModels
 
             Person = project.Person;
             Company = project.Company;
+
+            FillData = new Command(OnFillDataExecute);
+            ClearData = new Command(OnClearDataExecute);
         }
 
         public Person Person { get; private set; }
 
         public Company Company { get; private set; }
+
+        #region Commands
+        public Command FillData { get; private set; }
+
+        private void OnFillDataExecute()
+        {
+            Person.FirstName = "Geert";
+            Person.LastName = "van Horrik";
+            Company.Name = "CatenaLogic";
+        }
+
+        public Command ClearData { get; private set; }
+
+        private void OnClearDataExecute()
+        {
+            Person.FirstName = string.Empty;
+            Person.LastName = string.Empty;
+            Company.Name = string.Empty;
+        }
+        #endregion
     }
 }

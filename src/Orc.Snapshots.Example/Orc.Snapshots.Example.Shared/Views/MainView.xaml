@@ -4,6 +4,7 @@
                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                    xmlns:catel="http://catel.codeplex.com"
+                   xmlns:orc="http://www.wildgums.net.au/orc"
                    mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="400">
 
     <catel:StackGrid>
@@ -11,6 +12,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <Label Grid.Row="0" Grid.ColumnSpan="5">
@@ -36,6 +38,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             
             <Label Content="First name" />
@@ -46,8 +49,14 @@
 
             <Label Content="Company name" />
             <TextBox Text="{Binding Company.Name}" />
+
+            <WrapPanel Grid.ColumnSpan="2">
+                <Button Content="Fill" Command="{Binding FillData}" />
+                <Button Content="Clear" Command="{Binding ClearData}" />
+            </WrapPanel>
         </catel:StackGrid>
-        
+
+        <!--<orc:LogViewerControl Grid.Row="3" />-->
     </catel:StackGrid>
 
 </catel:UserControl>
