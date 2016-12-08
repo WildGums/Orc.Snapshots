@@ -52,7 +52,7 @@ namespace Orc.Snapshots.ViewModels
             _messageService = messageService;
             _languageService = languageService;
 
-            Snapshots = new FastObservableCollection<ISnapshot>();
+            Snapshots = new List<ISnapshot>();
 
             RestoreSnapshot = new TaskCommand<ISnapshot>(OnRestoreSnapshotExecuteAsync, OnRestoreSnapshotCanExecute);
             EditSnapshot = new TaskCommand<ISnapshot>(OnEditSnapshotExecuteAsync, OnEditSnapshotCanExecute);
@@ -61,13 +61,17 @@ namespace Orc.Snapshots.ViewModels
         #endregion
 
         #region Properties
-        public FastObservableCollection<ISnapshot> Snapshots { get; private set; }
+        public bool HasSnapshots { get; private set; }
+
+        public List<ISnapshot> Snapshots { get; private set; }
+
+        public string Filter { get; set; }
 
         public object Scope { get; set; }
         #endregion
 
         #region Commands
- 
+
         public TaskCommand<ISnapshot> RestoreSnapshot { get; private set; }
 
         private bool OnRestoreSnapshotCanExecute(ISnapshot snapshot)
@@ -156,6 +160,11 @@ namespace Orc.Snapshots.ViewModels
         #endregion
 
         #region Methods
+        private void OnFilterChanged()
+        {
+            UpdateSnapshots();
+        }
+
 #pragma warning disable AsyncFixer03 // Avoid fire & forget async void methods
 #pragma warning disable AvoidAsyncVoid
         private async void OnScopeChanged()
@@ -259,14 +268,24 @@ namespace Orc.Snapshots.ViewModels
 
         private void UpdateSnapshots()
         {
-            var finalItems = new List<ISnapshot>(_snapshotManager.Snapshots);
+            var filter = Filter;
+
+            var source = _snapshotManager.Snapshots;
+
+            HasSnapshots = source.Any();
+
+            if (!string.IsNullOrWhiteSpace(filter))
+            {
+                source = (from item in source
+                          where item.Title.ContainsIgnoreCase(filter)
+                          select item);
+            }
+
+            var finalItems = new List<ISnapshot>(source);
 
             Log.Debug($"Updating available snapshots using snapshot manager with scope '{_snapshotManager?.Scope}', '{finalItems.Count}' snapshots available");
 
-            using (Snapshots.SuspendChangeNotifications())
-            {
-                ((ICollection<ISnapshot>)Snapshots).ReplaceRange(finalItems);
-            }
+            Snapshots = finalItems;
         }
         #endregion
     }

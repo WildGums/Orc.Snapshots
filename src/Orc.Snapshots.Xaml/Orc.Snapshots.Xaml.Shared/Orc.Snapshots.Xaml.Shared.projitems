@@ -39,9 +39,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="$(MSBuildThisFileDirectory)Resources\Images\edit.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Resources\Images\refresh.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Resources\Images\remove.png" />
-    <Content Include="$(MSBuildThisFileDirectory)Resources\Images\restore.png" />
+    <Folder Include="$(MSBuildThisFileDirectory)Resources\Images\" />
   </ItemGroup>
 </Project>

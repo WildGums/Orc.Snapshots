@@ -24,7 +24,7 @@ namespace Orc.Snapshots
             snapshotManager.AddProvider(snapshotProvider);
         }
 
-        public static async Task CreateSnapshotAndSaveAsync(this ISnapshotManager snapshotManager, string title)
+        public static async Task<ISnapshot> CreateSnapshotAndSaveAsync(this ISnapshotManager snapshotManager, string title)
         {
             Argument.IsNotNull(() => snapshotManager);
             Argument.IsNotNullOrWhitespace(() => title);
@@ -33,6 +33,8 @@ namespace Orc.Snapshots
 
             snapshotManager.Add(snapshot);
             await snapshotManager.SaveAsync();
+
+            return snapshot;
         }
 
         public static ISnapshot FindSnapshot(this ISnapshotManager snapshotManager, string title)

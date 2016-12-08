@@ -2,7 +2,8 @@
                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                    xmlns:catel="http://catel.codeplex.com"
-                   xmlns:converters="clr-namespace:Orc.Snapshots.Converters">
+                   xmlns:converters="clr-namespace:Orc.Snapshots.Converters"
+                   xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity">
 
     <UserControl.Resources>
         <catel:BooleanToHidingVisibilityConverter x:Key="BooleanToHidingVisibilityConverter" />
@@ -11,8 +12,27 @@
     </UserControl.Resources>
 
     <Grid x:Name="layoutRoot" Background="White">
-        <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="400">
-            <ListBox x:Name="listBox" ItemsSource="{Binding Snapshots}" BorderThickness="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <TextBox Grid.Row="0" Text="{Binding Filter}"
+                 Visibility="{Binding HasSnapshots, Converter={catel:BooleanToCollapsingVisibilityConverter}}">
+            <i:Interaction.Behaviors>
+                <catel:UpdateBindingOnTextChanged />
+                <catel:DelayBindingUpdate PropertyName="Text" UpdateDelay="1000" />
+                <catel:SelectTextOnFocus />
+            </i:Interaction.Behaviors>
+        </TextBox>
+        
+        <Label Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"
+               Visibility="{Binding Snapshots, Converter={catel:CollectionToCollapsingVisibilityConverter}, ConverterParameter=True}">
+            <TextBlock TextAlignment="Center" Text="{catel:LanguageBinding Snapshots_NoSnapshots}" TextWrapping="Wrap" />
+        </Label>
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" MaxHeight="400" Margin="2,0,2,0">
+            <ItemsControl x:Name="listBox" ItemsSource="{Binding Snapshots}" BorderThickness="0">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel />
@@ -23,7 +43,7 @@
                     <DataTemplate>
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="200" />
+                                <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
@@ -31,7 +51,7 @@
 
                             <Label Grid.Column="0" Content="{Binding Title, Converter={converters:UnderscoreToDoubleUnderscoresStringConverter}}" />
 
-                            <Button Grid.Column="1" CommandParameter="{Binding }" ToolTip="{catel:LanguageBinding Snapshots_Restore}" Width="24" 
+                            <Button Grid.Column="1" CommandParameter="{Binding }" ToolTip="{catel:LanguageBinding Snapshots_Restore}" Width="24" Margin="4,6,4,6"
                                     Visibility="{Binding RelativeSource={RelativeSource Self}, Path=IsEnabled, Converter={StaticResource BooleanToHidingVisibilityConverter}}">
 
                                 <!-- NOTE: important to fix commands where command parameter is not yet available when
@@ -43,10 +63,10 @@
                                     </MultiBinding>
                                 </Button.Command>
 
-                                <Image Source="/Orc.Snapshots.Xaml;component/Resources/Images/restore.png" Stretch="None" />
+                                <Image Source="/Orc.Snapshots.Xaml;component/Resources/Images/restore.png" Stretch="UniformToFill" Margin="2" />
                             </Button>
 
-                            <Button Grid.Column="2" CommandParameter="{Binding }" ToolTip="{catel:LanguageBinding Snapshots_Edit}" Width="24" 
+                            <Button Grid.Column="2" CommandParameter="{Binding }" ToolTip="{catel:LanguageBinding Snapshots_Edit}" Width="24" Margin="0,6,4,6"
                                     Visibility="{Binding RelativeSource={RelativeSource Self}, Path=IsEnabled, Converter={StaticResource BooleanToHidingVisibilityConverter}}">
 
                                 <!-- NOTE: important to fix commands where command parameter is not yet available when
@@ -58,10 +78,10 @@
                                     </MultiBinding>
                                 </Button.Command>
 
-                                <Image Source="/Orc.Snapshots.Xaml;component/Resources/Images/edit.png" Stretch="None" />
+                                <Image Source="/Orc.Snapshots.Xaml;component/Resources/Images/edit.png" Stretch="UniformToFill" Margin="2" />
                             </Button>
 
-                            <Button Grid.Column="3" CommandParameter="{Binding }" ToolTip="{catel:LanguageBinding Snapshots_Remove}" Width="24"
+                            <Button Grid.Column="3" CommandParameter="{Binding }" ToolTip="{catel:LanguageBinding Snapshots_Remove}" Width="24" Margin="0,6,4,6"
                                     Visibility="{Binding RelativeSource={RelativeSource Self}, Path=IsEnabled, Converter={StaticResource BooleanToHidingVisibilityConverter}}">
 
                                 <!-- NOTE: important to fix commands where command parameter is not yet available when
@@ -73,17 +93,13 @@
                                     </MultiBinding>
                                 </Button.Command>
 
-                                <Image Source="/Orc.Snapshots.Xaml;component/Resources/Images/remove.png" Stretch="None" />
+                                <Image Source="/Orc.Snapshots.Xaml;component/Resources/Images/remove.png" Stretch="UniformToFill" Margin="2" />
                             </Button>
                         </Grid>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
-            </ListBox>
+            </ItemsControl>
         </ScrollViewer>
-
-        <Label HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding Snapshots, Converter={catel:CollectionToCollapsingVisibilityConverter}, ConverterParameter=True}">
-            <TextBlock TextAlignment="Center" Text="{catel:LanguageBinding Snapshots_NoSnapshots}" TextWrapping="Wrap" />
-        </Label>
     </Grid>
 
 </catel:UserControl>

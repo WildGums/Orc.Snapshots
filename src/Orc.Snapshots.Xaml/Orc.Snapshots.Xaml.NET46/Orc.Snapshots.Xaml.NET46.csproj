@@ -85,6 +85,18 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="..\Orc.Snapshots.Xaml.Shared\Resources\Images\edit.png">
+      <Link>Resources\Images\edit.png</Link>
+    </Resource>
+    <Resource Include="..\Orc.Snapshots.Xaml.Shared\Resources\Images\refresh.png">
+      <Link>Resources\Images\refresh.png</Link>
+    </Resource>
+    <Resource Include="..\Orc.Snapshots.Xaml.Shared\Resources\Images\remove.png">
+      <Link>Resources\Images\remove.png</Link>
+    </Resource>
+    <Resource Include="..\Orc.Snapshots.Xaml.Shared\Resources\Images\restore.png">
+      <Link>Resources\Images\restore.png</Link>
+    </Resource>
     <Content Include="FodyWeavers.xml" />
   </ItemGroup>
   <ItemGroup>
