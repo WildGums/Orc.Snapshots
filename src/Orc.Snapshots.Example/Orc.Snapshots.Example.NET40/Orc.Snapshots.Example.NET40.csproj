@@ -40,6 +40,9 @@
     <NoWarn>1591;1998</NoWarn>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>..\Orc.Snapshots.Example.Shared\Resources\Icons\catel.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Analyzer Include="..\..\..\lib\AsyncUsageAnalyzers.1.0.0-alpha003\analyzers\dotnet\AsyncUsageAnalyzers.dll" />
     <Analyzer Include="..\..\..\lib\PublicApiAnalyzer.1.0.0-alpha001\analyzers\dotnet\cs\PublicApiAnalyzer.CodeFixes.dll" />
@@ -91,6 +94,10 @@
     </Reference>
     <Reference Include="Orc.FileSystem, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\lib\Orc.FileSystem.1.1.1\lib\net40\Orc.FileSystem.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Orc.Notifications, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\lib\Orc.Notifications.1.2.0\lib\net40\Orc.Notifications.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Orchestra.Core, Version=2.4.1.0, Culture=neutral, processorArchitecture=MSIL">

@@ -13,8 +13,41 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-		<!-- TODO: Add your content here -->
+        <Label Grid.Row="0" Grid.ColumnSpan="5">
+            <TextBlock TextWrapping="Wrap">
+                This application shows how to use the snapshots library including the xaml controls. Below
+                is data that represents the state of a project or data at a specific moment in time.
+                <LineBreak /><LineBreak />
+                To create a snapshot, use the 'Create snapshot' button. To restore a snapshot, use the 
+                drop down button that shows the list of available snapshots.
+                <LineBreak /><LineBreak />
+                The snapshots in this example are persisted to disk so will survive multiple application 
+                instances. This library also provides an out-of-the-box solution of in-memory storage.
+            </TextBlock>
+        </Label>
 		
+        <catel:StackGrid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            
+            <Label Content="First name" />
+            <TextBox Text="{Binding Person.FirstName}" />
+
+            <Label Content="Last name" />
+            <TextBox Text="{Binding Person.LastName}" />
+
+            <Label Content="Company name" />
+            <TextBox Text="{Binding Company.Name}" />
+        </catel:StackGrid>
+        
     </catel:StackGrid>
 
 </catel:UserControl>

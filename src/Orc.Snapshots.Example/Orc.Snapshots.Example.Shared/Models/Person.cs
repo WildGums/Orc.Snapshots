@@ -11,6 +11,12 @@ namespace Orc.Snapshots.Models
 
     public class Person : ModelBase
     {
+        public Person()
+        {
+            FirstName = string.Empty;
+            LastName = string.Empty;
+        }
+
         public string FirstName { get; set; }
 
         public string LastName { get; set; }

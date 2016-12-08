@@ -132,11 +132,17 @@
   <data name="Snapshots_EditSnapshot" xml:space="preserve">
     <value>Edit snapshot {0}</value>
   </data>
+  <data name="Snapshots_NoSnapshots" xml:space="preserve">
+    <value>No snapshots available</value>
+  </data>
   <data name="Snapshots_Remove" xml:space="preserve">
     <value>Remove</value>
   </data>
   <data name="Snapshots_Restore" xml:space="preserve">
     <value>Restore</value>
+  </data>
+  <data name="Snapshots_Snapshot" xml:space="preserve">
+    <value>Snapshot</value>
   </data>
   <data name="Snapshots_SnapshotWithCurrentTitleAlreadyExists" xml:space="preserve">
     <value>Snapshot with current title already exists</value>

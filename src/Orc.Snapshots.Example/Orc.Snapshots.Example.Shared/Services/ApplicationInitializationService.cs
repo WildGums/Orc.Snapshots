@@ -13,8 +13,11 @@ namespace Orc.Snapshots.Example.Services
     using Catel;
     using Catel.IoC;
     using Catel.Threading;
+    using Models;
     using Orchestra.Markup;
     using Snapshots;
+    using Snapshots.Providers;
+    using Watchers;
 
     public class ApplicationInitializationService : ApplicationInitializationServiceBase
     {
@@ -45,6 +48,16 @@ namespace Orc.Snapshots.Example.Services
 
         private void RegisterTypes()
         {
+            // Singleton project, we recommend to use Orc.ProjectManagement for real projects
+            _serviceLocator.RegisterTypeAndInstantiate<Project>();
+
+            // Snapshot Providers
+            var snapshotManager = _serviceLocator.ResolveType<ISnapshotManager>();
+            snapshotManager.AddProvider<CompanySnapshotProvider>();
+            snapshotManager.AddProvider<PersonSnapshotProvider>();
+
+            // Watchers
+            _serviceLocator.RegisterTypeAndInstantiate<ShowNotificationOnSnapshotEventsWatcher>();
         }
     }
 }

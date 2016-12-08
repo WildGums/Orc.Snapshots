@@ -13,6 +13,7 @@
         <TextBlock Grid.Column="0" Text="{catel:LanguageBinding Snapshots_Title}" />
         <TextBox Grid.Column="1" Text="{Binding SnapshotTitle, NotifyOnValidationError=True, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}">
             <i:Interaction.Behaviors>
+                <catel:SelectTextOnFocus />
                 <catel:UpdateBindingOnTextChanged />
             </i:Interaction.Behaviors>
         </TextBox>

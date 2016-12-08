@@ -72,8 +72,10 @@ namespace Orc.Snapshots
         public event AsyncEventHandler<CancelEventArgs> SavingAsync;
         public event EventHandler<EventArgs> Saved;
 
-        public event EventHandler<EventArgs> SnapshotsChanged;
+        public event EventHandler<SnapshotEventArgs> SnapshotCreated;
+        public event EventHandler<SnapshotEventArgs> SnapshotRestored;
 
+        public event EventHandler<EventArgs> SnapshotsChanged;
         public event EventHandler<SnapshotEventArgs> SnapshotAdded;
         public event EventHandler<SnapshotEventArgs> SnapshotRemoved;
 
@@ -214,6 +216,8 @@ namespace Orc.Snapshots
                 snapshot.SetData(provider.Name, providerData);
             }
 
+            SnapshotCreated.SafeInvoke(this, () => new SnapshotEventArgs(snapshot));
+
             Log.Info($"Created snapshot '{snapshot}'");
 
             return snapshot;
@@ -243,6 +247,8 @@ namespace Orc.Snapshots
                     await provider.RestoreDataFromSnapshotAsync(memoryStream);
                 }
             }
+
+            SnapshotRestored.SafeInvoke(this, () => new SnapshotEventArgs(snapshot));
 
             Log.Info($"Restored snapshot '{snapshot}'");
         }

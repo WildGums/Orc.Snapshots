@@ -25,6 +25,8 @@ namespace Orc.Snapshots.Example.ViewModels
             _messageService = messageService;
 
             CreateSnapshot = new TaskCommand(OnCreateSnapshotExecuteAsync, OnCreateSnapshotCanExecute);
+
+            Title = "Orc.Snapshots example";
         }
 
         #region Properties

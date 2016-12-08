@@ -44,8 +44,8 @@
                                 </Button.Command>
 
                                 <Image Source="/Orc.Snapshots.Xaml;component/Resources/Images/restore.png" Stretch="None" />
-                            </Button>                            
-                            
+                            </Button>
+
                             <Button Grid.Column="2" CommandParameter="{Binding }" ToolTip="{catel:LanguageBinding Snapshots_Edit}" Width="24" 
                                     Visibility="{Binding RelativeSource={RelativeSource Self}, Path=IsEnabled, Converter={StaticResource BooleanToHidingVisibilityConverter}}">
 
@@ -80,6 +80,10 @@
                 </ItemsControl.ItemTemplate>
             </ListBox>
         </ScrollViewer>
+
+        <Label HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding Snapshots, Converter={catel:CollectionToCollapsingVisibilityConverter}, ConverterParameter=True}">
+            <TextBlock TextAlignment="Center" Text="{catel:LanguageBinding Snapshots_NoSnapshots}" TextWrapping="Wrap" />
+        </Label>
     </Grid>
 
 </catel:UserControl>

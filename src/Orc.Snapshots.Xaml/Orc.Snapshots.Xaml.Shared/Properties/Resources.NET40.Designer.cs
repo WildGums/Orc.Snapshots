@@ -106,6 +106,15 @@ namespace Orc.Snapshots.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No snapshots available.
+        /// </summary>
+        internal static string Snapshots_NoSnapshots {
+            get {
+                return ResourceManager.GetString("Snapshots_NoSnapshots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remove.
         /// </summary>
         internal static string Snapshots_Remove {
@@ -120,6 +129,15 @@ namespace Orc.Snapshots.Properties {
         internal static string Snapshots_Restore {
             get {
                 return ResourceManager.GetString("Snapshots_Restore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Snapshot.
+        /// </summary>
+        internal static string Snapshots_Snapshot {
+            get {
+                return ResourceManager.GetString("Snapshots_Snapshot", resourceCulture);
             }
         }
         

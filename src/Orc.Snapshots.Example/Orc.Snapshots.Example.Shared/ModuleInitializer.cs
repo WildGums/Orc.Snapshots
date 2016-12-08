@@ -1,6 +1,5 @@
 using Catel.IoC;
 using Orc.Snapshots.Example.Services;
-using Orc.Snapshots.Models;
 using Orchestra.Services;
 
 /// <summary>
@@ -14,9 +13,6 @@ public static class ModuleInitializer
     public static void Initialize()
     {
         var serviceLocator = ServiceLocator.Default;
-
-        // Singleton project, we recommend to use Orc.ProjectManagement for real projects
-        serviceLocator.RegisterTypeAndInstantiate<Project>();
 
         serviceLocator.RegisterType<IRibbonService, RibbonService>();
         serviceLocator.RegisterType<IApplicationInitializationService, ApplicationInitializationService>();

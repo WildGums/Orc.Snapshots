@@ -30,6 +30,8 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Services\ApplicationInitializationService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\RibbonService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Snapshots\Providers\CompanySnapshotProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Snapshots\Providers\PersonSnapshotProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\RibbonViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\StatusBarViewModel.cs" />
@@ -42,6 +44,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\StatusBarView.xaml.cs">
       <DependentUpon>StatusBarView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Watchers\ShowNotificationOnSnapshotEventsWatcher.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)Themes\Generic.xaml">
@@ -63,6 +66,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Resources\Fonts\" />
-    <Folder Include="$(MSBuildThisFileDirectory)Snapshots\Providers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)Resources\Icons\catel.ico" />
   </ItemGroup>
 </Project>
