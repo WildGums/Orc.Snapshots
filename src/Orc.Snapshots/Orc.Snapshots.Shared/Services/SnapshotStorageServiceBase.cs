@@ -18,7 +18,7 @@ namespace Orc.Snapshots
     {
         private static readonly ILog Log = LogManager.GetCurrentClassLogger();
 
-        private static readonly byte[] SeparatorBytes = new byte[] { };
+        private static readonly byte[] SeparatorBytes = Encoding.UTF8.GetBytes("-|-");
         private static readonly Encoding Encoding = Encoding.UTF8;
 
         public abstract Task<IEnumerable<ISnapshot>> LoadSnapshotsAsync();
@@ -40,6 +40,7 @@ namespace Orc.Snapshots
             }
 
             var titleBytes = new byte[separatorIndex];
+            Buffer.BlockCopy(bytes, 0, titleBytes, 0, separatorIndex);
             var title = Encoding.GetString(titleBytes);
 
             var dataIndex = separatorIndex + SeparatorBytes.Length;

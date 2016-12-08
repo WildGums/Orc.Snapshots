@@ -49,7 +49,7 @@ namespace Orc.Snapshots.ViewModels
 
             if (string.IsNullOrWhiteSpace(SnapshotTitle))
             {
-                var dateString = FastDateTime.Now.ToString("yyyy-MM-dd HH:mm");
+                var dateString = FastDateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                 SnapshotTitle = $"{_languageService.GetString("Snapshots_Snapshot")} - {dateString}";
             }
         }
