@@ -10,6 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)..\..\SolutionAssemblyInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GlobalInitialization.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Managers\SnapshotManagerFacts.Add.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Managers\SnapshotManagerFacts.CreateSnapshotAsync.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Managers\SnapshotManagerFacts.cs" />
@@ -26,11 +27,15 @@
     <Compile Include="$(MSBuildThisFileDirectory)Providers\TestSnapshotProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ModuleInitializer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Properties\AssemblyInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TemporaryFilesContext.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Services\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)Managers\SnapshotManagerFacts.AddProvider.cs" />
+    <None Include="$(MSBuildThisFileDirectory)Models\TheGetAllBytesAsyncMethod.ReturnsBytesForUpdatedSnapshotAsync.approved.zip" />
+    <None Include="$(MSBuildThisFileDirectory)Models\TheGetAllBytesAsyncMethod.ReturnsBytesForSnapshotAsync.approved.zip" />
+    <None Include="$(MSBuildThisFileDirectory)Models\TheGetAllBytesAsyncMethod.ReturnsBytesForEmptySnapshotAsync.approved.zip" />
   </ItemGroup>
 </Project>

@@ -16,9 +16,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Exceptions\InvalidSnapshotException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Exceptions\SnapshotException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Exceptions\SnapshotManagementInitializationException.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Extensions\ISnapshotManagerExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Managers\Extensions\ISnapshotManagerExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Managers\Interfaces\ISnapshotManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Managers\SnapshotManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Extensions\ISnapshotExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Interfaces\ISnapshot.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Snapshot.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ModuleInitializer.cs" />

@@ -9,12 +9,10 @@ namespace Orc.Snapshots
 {
     using System.Collections.Generic;
     using System.IO;
-    using System.IO.Compression;
     using System.Linq;
     using System.Threading.Tasks;
     using Catel;
     using Catel.Logging;
-    using FileSystem;
     using Ionic.Zip;
     using CompressionLevel = Ionic.Zlib.CompressionLevel;
 
@@ -22,6 +20,7 @@ namespace Orc.Snapshots
     {
         private static readonly ILog Log = LogManager.GetCurrentClassLogger();
 
+        private const string InternalFileExtension = ".dat";
         private readonly Dictionary<string, byte[]> _data = new Dictionary<string, byte[]>();
 
         private byte[] _allData;
@@ -35,6 +34,11 @@ namespace Orc.Snapshots
 
         #region Properties
         public string Title { get; set; }
+
+        public List<string> Keys
+        {
+            get { return _data.Keys.ToList(); }
+        }
         #endregion
 
         #region Methods
@@ -90,38 +94,49 @@ namespace Orc.Snapshots
         public void SetData(string key, byte[] data)
         {
             Argument.IsNotNullOrWhitespace(() => key);
-            Argument.IsNotNull(() => data);
 
             lock (_data)
             {
-                _data[key] = data;
+                if (data == null)
+                {
+                    _data.Remove(key);
+                }
+                else
+                {
+                    _data[key] = data;
+                }
 
                 _isDirty = true;
             }
+        }
+
+        public void ClearData(string key)
+        {
+            SetData(key, null);
         }
 
         protected virtual async Task<List<KeyValuePair<string, byte[]>>> LoadSnapshotDataAsync(byte[] bytes)
         {
             var data = new List<KeyValuePair<string, byte[]>>();
 
-            using (var memoryStream = new MemoryStream())
+            using (var memoryStream = new MemoryStream(bytes))
             {
-                using (var zipStream = new ZipInputStream(memoryStream))
+                using (var zipFile = ZipFile.Read(memoryStream))
                 {
-                    var entry = zipStream.GetNextEntry();
-                    while (entry != null)
+                    foreach (var entry in zipFile.Entries)
                     {
-                        var key = entry.FileName;
+                        var fileName = entry.FileName;
+                        var key = fileName.Substring(0, fileName.Length - InternalFileExtension.Length);
                         byte[] dataBytes;
 
-                        using (var reader = entry.OpenReader())
+                        using (var fileMemoryStream = new MemoryStream())
                         {
-                            dataBytes = await reader.ReadAllBytesAsync();
+                            entry.Extract(fileMemoryStream);
+
+                            dataBytes = fileMemoryStream.ToArray();
                         }
 
                         data.Add(new KeyValuePair<string, byte[]>(key, dataBytes));
-
-                        entry = zipStream.GetNextEntry();
                     }
                 }
             }
@@ -143,7 +158,7 @@ namespace Orc.Snapshots
                         var bytes = dataItem.Value;
                         if (bytes != null && bytes.Length > 0)
                         {
-                            zip.AddEntry(dataItem.Key, bytes);
+                            zip.AddEntry($"{dataItem.Key}{InternalFileExtension}", bytes);
                         }
                     }
 

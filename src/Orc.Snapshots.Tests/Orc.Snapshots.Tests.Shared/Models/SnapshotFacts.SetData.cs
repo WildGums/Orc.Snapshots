@@ -41,6 +41,17 @@ namespace Orc.Snapshots.Tests.Models
 
                 Assert.AreEqual(testBytes, snapshot.GetData("MyData"));
             }
+
+            [Test]
+            public void ClearsData()
+            {
+                var snapshot = new Snapshot();
+
+                snapshot.SetData("MyData", new byte[] { 4, 5, 6 });
+                snapshot.SetData("MyData", null);
+
+                Assert.AreEqual(0, snapshot.Keys.Count);
+            }
         }
     }
 }
