@@ -117,4 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Snapshots_AreYouSure" xml:space="preserve">
+    <value>Are you sure?</value>
+  </data>
+  <data name="Snapshots_AreYouSureYouWantToRemoveTheSnapshot" xml:space="preserve">
+    <value>Are you sure you want to remove snapshot '{0}'?</value>
+  </data>
+  <data name="Snapshots_CreateNewSnapshot" xml:space="preserve">
+    <value>Create new snapshot</value>
+  </data>
+  <data name="Snapshots_Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Snapshots_EditSnapshot" xml:space="preserve">
+    <value>Edit snapshot {0}</value>
+  </data>
+  <data name="Snapshots_Remove" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="Snapshots_Restore" xml:space="preserve">
+    <value>Restore</value>
+  </data>
+  <data name="Snapshots_SnapshotWithCurrentTitleAlreadyExists" xml:space="preserve">
+    <value>Snapshot with current title already exists</value>
+  </data>
+  <data name="Snapshots_Title" xml:space="preserve">
+    <value>Title</value>
+  </data>
 </root>

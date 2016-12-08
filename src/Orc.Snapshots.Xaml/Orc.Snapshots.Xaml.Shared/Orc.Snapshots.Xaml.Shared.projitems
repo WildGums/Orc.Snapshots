@@ -10,16 +10,37 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)..\..\SolutionAssemblyInfo.cs" />
-	<Compile Include="$(MSBuildThisFileDirectory)..\..\MethodTimeLogger.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\MethodTimeLogger.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\TriggerConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\UnderscoreToDoubleUnderscoresStringConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ModuleInitializer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\SnapshotsViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\SnapshotViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\SnapshotsView.xaml.cs">
+      <DependentUpon>SnapshotsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\SnapshotWindow.xaml.cs">
+      <DependentUpon>SnapshotWindow.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)Themes\Generic.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\SnapshotsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\SnapshotWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)Resources\Images\" />
+    <Content Include="$(MSBuildThisFileDirectory)Resources\Images\edit.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Resources\Images\refresh.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Resources\Images\remove.png" />
+    <Content Include="$(MSBuildThisFileDirectory)Resources\Images\restore.png" />
   </ItemGroup>
 </Project>

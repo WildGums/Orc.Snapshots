@@ -59,5 +59,86 @@ namespace Orc.Snapshots.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure?.
+        /// </summary>
+        internal static string Snapshots_AreYouSure {
+            get {
+                return ResourceManager.GetString("Snapshots_AreYouSure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to remove snapshot &apos;{0}&apos;?.
+        /// </summary>
+        internal static string Snapshots_AreYouSureYouWantToRemoveTheSnapshot {
+            get {
+                return ResourceManager.GetString("Snapshots_AreYouSureYouWantToRemoveTheSnapshot", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create new snapshot.
+        /// </summary>
+        internal static string Snapshots_CreateNewSnapshot {
+            get {
+                return ResourceManager.GetString("Snapshots_CreateNewSnapshot", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        internal static string Snapshots_Edit {
+            get {
+                return ResourceManager.GetString("Snapshots_Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit snapshot {0}.
+        /// </summary>
+        internal static string Snapshots_EditSnapshot {
+            get {
+                return ResourceManager.GetString("Snapshots_EditSnapshot", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove.
+        /// </summary>
+        internal static string Snapshots_Remove {
+            get {
+                return ResourceManager.GetString("Snapshots_Remove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restore.
+        /// </summary>
+        internal static string Snapshots_Restore {
+            get {
+                return ResourceManager.GetString("Snapshots_Restore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Snapshot with current title already exists.
+        /// </summary>
+        internal static string Snapshots_SnapshotWithCurrentTitleAlreadyExists {
+            get {
+                return ResourceManager.GetString("Snapshots_SnapshotWithCurrentTitleAlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        internal static string Snapshots_Title {
+            get {
+                return ResourceManager.GetString("Snapshots_Title", resourceCulture);
+            }
+        }
     }
 }

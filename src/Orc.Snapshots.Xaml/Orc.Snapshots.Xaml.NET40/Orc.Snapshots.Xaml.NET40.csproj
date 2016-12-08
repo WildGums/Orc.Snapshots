@@ -146,6 +146,12 @@
     </Compile>
     <Compile Include="ModuleInitializer.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Orc.Snapshots\Orc.Snapshots.NET40\Orc.Snapshots.NET40.csproj">
+      <Project>{de5c6a97-c8c9-4013-b6ca-3ba3baec67d9}</Project>
+      <Name>Orc.Snapshots.NET40</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="..\Orc.Snapshots.Xaml.Shared\Orc.Snapshots.Xaml.Shared.projitems" Label="Shared" Condition="Exists('..\Orc.Snapshots.Xaml.Shared\Orc.Snapshots.Xaml.Shared.projitems')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
