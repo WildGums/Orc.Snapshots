@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="MainViewModel.cs" company="WildGums">
+// <copyright file="StatusBarViewModel.cs" company="WildGums">
 //   Copyright (c) 2008 - 2015 WildGums. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
@@ -7,18 +7,9 @@
 
 namespace Orc.Snapshots.Example.ViewModels
 {
-    using Catel.Logging;
     using Catel.MVVM;
 
-    /// <summary>
-    /// MainWindow view model.
-    /// </summary>
-    public class MainViewModel : ViewModelBase
+    public class StatusBarViewModel : ViewModelBase
     {
-        private static readonly ILog Log = LogManager.GetCurrentClassLogger();
-
-        public MainViewModel()
-        {
-        }
     }
 }

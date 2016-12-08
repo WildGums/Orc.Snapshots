@@ -7,6 +7,7 @@
 
 namespace Orc.Snapshots
 {
+    using System.Linq;
     using System.Threading.Tasks;
     using Catel;
     using Catel.IoC;
@@ -32,6 +33,24 @@ namespace Orc.Snapshots
 
             snapshotManager.Add(snapshot);
             await snapshotManager.SaveAsync();
+        }
+
+        public static ISnapshot FindSnapshot(this ISnapshotManager snapshotManager, string title)
+        {
+            Argument.IsNotNull(() => snapshotManager);
+            Argument.IsNotNullOrWhitespace(() => title);
+
+            return (from snapshot in snapshotManager.Snapshots
+                    where string.Equals(snapshot.Title, title)
+                    select snapshot).FirstOrDefault();
+        }
+
+        public static TSnapshot FindSnapshot<TSnapshot>(this ISnapshotManager snapshotManager, string title)
+            where TSnapshot : ISnapshot
+        {
+            Argument.IsNotNull(() => snapshotManager);
+
+            return (TSnapshot)FindSnapshot(snapshotManager, title);
         }
         #endregion
     }

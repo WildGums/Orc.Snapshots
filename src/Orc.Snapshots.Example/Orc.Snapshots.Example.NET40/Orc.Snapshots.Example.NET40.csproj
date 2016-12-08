@@ -65,6 +65,14 @@
       <HintPath>..\..\..\lib\Catel.MVVM.4.5.4\lib\net40\Catel.MVVM.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="ControlzEx, Version=2.1.4.13, Culture=neutral, PublicKeyToken=f08b075e934b7045, processorArchitecture=MSIL">
+      <HintPath>..\..\..\lib\ControlzEx.2.1.4.13\lib\net40\ControlzEx.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Fluent, Version=4.0.3.394, Culture=neutral, PublicKeyToken=3e436e32a8c5546f, processorArchitecture=MSIL">
+      <HintPath>..\..\..\lib\Fluent.Ribbon.4.0.3.394\lib\net40\Fluent.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Threading.Tasks">
       <HintPath>..\..\..\lib\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
       <Private>True</Private>
@@ -77,8 +85,20 @@
       <HintPath>..\..\..\lib\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Orc.Controls, Version=1.3.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\lib\Orc.Controls.1.3.5\lib\net40\Orc.Controls.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Orc.FileSystem, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\lib\Orc.FileSystem.1.1.1\lib\net40\Orc.FileSystem.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Orchestra.Core, Version=2.4.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\lib\Orchestra.Core.2.4.1\lib\net40\Orchestra.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Orchestra.Shell.Ribbon.Fluent, Version=2.4.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\lib\Orchestra.Shell.Ribbon.Fluent.2.4.1\lib\net40\Orchestra.Shell.Ribbon.Fluent.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -97,7 +117,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\..\lib\Catel.MVVM.4.5.4\lib\net40\System.Windows.Interactivity.dll</HintPath>
+      <HintPath>..\..\..\lib\ControlzEx.2.1.4.13\lib\net40\System.Windows.Interactivity.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Xml" />
@@ -116,6 +136,10 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Orc.Snapshots.Xaml\Orc.Snapshots.Xaml.NET40\Orc.Snapshots.Xaml.NET40.csproj">
+      <Project>{7af50048-6441-44e2-a6a0-e183e65125a7}</Project>
+      <Name>Orc.Snapshots.Xaml.NET40</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Orc.Snapshots\Orc.Snapshots.NET40\Orc.Snapshots.NET40.csproj">
       <Project>{de5c6a97-c8c9-4013-b6ca-3ba3baec67d9}</Project>
       <Name>Orc.Snapshots.NET40</Name>
@@ -125,6 +149,9 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="..\Orc.Snapshots.Example.Shared\Resources\Fonts\fontawesome-webfont.ttf">
+      <Link>Resources\Fonts\fontawesome-webfont.ttf</Link>
+    </Resource>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>

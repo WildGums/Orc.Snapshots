@@ -64,14 +64,34 @@
       <HintPath>..\..\..\lib\Catel.MVVM.4.5.4\lib\net45\Catel.MVVM.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="ControlzEx, Version=2.1.4.13, Culture=neutral, PublicKeyToken=f08b075e934b7045, processorArchitecture=MSIL">
+      <HintPath>..\..\..\lib\ControlzEx.2.1.4.13\lib\net45\ControlzEx.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Fluent, Version=4.0.3.394, Culture=neutral, PublicKeyToken=3e436e32a8c5546f, processorArchitecture=MSIL">
+      <HintPath>..\..\..\lib\Fluent.Ribbon.4.0.3.394\lib\net45\Fluent.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Orc.Controls, Version=1.3.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\lib\Orc.Controls.1.3.5\lib\net45\Orc.Controls.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Orc.FileSystem, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\lib\Orc.FileSystem.1.1.1\lib\net45\Orc.FileSystem.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Orchestra.Core, Version=2.4.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\lib\Orchestra.Core.2.4.1\lib\net45\Orchestra.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Orchestra.Shell.Ribbon.Fluent, Version=2.4.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\lib\Orchestra.Shell.Ribbon.Fluent.2.4.1\lib\net45\Orchestra.Shell.Ribbon.Fluent.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\..\lib\Catel.MVVM.4.5.4\lib\net45\System.Windows.Interactivity.dll</HintPath>
+      <HintPath>..\..\..\lib\ControlzEx.2.1.4.13\lib\net45\System.Windows.Interactivity.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Xml" />
@@ -91,10 +111,17 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="..\Orc.Snapshots.Example.Shared\Resources\Fonts\fontawesome-webfont.ttf">
+      <Link>Resources\Fonts\fontawesome-webfont.ttf</Link>
+    </Resource>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Orc.Snapshots.Xaml\Orc.Snapshots.Xaml.NET45\Orc.Snapshots.Xaml.NET45.csproj">
+      <Project>{720b314b-2647-4888-ab96-37c526c7f0c5}</Project>
+      <Name>Orc.Snapshots.Xaml.NET45</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Orc.Snapshots\Orc.Snapshots.NET45\Orc.Snapshots.NET45.csproj">
       <Project>{2c732685-7edc-4640-95e0-ee50a43e223e}</Project>
       <Name>Orc.Snapshots.NET45</Name>

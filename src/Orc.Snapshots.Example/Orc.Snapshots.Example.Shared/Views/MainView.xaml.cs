@@ -4,12 +4,12 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Orc.Snapshots.Views
+namespace Orc.Snapshots.Example.Views
 {
-    public partial class MainWindow 
+    public partial class MainView 
     {
         #region Constructors
-        public MainWindow()
+        public MainView()
         {
             InitializeComponent();
         }

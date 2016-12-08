@@ -9,25 +9,30 @@ namespace Orc.Snapshots.Example
 {
     using System.Globalization;
     using System.Windows;
+
+    using Catel.ApiCop;
+    using Catel.ApiCop.Listeners;
     using Catel.IoC;
     using Catel.Logging;
     using Catel.Services;
     using Catel.Windows;
+    using Orchestra.Services;
+    using Orchestra.Views;
 
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
-    public partial class App : Application
+    public partial class App
     {
-        public App()
+        private static readonly ILog Log = LogManager.GetCurrentClassLogger();
+
+#pragma warning disable AvoidAsyncVoid // Avoid async void
+#pragma warning disable IDE1006 // Naming Styles
+        protected override async void OnStartup(StartupEventArgs e)
+#pragma warning restore IDE1006 // Naming Styles
+#pragma warning restore AvoidAsyncVoid // Avoid async void
         {
 #if DEBUG
-            LogManager.AddDebugListener(false);
+            LogManager.AddDebugListener(true);
 #endif
-        }
 
-        protected override void OnStartup(StartupEventArgs e)
-        {
             var languageService = ServiceLocator.Default.ResolveType<ILanguageService>();
 
             // Note: it's best to use .CurrentUICulture in actual apps since it will use the preferred language
@@ -36,9 +41,24 @@ namespace Orc.Snapshots.Example
             languageService.PreferredCulture = CultureInfo.CurrentCulture;
             languageService.FallbackCulture = new CultureInfo("en-US");
 
-            base.OnStartup(e);
+            Log.Info("Starting application");
 
             StyleHelper.CreateStyleForwardersForDefaultStyles();
+
+            Log.Info("Calling base.OnStartup");
+
+            var serviceLocator = ServiceLocator.Default;
+            var shellService = serviceLocator.ResolveType<IShellService>();
+            await shellService.CreateWithSplashAsync<ShellWindow>();
+        }
+
+        protected override void OnExit(ExitEventArgs e)
+        {
+            // Get advisory report in console
+            ApiCopManager.AddListener(new ConsoleApiCopListener());
+            ApiCopManager.WriteResults();
+
+            base.OnExit(e);
         }
     }
 }
