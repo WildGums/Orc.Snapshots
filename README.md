@@ -8,6 +8,8 @@
 
 Manage snapshots the easy way using this library.
 
+![](doc/images/orc_snapshots.gif)
+
 # Quick introduction
 
 Snapshots are like save games. They represent a set of data and/or values from a specific moment in time in an application. Using snapshots allows an application (and thus eventually the end-user) to store data (in memory, in a file or any in other persistence tech) which can later be retrieved.
