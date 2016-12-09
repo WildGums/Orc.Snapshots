@@ -130,14 +130,7 @@ namespace Orc.Snapshots
                     {
                         var fileName = entry.FileName;
                         var key = fileName.Substring(0, fileName.Length - InternalFileExtension.Length);
-                        byte[] dataBytes;
-
-                        using (var fileMemoryStream = new MemoryStream())
-                        {
-                            entry.Extract(fileMemoryStream);
-
-                            dataBytes = fileMemoryStream.ToArray();
-                        }
+                        var dataBytes = entry.GetBytes();
 
                         data.Add(new KeyValuePair<string, byte[]>(key, dataBytes));
                     }

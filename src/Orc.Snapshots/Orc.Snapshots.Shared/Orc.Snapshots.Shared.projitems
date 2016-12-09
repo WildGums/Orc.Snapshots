@@ -16,6 +16,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Exceptions\InvalidSnapshotException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Exceptions\SnapshotException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Exceptions\SnapshotManagementInitializationException.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\ZipEntryExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Managers\Extensions\ISnapshotManagerExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Managers\Interfaces\ISnapshotManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Managers\SnapshotManager.cs" />

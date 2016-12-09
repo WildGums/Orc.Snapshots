@@ -10,10 +10,13 @@ namespace Orc.Snapshots
     using System;
     using System.Collections.Generic;
     using System.Globalization;
+    using System.IO;
     using System.Text;
     using System.Threading.Tasks;
     using Catel;
     using Catel.Logging;
+    using FileSystem;
+    using Ionic.Zip;
 
     public abstract class SnapshotStorageServiceBase : ISnapshotStorageService
     {
@@ -36,30 +39,21 @@ namespace Orc.Snapshots
                 return null;
             }
 
-            var dataBytesIndex = IndexOf(bytes, DataSeparatorBytes);
-            if (dataBytesIndex < 0)
-            {
-                Log.Warning("No data separator found in snapshot data, cannot convert bytes to snapshot");
-                return null;
-            }
+            Dictionary<string, string> metadata;
+            byte[] dataBytes;
 
-            var metadataLength = dataBytesIndex;
-            var metadataBytes = new byte[dataBytesIndex];
-            if (metadataLength > 0)
+            using (var memoryStream = new MemoryStream(bytes))
             {
-                Buffer.BlockCopy(bytes, 0, metadataBytes, 0, metadataLength);
-            }
+                using (var zip = ZipFile.Read(memoryStream))
+                {
+                    var metadataEntry = zip["metadata"];
+                    var metadataBytes = metadataEntry.GetBytes();
+                    metadata = ParseMetadata(metadataBytes);
 
-            var dataStartIndex = dataBytesIndex + DataSeparatorBytes.Length;
-            var dataLength = bytes.Length - dataStartIndex;
-            var dataBytes = new byte[dataLength];
-            if (dataLength > 0)
-            {
-                Buffer.BlockCopy(bytes, dataStartIndex, dataBytes, 0, dataLength);
+                    var dataEntry = zip["data"];
+                    dataBytes = dataEntry.GetBytes();
+                }
             }
-
-            // Metadata
-            var metadata = ParseMetadata(metadataBytes);
 
             if (!metadata.TryGetValue("title", out string title))
             {
@@ -85,120 +79,71 @@ namespace Orc.Snapshots
 
         protected virtual async Task<byte[]> ConvertSnapshotToBytesAsync(ISnapshot snapshot)
         {
-            var bytes = new List<byte>();
+            using (var memoryStream = new MemoryStream())
+            {
+                using (var zip = new ZipFile())
+                {
+                    var metadata = new Dictionary<string, string>();
+                    metadata["title"] = snapshot.Title;
+                    metadata["created"] = snapshot.Created.ToString("yyyy-MM-dd HH:mm:ss");
 
-            var metadata = new Dictionary<string, string>();
-            metadata["title"] = snapshot.Title;
-            metadata["created"] = snapshot.Created.ToString("yyyy-MM-dd HH:mm:ss");
+                    zip.AddEntry("metadata", GetMetadataBytes(metadata));
 
-            var metadataBytes = GetMetadataBytes(metadata);
-            bytes.AddRange(metadataBytes);
+                    var snapshotBytes = await snapshot.GetAllBytesAsync();
+                    zip.AddEntry("data", snapshotBytes);
 
-            // Data separator
-            bytes.AddRange(DataSeparatorBytes);
+                    zip.Save(memoryStream);
+                }
 
-            var snapshotBytes = await snapshot.GetAllBytesAsync();
-            bytes.AddRange(snapshotBytes);
-
-            return bytes.ToArray();
+                return memoryStream.ToArray();
+            }
         }
 
-        private List<byte> GetMetadataBytes(Dictionary<string, string> metadata)
+        private byte[] GetMetadataBytes(Dictionary<string, string> metadata)
         {
-            var bytes = new List<byte>();
-
-            foreach (var value in metadata)
+            using (var memoryStream = new MemoryStream())
             {
-                var stringValue = $"{value.Key}{MetadataSplitter}{value.Value}";
-                var stringBytes = Encoding.GetBytes(stringValue);
+                using (var writer = new StreamWriter(memoryStream))
+                {
+                    foreach (var value in metadata)
+                    {
+                        var stringValue = $"{value.Key}{MetadataSplitter}{value.Value}";
+                        writer.WriteLine(stringValue);
+                    }
+                }
 
-                bytes.AddRange(stringBytes);
-                bytes.AddRange(MetadataSeparatorBytes);
+                return memoryStream.ToArray();
             }
-
-            return bytes;
         }
 
         private Dictionary<string, string> ParseMetadata(byte[] bytes)
         {
             var metadata = new Dictionary<string, string>();
 
-            var nextIndex = 0;
-            var info = FindMetadataBlockAsText(bytes, nextIndex);
-            while (info != null)
+            using (var memoryStream = new MemoryStream(bytes))
             {
-                var splitIndex = info.Item1.IndexOf(MetadataSplitter);
-                if (splitIndex < 0)
+                using (var reader = new StreamReader(memoryStream))
                 {
-                    continue;
+                    var allText = reader.ReadToEnd();
+                    var allLines = allText.Split(new[] {Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries);
+
+                    foreach (var line in allLines)
+                    {
+                        var splitIndex = line.IndexOf(MetadataSplitter);
+                        if (splitIndex < 0)
+                        {
+                            continue;
+                        }
+
+                        var key = line.Substring(0, splitIndex);
+                        var value = line.Substring(splitIndex + MetadataSplitter.Length);
+
+                        metadata[key] = value;
+                    }
                 }
-
-                var key = info.Item1.Substring(0, splitIndex);
-                var value = info.Item1.Substring(splitIndex + MetadataSplitter.Length);
-
-                metadata[key] = value;
-
-                nextIndex = info.Item2 + MetadataSeparatorBytes.Length;
-                info = FindMetadataBlockAsText(bytes, nextIndex);
             }
 
             return metadata;
-        }
-
-        private Tuple<byte[], int> FindMetadataBlock(byte[] bytes, int startIndex)
-        {
-            var separatorIndex = IndexOf(bytes, MetadataSeparatorBytes, startIndex);
-            if (separatorIndex < 0)
-            {
-                Log.Warning("No separator found in snapshot data, cannot convert bytes to snapshot");
-                return null;
-            }
-
-            var length = separatorIndex - startIndex;
-
-            var blockBytes = new byte[length];
-            Buffer.BlockCopy(bytes, startIndex, blockBytes, 0, length);
-
-            return new Tuple<byte[], int>(blockBytes, separatorIndex);
-        }
-
-        private Tuple<string, int> FindMetadataBlockAsText(byte[] bytes, int startIndex)
-        {
-            var dataBlock = FindMetadataBlock(bytes, startIndex);
-            if (dataBlock == null)
-            {
-                return null;
-            }
-
-            var text = Encoding.GetString(dataBlock.Item1);
-
-            return new Tuple<string, int>(text, dataBlock.Item2);
-        }
-
-        private static int IndexOf(byte[] data, byte[] block, int startIndex = 0)
-        {
-            Argument.IsNotNull("data", data);
-            Argument.IsNotNull("block", block);
-
-            for (int i = startIndex; i <= data.Length - block.Length; i++)
-            {
-                for (int j = 0; j < block.Length; j++)
-                {
-                    if (data[i + j] == block[j])
-                    {
-                        if (j == block.Length - 1)
-                        {
-                            return i;
-                        }
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-            }
-
-            return -1;
         }
     }
 }
