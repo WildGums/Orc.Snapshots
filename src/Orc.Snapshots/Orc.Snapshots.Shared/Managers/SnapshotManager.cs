@@ -204,16 +204,23 @@ namespace Orc.Snapshots
             {
                 Log.Debug($"Creating data for snapshot '{snapshot}' using provider '{provider}'");
 
-                byte[] providerData;
+                var names = provider.GetNames();
 
-                using (var memoryStream = new MemoryStream())
+                foreach (var name in names)
                 {
-                    await provider.StoreDataToSnapshotAsync(memoryStream);
+                    Log.Debug($"Creating data for snapshot '{snapshot}' using provider '{provider}::{name}'");
 
-                    providerData = memoryStream.ToArray();
+                    byte[] providerData;
+
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        await provider.StoreDataToSnapshotAsync(name, memoryStream);
+
+                        providerData = memoryStream.ToArray();
+                    }
+
+                    snapshot.SetData(name, providerData);
                 }
-
-                snapshot.SetData(provider.Name, providerData);
             }
 
             SnapshotCreated.SafeInvoke(this, () => new SnapshotEventArgs(snapshot));
@@ -235,16 +242,23 @@ namespace Orc.Snapshots
             {
                 Log.Debug($"Restoring data for snapshot '{snapshot}' using provider '{provider}'");
 
-                var providerData = snapshot.GetData(provider.Name);
-                if (providerData == null || providerData.Length == 0)
-                {
-                    Log.Debug($"Cannot restore snapshot data for provider '{provider}', no data available");
-                    continue;
-                }
+                var names = provider.GetNames();
 
-                using (var memoryStream = new MemoryStream(providerData))
+                foreach (var name in names)
                 {
-                    await provider.RestoreDataFromSnapshotAsync(memoryStream);
+                    Log.Debug($"Restoring data for snapshot '{snapshot}' using provider '{provider}::{name}'");
+
+                    var providerData = snapshot.GetData(name);
+                    if (providerData == null || providerData.Length == 0)
+                    {
+                        Log.Debug($"Cannot restore snapshot data for provider '{provider}::{name}', no data available");
+                        continue;
+                    }
+
+                    using (var memoryStream = new MemoryStream(providerData))
+                    {
+                        await provider.RestoreDataFromSnapshotAsync(name, memoryStream);
+                    }
                 }
             }
 

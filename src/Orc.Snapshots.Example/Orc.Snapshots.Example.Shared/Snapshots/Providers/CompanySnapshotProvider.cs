@@ -25,7 +25,7 @@ namespace Orc.Snapshots.Snapshots.Providers
             _project = project;
         }
 
-        public override async Task StoreDataToSnapshotAsync(Stream stream)
+        public override async Task StoreDataToSnapshotAsync(string name, Stream stream)
         {
             using (var writer = new StreamWriter(stream))
             {
@@ -35,7 +35,7 @@ namespace Orc.Snapshots.Snapshots.Providers
             }
         }
 
-        public override async Task RestoreDataFromSnapshotAsync(Stream stream)
+        public override async Task RestoreDataFromSnapshotAsync(string name, Stream stream)
         {
             using (var reader = new StreamReader(stream))
             {

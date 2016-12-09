@@ -20,7 +20,7 @@ namespace Orc.Snapshots.Tests.Providers
 
         public string TestData { get; set; }
 
-        public override async Task StoreDataToSnapshotAsync(Stream stream)
+        public override async Task StoreDataToSnapshotAsync(string name, Stream stream)
         {
             using (var writer = new StreamWriter(stream))
             {
@@ -28,7 +28,7 @@ namespace Orc.Snapshots.Tests.Providers
             }
         }
 
-        public override async Task RestoreDataFromSnapshotAsync(Stream stream)
+        public override async Task RestoreDataFromSnapshotAsync(string name, Stream stream)
         {
             using (var reader = new StreamReader(stream))
             {

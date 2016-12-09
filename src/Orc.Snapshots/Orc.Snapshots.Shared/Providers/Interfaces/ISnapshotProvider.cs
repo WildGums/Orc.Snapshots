@@ -7,6 +7,7 @@
 
 namespace Orc.Snapshots
 {
+    using System.Collections.Generic;
     using System.IO;
     using System.Threading.Tasks;
 
@@ -21,18 +22,26 @@ namespace Orc.Snapshots
 
         #region Methods
         /// <summary>
+        /// Gets the names of the values that needs to be written to a stream.
+        /// </summary>
+        /// <returns></returns>
+        List<string> GetNames();
+
+        /// <summary>
         /// Stores the data into the stream that will be stored inside the snapshot.
         /// </summary>
+        /// <param name="name">The name.</param>
         /// <param name="stream">The stream.</param>
         /// <returns></returns>
-        Task StoreDataToSnapshotAsync(Stream stream);
+        Task StoreDataToSnapshotAsync(string name, Stream stream);
 
         /// <summary>
         /// Restores the snapshot data from the stream.
         /// </summary>
+        /// <param name="name">The name.</param>
         /// <param name="stream">The stream.</param>
         /// <returns></returns>
-        Task RestoreDataFromSnapshotAsync(Stream stream);
+        Task RestoreDataFromSnapshotAsync(string name, Stream stream);
         #endregion
     }
 }
