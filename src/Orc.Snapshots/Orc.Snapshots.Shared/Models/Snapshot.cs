@@ -7,6 +7,7 @@
 
 namespace Orc.Snapshots
 {
+    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
@@ -34,6 +35,8 @@ namespace Orc.Snapshots
 
         #region Properties
         public string Title { get; set; }
+
+        public DateTime Created { get; set; }
 
         public List<string> Keys
         {

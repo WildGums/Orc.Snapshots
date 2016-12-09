@@ -7,6 +7,7 @@
 
 namespace Orc.Snapshots
 {
+    using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
@@ -15,6 +16,7 @@ namespace Orc.Snapshots
         #region Properties
         string Title { get; set; }
         List<string> Keys { get; }
+        DateTime Created { get; set; }
         #endregion
 
         Task InitializeFromBytesAsync(byte[] bytes);

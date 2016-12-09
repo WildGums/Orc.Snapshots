@@ -75,7 +75,7 @@ namespace Orc.Snapshots
                 var bytes = await _fileService.ReadAllBytesAsync(source);
                 if (bytes != null && bytes.Length > 0)
                 {
-                    result = ConvertBytesToSnapshot(bytes);
+                    result = await ConvertBytesToSnapshotAsync(bytes);
                 }
             }
             catch (Exception ex)

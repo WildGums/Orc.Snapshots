@@ -52,7 +52,7 @@ namespace Orc.Snapshots
                 byte[] bytes;
                 if (_snapshots.TryGetValue(source, out bytes))
                 {
-                    result = ConvertBytesToSnapshot(bytes);
+                    result = await ConvertBytesToSnapshotAsync(bytes);
                 }
             }
             catch (Exception ex)

@@ -195,7 +195,8 @@ namespace Orc.Snapshots
 
             var snapshot = new Snapshot
             {
-                Title = title
+                Title = title,
+                Created = FastDateTime.Now
             };
 
             var providers = GetProviders();
