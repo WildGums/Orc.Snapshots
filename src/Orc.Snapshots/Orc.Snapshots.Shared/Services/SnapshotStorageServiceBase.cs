@@ -55,12 +55,14 @@ namespace Orc.Snapshots
                 }
             }
 
-            if (!metadata.TryGetValue("title", out string title))
+            string title;
+            if (!metadata.TryGetValue("title", out title))
             {
                 title = "-";
             }
 
-            if (!metadata.TryGetValue("created", out string created))
+            string created;
+            if (!metadata.TryGetValue("created", out created))
             {
                 created = FastDateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             }
