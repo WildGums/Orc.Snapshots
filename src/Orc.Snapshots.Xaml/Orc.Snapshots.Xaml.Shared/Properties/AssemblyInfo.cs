@@ -25,6 +25,7 @@ using System.Windows.Markup;
 [assembly: XmlnsPrefix("http://www.wildgums.com/orc.snapshots", "orcsnapshots")]
 [assembly: XmlnsDefinition("http://www.wildgums.com/orc.snapshots", "Orc.Snapshots")]
 [assembly: XmlnsDefinition("http://www.wildgums.com/orc.snapshots", "Orc.Snapshots.Converters")]
+[assembly: XmlnsDefinition("http://www.wildgums.com/orc.snapshots", "Orc.Snapshots.Views")]
 
 [assembly: ThemeInfo(
     ResourceDictionaryLocation.None, //where theme specific resource dictionaries are located
