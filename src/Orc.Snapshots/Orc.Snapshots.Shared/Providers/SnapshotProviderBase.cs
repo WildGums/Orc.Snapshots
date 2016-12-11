@@ -14,6 +14,7 @@ namespace Orc.Snapshots
     using Catel.Data;
     using Catel.IoC;
     using Catel.Logging;
+    using Catel.Threading;
 
     /// <summary>
     /// Base implementation for snapshot providers.
@@ -73,12 +74,23 @@ namespace Orc.Snapshots
 
         #region Methods
         /// <summary>
-        /// Gets the names of the values that needs to be written to a stream.
+        /// Called when a snapshot manager is about to restore a snapshot.
         /// </summary>
+        /// <param name="snapshot">The snapshot.</param>
         /// <returns></returns>
-        public virtual List<string> GetNames()
+        public virtual Task RestoringSnapshotAsync(ISnapshot snapshot)
         {
-            return new List<string>(new [] { Name });
+            return TaskHelper.Completed;
+        }
+
+        /// <summary>
+        /// Called when a snapshot manager has just restored a snapshot.
+        /// </summary>
+        /// <param name="snapshot">The snapshot.</param>
+        /// <returns></returns>
+        public virtual Task RestoredSnapshotAsync(ISnapshot snapshot)
+        {
+            return TaskHelper.Completed;
         }
 
         /// <summary>
@@ -96,6 +108,15 @@ namespace Orc.Snapshots
         /// <param name="stream">The stream.</param>
         /// <returns></returns>
         public abstract Task RestoreDataFromSnapshotAsync(string name, Stream stream);
+
+        /// <summary>
+        /// Gets the names of the values that needs to be written to a stream.
+        /// </summary>
+        /// <returns></returns>
+        public virtual List<string> GetNames()
+        {
+            return new List<string>(new[] { Name });
+        }
         #endregion
     }
 }

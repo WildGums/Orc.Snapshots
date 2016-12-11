@@ -244,6 +244,11 @@ namespace Orc.Snapshots
 
             foreach (var provider in providers)
             {
+                await provider.RestoringSnapshotAsync(snapshot);
+            }
+
+            foreach (var provider in providers)
+            {
                 Log.Debug($"Restoring data for snapshot '{snapshot}' using provider '{provider}'");
 
                 var names = provider.GetNames();
@@ -264,6 +269,11 @@ namespace Orc.Snapshots
                         await provider.RestoreDataFromSnapshotAsync(name, memoryStream);
                     }
                 }
+            }
+
+            foreach (var provider in providers)
+            {
+                await provider.RestoredSnapshotAsync(snapshot);
             }
 
             SnapshotRestored.SafeInvoke(this, () => new SnapshotEventArgs(snapshot));

@@ -28,6 +28,20 @@ namespace Orc.Snapshots
         List<string> GetNames();
 
         /// <summary>
+        /// Called when a snapshot manager is about to restore a snapshot.
+        /// </summary>
+        /// <param name="snapshot">The snapshot.</param>
+        /// <returns></returns>
+        Task RestoringSnapshotAsync(ISnapshot snapshot);
+
+        /// <summary>
+        /// Called when a snapshot manager has just restored a snapshot.
+        /// </summary>
+        /// <param name="snapshot">The snapshot.</param>
+        /// <returns></returns>
+        Task RestoredSnapshotAsync(ISnapshot snapshot);
+
+        /// <summary>
         /// Stores the data into the stream that will be stored inside the snapshot.
         /// </summary>
         /// <param name="name">The name.</param>
