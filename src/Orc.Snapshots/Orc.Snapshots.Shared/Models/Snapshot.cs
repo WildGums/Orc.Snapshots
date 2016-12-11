@@ -122,7 +122,7 @@ namespace Orc.Snapshots
                     foreach (var entry in zipFile.Entries)
                     {
                         var fileName = entry.FileName;
-                        var key = fileName.Substring(0, fileName.Length - InternalFileExtension.Length);
+                        var key = fileName.Substring(0, fileName.Length - InternalFileExtension.Length).Replace("/", "\\");
                         var dataBytes = entry.GetBytes();
 
                         data.Add(new KeyValuePair<string, byte[]>(key, dataBytes));
