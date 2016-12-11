@@ -100,14 +100,7 @@ namespace Orc.Snapshots
 
             lock (_data)
             {
-                if (data == null)
-                {
-                    _data.Remove(key);
-                }
-                else
-                {
-                    _data[key] = data;
-                }
+                _data[key] = data;
 
                 _isDirty = true;
             }
@@ -152,10 +145,14 @@ namespace Orc.Snapshots
                     foreach (var dataItem in data)
                     {
                         var bytes = dataItem.Value;
-                        if (bytes != null && bytes.Length > 0)
+
+                        // Even store empty data
+                        if (bytes == null)
                         {
-                            zip.AddEntry($"{dataItem.Key}{InternalFileExtension}", bytes);
+                            bytes = new byte[] { };
                         }
+
+                        zip.AddEntry($"{dataItem.Key}{InternalFileExtension}", bytes);
                     }
 
                     zip.Save(memoryStream);

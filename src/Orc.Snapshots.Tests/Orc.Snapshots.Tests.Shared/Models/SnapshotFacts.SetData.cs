@@ -50,7 +50,7 @@ namespace Orc.Snapshots.Tests.Models
                 snapshot.SetData("MyData", new byte[] { 4, 5, 6 });
                 snapshot.SetData("MyData", null);
 
-                Assert.AreEqual(0, snapshot.Keys.Count);
+                Assert.AreEqual(null, snapshot.GetData("MyData"));
             }
         }
     }

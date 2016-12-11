@@ -272,10 +272,9 @@ namespace Orc.Snapshots
                     Log.Debug($"Restoring data for snapshot '{snapshot}' using provider '{provider}::{name}'");
 
                     var providerData = snapshot.GetData(name);
-                    if (providerData == null || providerData.Length == 0)
+                    if (providerData == null)
                     {
-                        Log.Debug($"Cannot restore snapshot data for provider '{provider}::{name}', no data available");
-                        continue;
+                        providerData = new byte[] {};
                     }
 
                     using (var memoryStream = new MemoryStream(providerData))
