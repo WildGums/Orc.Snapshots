@@ -28,27 +28,21 @@ namespace Orc.Snapshots.ViewModels
         private ISnapshotManager _snapshotManager;
         private readonly IUIVisualizerService _uiVisualizerService;
         private readonly IServiceLocator _serviceLocator;
-        private readonly IDispatcherService _dispatcherService;
         private readonly IMessageService _messageService;
         private readonly ILanguageService _languageService;
         #endregion
 
         #region Constructors
-        public SnapshotsViewModel(ISnapshotManager snapshotManager, IUIVisualizerService uiVisualizerService,
-            IServiceLocator serviceLocator, IDispatcherService dispatcherService, IMessageService messageService,
-            ILanguageService languageService)
+        public SnapshotsViewModel(IUIVisualizerService uiVisualizerService, IServiceLocator serviceLocator, 
+            IDispatcherService dispatcherService, IMessageService messageService, ILanguageService languageService)
         {
-            Argument.IsNotNull(() => snapshotManager);
             Argument.IsNotNull(() => uiVisualizerService);
             Argument.IsNotNull(() => serviceLocator);
-            Argument.IsNotNull(() => dispatcherService);
             Argument.IsNotNull(() => messageService);
             Argument.IsNotNull(() => languageService);
 
-            _snapshotManager = snapshotManager;
             _uiVisualizerService = uiVisualizerService;
             _serviceLocator = serviceLocator;
-            _dispatcherService = dispatcherService;
             _messageService = messageService;
             _languageService = languageService;
 
@@ -71,7 +65,6 @@ namespace Orc.Snapshots.ViewModels
         #endregion
 
         #region Commands
-
         public TaskCommand<ISnapshot> RestoreSnapshot { get; private set; }
 
         private bool OnRestoreSnapshotCanExecute(ISnapshot snapshot)
@@ -193,6 +186,15 @@ namespace Orc.Snapshots.ViewModels
             await base.CloseAsync();
         }
 
+        private void OnSnapshotsLoaded(object sender, EventArgs e)
+        {
+            var snapshotManager = _snapshotManager;
+
+            Log.Debug($"Snapshots have been loaded, updating snapshots, current snapshot manager scope is '{snapshotManager.Scope}'");
+
+            UpdateSnapshots();
+        }
+
         private void OnSnapshotsChanged(object sender, EventArgs e)
         {
             var snapshotManager = _snapshotManager;
@@ -200,17 +202,6 @@ namespace Orc.Snapshots.ViewModels
             Log.Debug($"Snapshots have changed, updating snapshots, current snapshot manager scope is '{snapshotManager.Scope}'");
 
             UpdateSnapshots();
-        }
-
-        private ISnapshotManager GetSnapshotManager()
-        {
-            if (_snapshotManager == null)
-            {
-                var snapshotManager = _serviceLocator.ResolveType<ISnapshotManager>(Scope);
-                SetSnapshotManager(snapshotManager);
-            }
-
-            return _snapshotManager;
         }
 
         private void SetSnapshotManager(ISnapshotManager snapshotManager)
@@ -223,6 +214,7 @@ namespace Orc.Snapshots.ViewModels
 
             if (previousSnapshotManager != null)
             {
+                previousSnapshotManager.Loaded -= OnSnapshotsLoaded;
                 previousSnapshotManager.SnapshotsChanged -= OnSnapshotsChanged;
             }
 
@@ -232,7 +224,8 @@ namespace Orc.Snapshots.ViewModels
 
             if (snapshotManager != null)
             {
-                _snapshotManager.SnapshotsChanged += OnSnapshotsChanged;
+                snapshotManager.Loaded += OnSnapshotsLoaded;
+                snapshotManager.SnapshotsChanged += OnSnapshotsChanged;
             }
         }
 
@@ -255,6 +248,7 @@ namespace Orc.Snapshots.ViewModels
             var snapshotManager = _snapshotManager;
             if (snapshotManager != null)
             {
+                snapshotManager.Loaded -= OnSnapshotsLoaded;
                 snapshotManager.SnapshotsChanged -= OnSnapshotsChanged;
 
                 if (setToNull)
