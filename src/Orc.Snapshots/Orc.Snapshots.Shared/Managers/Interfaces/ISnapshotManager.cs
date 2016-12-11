@@ -30,6 +30,8 @@ namespace Orc.Snapshots
         event EventHandler<EventArgs> Saved;
 
         event EventHandler<SnapshotEventArgs> SnapshotCreated;
+
+        event EventHandler<SnapshotEventArgs> SnapshotRestoring;
         event EventHandler<SnapshotEventArgs> SnapshotRestored;
 
         event EventHandler<EventArgs> SnapshotsChanged;

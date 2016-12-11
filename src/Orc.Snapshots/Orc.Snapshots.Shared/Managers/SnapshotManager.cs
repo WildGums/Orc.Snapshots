@@ -73,6 +73,7 @@ namespace Orc.Snapshots
         public event EventHandler<EventArgs> Saved;
 
         public event EventHandler<SnapshotEventArgs> SnapshotCreated;
+        public event EventHandler<SnapshotEventArgs> SnapshotRestoring;
         public event EventHandler<SnapshotEventArgs> SnapshotRestored;
 
         public event EventHandler<EventArgs> SnapshotsChanged;
@@ -236,6 +237,8 @@ namespace Orc.Snapshots
             Argument.IsNotNull(() => snapshot);
 
             Log.Info($"Restoring snapshot '{snapshot}'");
+
+            SnapshotRestoring.SafeInvoke(this, () => new SnapshotEventArgs(snapshot));
 
             var providers = GetProviders();
 
