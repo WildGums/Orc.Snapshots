@@ -74,6 +74,26 @@ namespace Orc.Snapshots
 
         #region Methods
         /// <summary>
+        /// Called when a snapshot manager is about to create a snapshot.
+        /// </summary>
+        /// <param name="snapshot">The snapshot.</param>
+        /// <returns></returns>
+        public virtual Task CreatingSnapshotAsync(ISnapshot snapshot)
+        {
+            return TaskHelper.Completed;
+        }
+
+        /// <summary>
+        /// Called when a snapshot manager has just created a snapshot.
+        /// </summary>
+        /// <param name="snapshot">The snapshot.</param>
+        /// <returns></returns>
+        public virtual Task CreatedSnapshotAsync(ISnapshot snapshot)
+        {
+            return TaskHelper.Completed;
+        }
+
+        /// <summary>
         /// Called when a snapshot manager is about to restore a snapshot.
         /// </summary>
         /// <param name="snapshot">The snapshot.</param>

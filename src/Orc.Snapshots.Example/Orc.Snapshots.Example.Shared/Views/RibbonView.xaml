@@ -19,6 +19,9 @@
                                         ClosePopupOnMouseDown="True" Command="{Binding CreateSnapshot}">
                         <views:SnapshotsView Width="300" />
                     </fluent:SplitButton>
+                    
+                    <fluent:Button Header="Clean up..." LargeIcon="{orchestra:FontImage {x:Static ribbon:FontAwesome.Trash}}"
+                                   Command="{Binding CleanupSnapshots}"/>
                 </fluent:RibbonGroupBox>
             </fluent:RibbonTabItem>
         </fluent:Ribbon.Tabs>

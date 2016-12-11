@@ -13,10 +13,15 @@
     <Compile Include="$(MSBuildThisFileDirectory)..\..\MethodTimeLogger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\TriggerConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\UnderscoreToDoubleUnderscoresStringConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\SnapshotCleanup.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ModuleInitializer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Properties\AssemblyInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\SnapshotsCleanupViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\SnapshotsViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\SnapshotViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\SnapshotsCleanupWindow.xaml.cs">
+      <DependentUpon>SnapshotsCleanupWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\SnapshotsView.xaml.cs">
       <DependentUpon>SnapshotsView.xaml</DependentUpon>
     </Compile>
@@ -26,6 +31,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="$(MSBuildThisFileDirectory)Themes\Generic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="$(MSBuildThisFileDirectory)Views\SnapshotsCleanupWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

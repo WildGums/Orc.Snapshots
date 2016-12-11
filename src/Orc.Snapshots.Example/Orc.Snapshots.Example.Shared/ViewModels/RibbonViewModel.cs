@@ -25,6 +25,7 @@ namespace Orc.Snapshots.Example.ViewModels
             _messageService = messageService;
 
             CreateSnapshot = new TaskCommand(OnCreateSnapshotExecuteAsync, OnCreateSnapshotCanExecute);
+            CleanupSnapshots = new TaskCommand(OnCleanupSnapshotsExecuteAsync);
 
             Title = "Orc.Snapshots example";
         }
@@ -63,6 +64,13 @@ namespace Orc.Snapshots.Example.ViewModels
 
                 await _snapshotManager.CreateSnapshotAndSaveAsync(snapshot.Title);
             }
+        }
+
+        public TaskCommand CleanupSnapshots { get; private set; }
+
+        private Task OnCleanupSnapshotsExecuteAsync()
+        {
+            return _uiVisualizerService.ShowDialogAsync<SnapshotsCleanupViewModel>();
         }
         #endregion
 

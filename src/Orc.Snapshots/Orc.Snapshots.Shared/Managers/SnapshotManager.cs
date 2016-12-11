@@ -72,7 +72,9 @@ namespace Orc.Snapshots
         public event AsyncEventHandler<CancelEventArgs> SavingAsync;
         public event EventHandler<EventArgs> Saved;
 
+        public event EventHandler<SnapshotEventArgs> SnapshotCreating;
         public event EventHandler<SnapshotEventArgs> SnapshotCreated;
+
         public event EventHandler<SnapshotEventArgs> SnapshotRestoring;
         public event EventHandler<SnapshotEventArgs> SnapshotRestored;
 
@@ -200,7 +202,14 @@ namespace Orc.Snapshots
                 Created = FastDateTime.Now
             };
 
+            SnapshotCreating.SafeInvoke(this, () => new SnapshotEventArgs(snapshot));
+
             var providers = GetProviders();
+
+            foreach (var provider in providers)
+            {
+                await provider.CreatingSnapshotAsync(snapshot);
+            }
 
             foreach (var provider in providers)
             {
@@ -223,6 +232,11 @@ namespace Orc.Snapshots
 
                     snapshot.SetData(name, providerData);
                 }
+            }
+
+            foreach (var provider in providers)
+            {
+                await provider.CreatedSnapshotAsync(snapshot);
             }
 
             SnapshotCreated.SafeInvoke(this, () => new SnapshotEventArgs(snapshot));
