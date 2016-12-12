@@ -29,10 +29,10 @@ namespace Orc.Snapshots
         event AsyncEventHandler<CancelEventArgs> SavingAsync;
         event EventHandler<EventArgs> Saved;
 
-        event EventHandler<SnapshotEventArgs> SnapshotCreating;
+        event AsyncEventHandler<SnapshotEventArgs> SnapshotCreatingAsync;
         event EventHandler<SnapshotEventArgs> SnapshotCreated;
 
-        event EventHandler<SnapshotEventArgs> SnapshotRestoring;
+        event AsyncEventHandler<SnapshotEventArgs> SnapshotRestoringAsync;
         event EventHandler<SnapshotEventArgs> SnapshotRestored;
 
         event EventHandler<EventArgs> SnapshotsChanged;
