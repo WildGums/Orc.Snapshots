@@ -50,5 +50,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Resources\Images\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Services\Interfaces\" />
   </ItemGroup>
 </Project>

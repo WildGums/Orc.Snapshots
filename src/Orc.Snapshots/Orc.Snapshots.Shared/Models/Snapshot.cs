@@ -49,7 +49,7 @@ namespace Orc.Snapshots
         #region Methods
         public override string ToString()
         {
-            return Title;
+            return $"{Title} (Category = {Category})";
         }
 
         public async Task InitializeFromBytesAsync(byte[] bytes)
