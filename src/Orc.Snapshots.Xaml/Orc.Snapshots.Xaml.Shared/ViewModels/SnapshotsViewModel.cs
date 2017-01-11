@@ -33,7 +33,7 @@ namespace Orc.Snapshots.ViewModels
         #endregion
 
         #region Constructors
-        public SnapshotsViewModel(IUIVisualizerService uiVisualizerService, IServiceLocator serviceLocator, 
+        public SnapshotsViewModel(IUIVisualizerService uiVisualizerService, IServiceLocator serviceLocator,
             IDispatcherService dispatcherService, IMessageService messageService, ILanguageService languageService)
         {
             Argument.IsNotNull(() => uiVisualizerService);
@@ -46,7 +46,7 @@ namespace Orc.Snapshots.ViewModels
             _messageService = messageService;
             _languageService = languageService;
 
-            Snapshots = new List<ISnapshot>();
+            SnapshotCategories = new List<SnapshotCategory>();
 
             RestoreSnapshot = new TaskCommand<ISnapshot>(OnRestoreSnapshotExecuteAsync, OnRestoreSnapshotCanExecute);
             EditSnapshot = new TaskCommand<ISnapshot>(OnEditSnapshotExecuteAsync, OnEditSnapshotCanExecute);
@@ -57,7 +57,7 @@ namespace Orc.Snapshots.ViewModels
         #region Properties
         public bool HasSnapshots { get; private set; }
 
-        public List<ISnapshot> Snapshots { get; private set; }
+        public List<SnapshotCategory> SnapshotCategories { get; private set; }
 
         public string Filter { get; set; }
 
@@ -257,29 +257,46 @@ namespace Orc.Snapshots.ViewModels
                 }
             }
 
-            Snapshots.Clear();
+            SnapshotCategories.Clear();
         }
 
         private void UpdateSnapshots()
         {
             var filter = Filter;
 
-            var source = _snapshotManager.Snapshots;
+            var allSnapshots = _snapshotManager.Snapshots;
 
-            HasSnapshots = source.Any();
+            HasSnapshots = allSnapshots.Any();
 
-            if (!string.IsNullOrWhiteSpace(filter))
+            var finalItems = new List<SnapshotCategory>();
+
+            var groupedSnapshots = allSnapshots.OrderBy(x => x.Category).GroupBy(x => x.Category);
+
+            foreach (var category in groupedSnapshots)
             {
-                source = (from item in source
-                          where item.Title.ContainsIgnoreCase(filter)
-                          select item);
+                var snapshotCategory = new SnapshotCategory
+                {
+                    Category = category.Key
+                };
+
+                var categoryItems = category.Select(x => x);
+
+                if (!string.IsNullOrWhiteSpace(filter))
+                {
+                    categoryItems = category.Where(x => x.Title.ContainsIgnoreCase(filter));
+                }
+
+                snapshotCategory.Snapshots.AddRange(categoryItems.OrderByDescending(x => x.Created));
+
+                if (snapshotCategory.Snapshots.Count > 0)
+                {
+                    finalItems.Add(snapshotCategory);
+                }
             }
 
-            var finalItems = new List<ISnapshot>(source);
+            Log.Debug($"Updating available snapshots using snapshot manager with scope '{_snapshotManager?.Scope}', '{finalItems.Count}' snapshot categories available");
 
-            Log.Debug($"Updating available snapshots using snapshot manager with scope '{_snapshotManager?.Scope}', '{finalItems.Count}' snapshots available");
-
-            Snapshots = finalItems;
+            SnapshotCategories = finalItems;
         }
         #endregion
     }

@@ -61,6 +61,12 @@ namespace Orc.Snapshots
                 title = "-";
             }
 
+            string category;
+            if (!metadata.TryGetValue("category", out category))
+            {
+                category = null;
+            }
+
             string created;
             if (!metadata.TryGetValue("created", out created))
             {
@@ -70,6 +76,7 @@ namespace Orc.Snapshots
             var snapshot = new Snapshot
             {
                 Title = title,
+                Category = string.IsNullOrWhiteSpace(category) ? null : category,
                 Created = DateTime.ParseExact(created, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture)
             };
 
@@ -87,6 +94,7 @@ namespace Orc.Snapshots
                 {
                     var metadata = new Dictionary<string, string>();
                     metadata["title"] = snapshot.Title;
+                    metadata["category"] = snapshot.Category ?? string.Empty;
                     metadata["created"] = snapshot.Created.ToString("yyyy-MM-dd HH:mm:ss");
 
                     zip.AddEntry("metadata", GetMetadataBytes(metadata));

@@ -13,6 +13,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)..\..\MethodTimeLogger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\TriggerConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\UnderscoreToDoubleUnderscoresStringConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\SnapshotCategory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\SnapshotCleanup.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ModuleInitializer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Properties\AssemblyInfo.cs" />

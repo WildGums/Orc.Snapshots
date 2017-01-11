@@ -1,6 +1,10 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    
+    <Style x:Key="SnapshotsCategoryTitleTextBlockStyle" TargetType="TextBlock">
+        <Setter Property="Margin" Value="6,8,6,0" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+    </Style>
     
 </ResourceDictionary>

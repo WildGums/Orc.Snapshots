@@ -25,76 +25,93 @@
                 <catel:SelectTextOnFocus />
             </i:Interaction.Behaviors>
         </TextBox>
-        
+
         <Label Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"
-               Visibility="{Binding Snapshots, Converter={catel:CollectionToCollapsingVisibilityConverter}, ConverterParameter=True}">
+               Visibility="{Binding SnapshotCategories, Converter={catel:CollectionToCollapsingVisibilityConverter}, ConverterParameter=True}">
             <TextBlock TextAlignment="Center" Text="{catel:LanguageBinding Snapshots_NoSnapshots}" TextWrapping="Wrap" />
         </Label>
 
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" MaxHeight="400" Margin="2,0,2,0">
-            <ItemsControl x:Name="listBox" ItemsSource="{Binding Snapshots}" BorderThickness="0">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-
+            <ItemsControl x:Name="snapshotCategoriesItemsControl" ItemsSource="{Binding SnapshotCategories}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
 
-                            <Label Grid.Column="0" Content="{Binding Title, Converter={converters:UnderscoreToDoubleUnderscoresStringConverter}}" />
+                            <TextBlock Grid.Row="0" Text="{Binding Category}" Visibility="{Binding Category, Converter={catel:EmptyStringToCollapsingVisibilityConverter}}"
+                                       Style="{StaticResource SnapshotsCategoryTitleTextBlockStyle}" />
 
-                            <Button Grid.Column="1" CommandParameter="{Binding }" ToolTip="{catel:LanguageBinding Snapshots_Restore}" Width="24" Margin="4,6,4,6"
+                            <ItemsControl Grid.Row="2" x:Name="listBox" ItemsSource="{Binding Snapshots}" BorderThickness="0">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <Label Grid.Column="0" Content="{Binding Title, Converter={converters:UnderscoreToDoubleUnderscoresStringConverter}}" />
+
+                                            <Button Grid.Column="1" CommandParameter="{Binding }" ToolTip="{catel:LanguageBinding Snapshots_Restore}" Width="24" Margin="4,6,4,6"
                                     Visibility="{Binding RelativeSource={RelativeSource Self}, Path=IsEnabled, Converter={StaticResource BooleanToHidingVisibilityConverter}}">
 
-                                <!-- NOTE: important to fix commands where command parameter is not yet available when
+                                                <!-- NOTE: important to fix commands where command parameter is not yet available when
                                      the command is being evaluated. See http://stackoverflow.com/questions/335849/wpf-commandparameter-is-null-first-time-canexecute-is-called -->
-                                <Button.Command>
-                                    <MultiBinding Converter="{StaticResource TriggerConverter}">
-                                        <Binding Path="DataContext.RestoreSnapshot" ElementName="layoutRoot" />
-                                        <Binding />
-                                    </MultiBinding>
-                                </Button.Command>
+                                                <Button.Command>
+                                                    <MultiBinding Converter="{StaticResource TriggerConverter}">
+                                                        <Binding Path="DataContext.RestoreSnapshot" ElementName="layoutRoot" />
+                                                        <Binding />
+                                                    </MultiBinding>
+                                                </Button.Command>
 
-                                <Image Source="/Orc.Snapshots.Xaml;component/Resources/Images/restore.png" Stretch="UniformToFill" Margin="2" />
-                            </Button>
+                                                <Image Source="/Orc.Snapshots.Xaml;component/Resources/Images/restore.png" Stretch="UniformToFill" Margin="2" />
+                                            </Button>
 
-                            <Button Grid.Column="2" CommandParameter="{Binding }" ToolTip="{catel:LanguageBinding Snapshots_Edit}" Width="24" Margin="0,6,4,6"
+                                            <Button Grid.Column="2" CommandParameter="{Binding }" ToolTip="{catel:LanguageBinding Snapshots_Edit}" Width="24" Margin="0,6,4,6"
                                     Visibility="{Binding RelativeSource={RelativeSource Self}, Path=IsEnabled, Converter={StaticResource BooleanToHidingVisibilityConverter}}">
 
-                                <!-- NOTE: important to fix commands where command parameter is not yet available when
+                                                <!-- NOTE: important to fix commands where command parameter is not yet available when
                                      the command is being evaluated. See http://stackoverflow.com/questions/335849/wpf-commandparameter-is-null-first-time-canexecute-is-called -->
-                                <Button.Command>
-                                    <MultiBinding Converter="{StaticResource TriggerConverter}">
-                                        <Binding Path="DataContext.EditSnapshot" ElementName="layoutRoot" />
-                                        <Binding />
-                                    </MultiBinding>
-                                </Button.Command>
+                                                <Button.Command>
+                                                    <MultiBinding Converter="{StaticResource TriggerConverter}">
+                                                        <Binding Path="DataContext.EditSnapshot" ElementName="layoutRoot" />
+                                                        <Binding />
+                                                    </MultiBinding>
+                                                </Button.Command>
 
-                                <Image Source="/Orc.Snapshots.Xaml;component/Resources/Images/edit.png" Stretch="UniformToFill" Margin="2" />
-                            </Button>
+                                                <Image Source="/Orc.Snapshots.Xaml;component/Resources/Images/edit.png" Stretch="UniformToFill" Margin="2" />
+                                            </Button>
 
-                            <Button Grid.Column="3" CommandParameter="{Binding }" ToolTip="{catel:LanguageBinding Snapshots_Remove}" Width="24" Margin="0,6,4,6"
+                                            <Button Grid.Column="3" CommandParameter="{Binding }" ToolTip="{catel:LanguageBinding Snapshots_Remove}" Width="24" Margin="0,6,4,6"
                                     Visibility="{Binding RelativeSource={RelativeSource Self}, Path=IsEnabled, Converter={StaticResource BooleanToHidingVisibilityConverter}}">
 
-                                <!-- NOTE: important to fix commands where command parameter is not yet available when
+                                                <!-- NOTE: important to fix commands where command parameter is not yet available when
                                      the command is being evaluated. See http://stackoverflow.com/questions/335849/wpf-commandparameter-is-null-first-time-canexecute-is-called -->
-                                <Button.Command>
-                                    <MultiBinding Converter="{StaticResource TriggerConverter}">
-                                        <Binding Path="DataContext.RemoveSnapshot" ElementName="layoutRoot" />
-                                        <Binding />
-                                    </MultiBinding>
-                                </Button.Command>
+                                                <Button.Command>
+                                                    <MultiBinding Converter="{StaticResource TriggerConverter}">
+                                                        <Binding Path="DataContext.RemoveSnapshot" ElementName="layoutRoot" />
+                                                        <Binding />
+                                                    </MultiBinding>
+                                                </Button.Command>
 
-                                <Image Source="/Orc.Snapshots.Xaml;component/Resources/Images/remove.png" Stretch="UniformToFill" Margin="2" />
-                            </Button>
+                                                <Image Source="/Orc.Snapshots.Xaml;component/Resources/Images/remove.png" Stretch="UniformToFill" Margin="2" />
+                                            </Button>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
                         </Grid>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>

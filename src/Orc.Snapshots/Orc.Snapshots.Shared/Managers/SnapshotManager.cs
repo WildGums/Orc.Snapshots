@@ -190,17 +190,11 @@ namespace Orc.Snapshots
             return false;
         }
 
-        public virtual async Task<ISnapshot> CreateSnapshotAsync(string title)
+        public virtual async Task<ISnapshot> CreateSnapshotAsync(ISnapshot snapshot)
         {
-            Argument.IsNotNullOrWhitespace(() => title);
+            Argument.IsNotNull(() => snapshot);
 
-            Log.Info($"Creating snapshot '{title}'");
-
-            var snapshot = new Snapshot
-            {
-                Title = title,
-                Created = FastDateTime.Now
-            };
+            Log.Info($"Creating snapshot '{snapshot}'");
 
             await SnapshotCreatingAsync.SafeInvokeAsync(this, new SnapshotEventArgs(snapshot));
 

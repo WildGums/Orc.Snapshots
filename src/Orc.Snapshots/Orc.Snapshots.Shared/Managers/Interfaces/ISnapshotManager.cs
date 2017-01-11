@@ -50,7 +50,7 @@ namespace Orc.Snapshots
         void AddProvider(ISnapshotProvider snapshotProvider);
         bool RemoveProvider(ISnapshotProvider snapshotProvider);
 
-        Task<ISnapshot> CreateSnapshotAsync(string title);
+        Task<ISnapshot> CreateSnapshotAsync(ISnapshot snapshot);
         Task RestoreSnapshotAsync(ISnapshot snapshot);
 
         void Add(ISnapshot snapshot);
