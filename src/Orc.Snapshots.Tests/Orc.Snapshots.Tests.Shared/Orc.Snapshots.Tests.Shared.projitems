@@ -10,6 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)..\..\SolutionAssemblyInfo.cs" />
+	<Compile Include="$(MSBuildThisFileDirectory)..\..\GlobalSuppressions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GlobalInitialization.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Managers\SnapshotManagerFacts.Add.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Managers\SnapshotManagerFacts.CreateSnapshotAsync.cs" />

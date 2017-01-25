@@ -19,6 +19,8 @@
       <SubType>Code</SubType>
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\SolutionAssemblyInfo.cs" />
+	<Compile Include="$(MSBuildThisFileDirectory)..\..\GlobalSuppressions.cs" />	
     <Compile Include="$(MSBuildThisFileDirectory)FontAwesome.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Company.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Person.cs" />
