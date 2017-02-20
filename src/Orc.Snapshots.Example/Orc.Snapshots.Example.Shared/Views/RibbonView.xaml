@@ -1,0 +1,30 @@
+﻿<catel:UserControl x:Class="Orc.Snapshots.Example.Views.RibbonView"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                   xmlns:catel="http://catel.codeplex.com"
+                   xmlns:fluent="urn:fluent-ribbon"
+                   xmlns:views="clr-namespace:Orc.Snapshots.Views;assembly=Orc.Snapshots.Xaml"
+                   xmlns:orchestra="https://github.com/orcomp/orchestra"
+                   xmlns:ribbon="clr-namespace:Orc.Snapshots.Example"
+                   xmlns:orc="http://www.wildgums.net.au/orc"
+                   mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="300">
+
+    <fluent:Ribbon>
+        <fluent:Ribbon.Tabs>
+            <fluent:RibbonTabItem Header="View">
+                <fluent:RibbonGroupBox Header="Snapshots">
+                    <fluent:SplitButton Header="Create snapshot" LargeIcon="{orchestra:FontImage {x:Static ribbon:FontAwesome.Plus}}"
+                                        ClosePopupOnMouseDown="True" Command="{Binding CreateSnapshot}">
+                        <views:SnapshotsView Width="300" />
+                    </fluent:SplitButton>
+                    
+                    <fluent:Button Header="Clean up..." LargeIcon="{orchestra:FontImage {x:Static ribbon:FontAwesome.Trash}}"
+                                   Command="{Binding CleanupSnapshots}"/>
+                </fluent:RibbonGroupBox>
+            </fluent:RibbonTabItem>
+        </fluent:Ribbon.Tabs>
+    </fluent:Ribbon>
+
+</catel:UserControl>
