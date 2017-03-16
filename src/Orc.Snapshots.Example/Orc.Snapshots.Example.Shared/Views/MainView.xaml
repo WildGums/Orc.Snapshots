@@ -56,7 +56,7 @@
             </WrapPanel>
         </catel:StackGrid>
 
-        <!--<orc:LogViewerControl Grid.Row="3" />-->
+        <orc:LogViewerControl Grid.Row="3" />
     </catel:StackGrid>
 
 </catel:UserControl>
