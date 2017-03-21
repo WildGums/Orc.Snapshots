@@ -21,6 +21,7 @@ namespace Orc.Snapshots
         DateTime Created { get; set; }
         #endregion
 
+        Task<string> GetContentHashAsync();
         Task InitializeFromBytesAsync(byte[] bytes);
         Task<byte[]> GetAllBytesAsync();
         byte[] GetData(string key);

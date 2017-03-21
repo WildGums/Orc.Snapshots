@@ -24,6 +24,7 @@ namespace Orc.Snapshots
         private const string InternalFileExtension = ".dat";
         private readonly Dictionary<string, byte[]> _data = new Dictionary<string, byte[]>();
 
+        private string _contentHash;
         private byte[] _allData;
         private bool _isDirty = true;
 
@@ -52,6 +53,16 @@ namespace Orc.Snapshots
             return $"{Title} (Category = {Category})";
         }
 
+        public async Task<string> GetContentHashAsync()
+        {
+            if (string.IsNullOrWhiteSpace(_contentHash))
+            {
+                await GetAllBytesAsync();
+            }
+
+            return _contentHash;
+        }
+
         public async Task InitializeFromBytesAsync(byte[] bytes)
         {
             Argument.IsNotNull(() => bytes);
@@ -65,6 +76,7 @@ namespace Orc.Snapshots
                 _data[dataItem.Key] = dataItem.Value;
             }
 
+            _contentHash = null;
             _isDirty = true;
         }
 
@@ -75,6 +87,7 @@ namespace Orc.Snapshots
                 Log.Debug($"Data for '{this}' is outdated, generating new data");
 
                 _allData = await SaveSnapshotDataAsync(_data.ToList());
+                _contentHash = Md5Helper.ComputeMd5(_allData);
             }
 
             return _allData;
@@ -104,6 +117,7 @@ namespace Orc.Snapshots
             {
                 _data[key] = data;
 
+                _contentHash = null;
                 _isDirty = true;
             }
         }
@@ -116,6 +130,8 @@ namespace Orc.Snapshots
         protected virtual async Task<List<KeyValuePair<string, byte[]>>> LoadSnapshotDataAsync(byte[] bytes)
         {
             var data = new List<KeyValuePair<string, byte[]>>();
+
+            _contentHash = string.Empty;
 
             using (var memoryStream = new MemoryStream(bytes))
             {
@@ -160,7 +176,8 @@ namespace Orc.Snapshots
                     zip.Save(memoryStream);
                 }
 
-                return memoryStream.ToArray();
+                var allBytes = memoryStream.ToArray();
+                return allBytes;
             }
         }
         #endregion
