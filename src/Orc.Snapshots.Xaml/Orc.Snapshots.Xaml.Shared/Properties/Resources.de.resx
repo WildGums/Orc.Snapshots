@@ -123,14 +123,14 @@
   <data name="Snapshots_AreYouSureYouWantToRemoveTheSnapshot" xml:space="preserve">
     <value>Are you sure you want to remove snapshot '{0}'?</value>
   </data>
-  <data name="Snapshots_CleanupExplanation" xml:space="preserve">
-    <value>This view allows you to clean up the snapshots.</value>
-  </data>
   <data name="Snapshots_CleanupMaxAge" xml:space="preserve">
     <value>Maximum age of a snapshot in days:</value>
   </data>
   <data name="Snapshots_CleanupSummary" xml:space="preserve">
     <value>Current number of items selected for cleanup:</value>
+  </data>
+  <data name="Snapshots_CleanupTitle" xml:space="preserve">
+    <value>Clean up snapshots</value>
   </data>
   <data name="Snapshots_CreateNewSnapshot" xml:space="preserve">
     <value>Create new snapshot</value>
