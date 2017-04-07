@@ -9,6 +9,7 @@ namespace Orc.Snapshots
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
     using Catel;
     using Catel.Logging;
@@ -95,11 +96,40 @@ namespace Orc.Snapshots
 
             Log.Debug("Deleting previous snapshot files");
 
+            var deleteCount = 0;
+
+            var snapshotFileNames = snapshots.ToDictionary(x => GetSnapshotFileName(directory, x), x => x, StringComparer.OrdinalIgnoreCase);
+
             foreach (var snapshotFile in _directoryService.GetFiles(directory, $"*{SnapshotExtension}"))
             {
                 try
                 {
-                    _fileService.Delete(snapshotFile);
+                    ISnapshot snapshot = null;
+                    var delete = !snapshotFileNames.TryGetValue(snapshotFile, out snapshot);
+                    if (!delete)
+                    {
+                        // Note: we cannot yet use this method because we add additional contents to the file
+                        // when writing to disk. Therefore we must assume that snapshots will never change once
+                        // written to disk.
+
+                        //var fileMd5 = Md5Helper.ComputeMd5ForFile(snapshotFile);
+                        //var contentMd5 = await snapshot.GetContentHashAsync();
+                        //if (!fileMd5.EqualsIgnoreCase(contentMd5))
+                        //{
+                        //    Log.Debug($"Deleting snapshot '{snapshotFile}' because the hashes are incorrect");
+                        //    delete = true;
+                        //}
+                    }
+
+                    if (delete)
+                    {
+                        _fileService.Delete(snapshotFile);
+                        deleteCount++;
+                    }
+                    else
+                    {
+                        Log.Debug($"No need to delete '{snapshotFile}', snapshot is still in use");
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -107,11 +137,21 @@ namespace Orc.Snapshots
                 }
             }
 
+            Log.Debug($"Deleted '{deleteCount}' snapshots, going to save new snapshots now");
+
+            var saveCount = 0;
+
             foreach (var snapshot in snapshots)
             {
                 var fileName = GetSnapshotFileName(directory, snapshot);
-                await SaveSnapshotAsync(fileName, snapshot);
+                if (!_fileService.Exists(fileName))
+                {
+                    await SaveSnapshotAsync(fileName, snapshot);
+                    saveCount++;
+                }
             }
+
+            Log.Debug($"Saved '{saveCount}' of '{snapshots.Count()}' snapshots to disk");
         }
 
         protected virtual async Task SaveSnapshotAsync(string source, ISnapshot snapshot)

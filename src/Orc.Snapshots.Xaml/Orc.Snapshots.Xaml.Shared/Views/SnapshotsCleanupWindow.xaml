@@ -19,10 +19,6 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Label Grid.Row="0">
-            <TextBlock Text="{catel:LanguageBinding Snapshots_CleanupExplanation}" TextWrapping="Wrap" />
-        </Label>
-
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />

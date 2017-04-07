@@ -79,15 +79,6 @@ namespace Orc.Snapshots.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This view allows you to clean up the snapshots..
-        /// </summary>
-        internal static string Snapshots_CleanupExplanation {
-            get {
-                return ResourceManager.GetString("Snapshots_CleanupExplanation", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Maximum age of a snapshot in days:.
         /// </summary>
         internal static string Snapshots_CleanupMaxAge {
@@ -102,6 +93,15 @@ namespace Orc.Snapshots.Properties {
         internal static string Snapshots_CleanupSummary {
             get {
                 return ResourceManager.GetString("Snapshots_CleanupSummary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clean up snapshots.
+        /// </summary>
+        internal static string Snapshots_CleanupTitle {
+            get {
+                return ResourceManager.GetString("Snapshots_CleanupTitle", resourceCulture);
             }
         }
         

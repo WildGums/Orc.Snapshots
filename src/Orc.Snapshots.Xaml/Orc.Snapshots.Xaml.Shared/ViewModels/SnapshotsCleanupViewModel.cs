@@ -14,6 +14,7 @@ namespace Orc.Snapshots.ViewModels
     using Catel;
     using Catel.Logging;
     using Catel.MVVM;
+    using Catel.Services;
 
     public class SnapshotsCleanupViewModel : ViewModelBase
     {
@@ -21,9 +22,10 @@ namespace Orc.Snapshots.ViewModels
 
         private readonly ISnapshotManager _snapshotManager;
 
-        public SnapshotsCleanupViewModel(ISnapshotManager snapshotManager)
+        public SnapshotsCleanupViewModel(ISnapshotManager snapshotManager, ILanguageService languageService)
         {
             Argument.IsNotNull(() => snapshotManager);
+            Argument.IsNotNull(() => languageService);
 
             _snapshotManager = snapshotManager;
 
@@ -31,6 +33,8 @@ namespace Orc.Snapshots.ViewModels
                                                   select new SnapshotCleanup(snapshot));
 
             MaxSnapshotAge = 7;
+
+            Title = languageService.GetString("Snapshots_CleanupTitle");
         }
 
         #region Properties
