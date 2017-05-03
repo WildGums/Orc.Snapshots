@@ -16,6 +16,7 @@ namespace Orc.Snapshots.Example
     using Catel.Logging;
     using Catel.Services;
     using Catel.Windows;
+    using Orchestra;
     using Orchestra.Services;
     using Orchestra.Views;
 
@@ -43,7 +44,7 @@ namespace Orc.Snapshots.Example
 
             Log.Info("Starting application");
 
-            StyleHelper.CreateStyleForwardersForDefaultStyles();
+            this.ApplyTheme();
 
             Log.Info("Calling base.OnStartup");
 
