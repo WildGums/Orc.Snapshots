@@ -12,6 +12,7 @@ namespace Orc.Snapshots.ViewModels
     using System.Linq;
     using System.Threading.Tasks;
     using Catel;
+    using Catel.Data;
     using Catel.Logging;
     using Catel.MVVM;
     using Catel.Services;
@@ -43,6 +44,9 @@ namespace Orc.Snapshots.ViewModels
         public int MaxSnapshotAge { get; set; }
 
         public int NumberOfSnapshotsToCleanup { get; set; }
+
+        public bool IncludeAllInCleanup { get; set; }
+
         #endregion
 
         #region Commands
@@ -95,6 +99,10 @@ namespace Orc.Snapshots.ViewModels
         private void OnSnapshotPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             UpdateSnapshotCount();
+            using (SuspendChangeCallbacks())
+            {
+                IncludeAllInCleanup = NumberOfSnapshotsToCleanup == Snapshots.Count;
+            }
         }
 
         private void UpdateSnapshotCount()
@@ -118,6 +126,19 @@ namespace Orc.Snapshots.ViewModels
                 snapshot.IncludeInCleanup = snapshot.Snapshot.Created < minCreated;
             }
         }
+
+        private void OnIncludeAllInCleanupChanged()
+        {
+            foreach (var snapshot in Snapshots)
+            {
+                snapshot.PropertyChanged -= OnSnapshotPropertyChanged;
+                snapshot.IncludeInCleanup = IncludeAllInCleanup;
+                snapshot.PropertyChanged += OnSnapshotPropertyChanged;
+            }
+
+            UpdateSnapshotCount();
+        }
+
         #endregion
     }
 }
