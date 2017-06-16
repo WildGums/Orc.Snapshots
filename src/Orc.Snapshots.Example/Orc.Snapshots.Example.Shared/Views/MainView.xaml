@@ -7,7 +7,7 @@
                    xmlns:orc="http://www.wildgums.net.au/orc"
                    mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="400">
 
-    <catel:StackGrid>
+    <orc:StackGrid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -28,7 +28,7 @@
             </TextBlock>
         </Label>
 		
-        <catel:StackGrid Grid.Row="1">
+        <orc:StackGrid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
@@ -54,9 +54,12 @@
                 <Button Content="Fill" Command="{Binding FillData}" />
                 <Button Content="Clear" Command="{Binding ClearData}" />
             </WrapPanel>
-        </catel:StackGrid>
+        </orc:StackGrid>
 
         <orc:LogViewerControl Grid.Row="3" />
-    </catel:StackGrid>
+    </orc:StackGrid>
 
 </catel:UserControl>
+
+
+

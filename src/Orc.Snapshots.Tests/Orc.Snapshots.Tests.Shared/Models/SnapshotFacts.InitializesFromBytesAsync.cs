@@ -50,7 +50,7 @@ namespace Orc.Snapshots.Tests.Models
 
             private string GetExampleFileName(string relativeFileName)
             {
-                var rootDirectory = System.Environment.CurrentDirectory;
+                var rootDirectory = AssemblyDirectoryHelper.GetCurrentDirectory();
 
                 var path = Path.Combine(rootDirectory, "Models", relativeFileName);
                 return path;
