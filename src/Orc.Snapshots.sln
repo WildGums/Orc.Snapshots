@@ -2,7 +2,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26020.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orc.Snapshots.NET40", "Orc.Snapshots\Orc.Snapshots.NET40\Orc.Snapshots.NET40.csproj", "{DE5C6A97-C8C9-4013-B6CA-3BA3BAEC67D9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orc.Snapshots.NET47", "Orc.Snapshots\Orc.Snapshots.NET47\Orc.Snapshots.NET47.csproj", "{DE5C6A97-C8C9-4013-B6CA-3BA3BAEC67D9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A8A1A4EE-E04A-43AB-90C9-41E7B82EE1E5}"
 EndProject
@@ -15,7 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "misc", "misc", "{1FE0D431-A
 		SolutionAssemblyInfo.cs = SolutionAssemblyInfo.cs
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orc.Snapshots.Tests.NET40", "Orc.Snapshots.Tests\Orc.Snapshots.Tests.NET40\Orc.Snapshots.Tests.NET40.csproj", "{46192429-1BA8-4534-B010-A38C025E8707}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orc.Snapshots.Tests.NET47", "Orc.Snapshots.Tests\Orc.Snapshots.Tests.NET47\Orc.Snapshots.Tests.NET47.csproj", "{46192429-1BA8-4534-B010-A38C025E8707}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{0787DFC6-AB24-4D00-A8A4-FF203DC7D080}"
 EndProject
@@ -31,7 +31,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orc.Snapshots.Tests.NET45",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Example", "Example", "{672BFA2E-9F93-496F-B188-40579FB5D301}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orc.Snapshots.Example.NET40", "Orc.Snapshots.Example\Orc.Snapshots.Example.NET40\Orc.Snapshots.Example.NET40.csproj", "{572487D7-803C-4248-A665-C9376A620503}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orc.Snapshots.Example.NET47", "Orc.Snapshots.Example\Orc.Snapshots.Example.NET47\Orc.Snapshots.Example.NET47.csproj", "{572487D7-803C-4248-A665-C9376A620503}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Orc.Snapshots.Example.Shared", "Orc.Snapshots.Example\Orc.Snapshots.Example.Shared\Orc.Snapshots.Example.Shared.shproj", "{AF9FD050-CC3A-495D-AB09-B549745A72F6}"
 EndProject
@@ -47,7 +47,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core.Xaml", "Core.Xaml", "{
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Orc.Snapshots.Xaml.Shared", "Orc.Snapshots.Xaml\Orc.Snapshots.Xaml.Shared\Orc.Snapshots.Xaml.Shared.shproj", "{1940594A-7C07-4417-BDDD-0B6931CA00A8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orc.Snapshots.Xaml.NET40", "Orc.Snapshots.Xaml\Orc.Snapshots.Xaml.NET40\Orc.Snapshots.Xaml.NET40.csproj", "{7AF50048-6441-44E2-A6A0-E183E65125A7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orc.Snapshots.Xaml.NET47", "Orc.Snapshots.Xaml\Orc.Snapshots.Xaml.NET47\Orc.Snapshots.Xaml.NET47.csproj", "{7AF50048-6441-44E2-A6A0-E183E65125A7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orc.Snapshots.Xaml.NET45", "Orc.Snapshots.Xaml\Orc.Snapshots.Xaml.NET45\Orc.Snapshots.Xaml.NET45.csproj", "{720B314B-2647-4888-AB96-37C526C7F0C5}"
 EndProject

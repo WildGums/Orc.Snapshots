@@ -98,14 +98,14 @@ namespace Orc.Snapshots.ViewModels
 
         private async Task OnEditSnapshotExecuteAsync(ISnapshot snapshot)
         {
-            var modelValidation = snapshot as IModelValidation;
+            var modelValidation = snapshot as IValidatable;
 
             EventHandler<ValidationEventArgs> handler = null;
             handler = (sender, e) =>
             {
                 if (_snapshotManager.Snapshots.Any(x => x.Title.EqualsIgnoreCase(snapshot.Title) && x != snapshot))
                 {
-                    e.ValidationContext.AddFieldValidationResult(FieldValidationResult.CreateError("Title",
+                    e.ValidationContext.Add(FieldValidationResult.CreateError("Title",
                         _languageService.GetString("Snapshots_SnapshotWithCurrentTitleAlreadyExists")));
                 }
             };
@@ -115,7 +115,7 @@ namespace Orc.Snapshots.ViewModels
                 modelValidation.Validating += handler;
             }
 
-            if (_uiVisualizerService.ShowDialog<SnapshotViewModel>(snapshot) ?? false)
+            if (await _uiVisualizerService.ShowDialogAsync<SnapshotViewModel>(snapshot) ?? false)
             {
                 if (modelValidation != null)
                 {

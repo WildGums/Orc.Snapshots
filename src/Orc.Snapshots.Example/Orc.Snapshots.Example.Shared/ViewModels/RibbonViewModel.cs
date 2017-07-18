@@ -46,7 +46,7 @@ namespace Orc.Snapshots.Example.ViewModels
             // In theory, we shouldn't have to use this one
             var snapshot = new Snapshot();
 
-            if (_uiVisualizerService.ShowDialog<SnapshotViewModel>(snapshot) ?? false)
+            if (await _uiVisualizerService.ShowDialogAsync<SnapshotViewModel>(snapshot) ?? false)
             {
                 var existingSnapshot = _snapshotManager.FindSnapshot(snapshot.Title);
                 if (existingSnapshot != null)

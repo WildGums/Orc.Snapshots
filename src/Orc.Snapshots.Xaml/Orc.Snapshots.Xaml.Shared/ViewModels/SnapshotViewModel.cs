@@ -24,7 +24,6 @@ namespace Orc.Snapshots.ViewModels
             Argument.IsNotNull(() => languageService);
 
             DeferValidationUntilFirstSaveCall = true;
-            SuspendValidation = false;
 
             _languageService = languageService;
 
