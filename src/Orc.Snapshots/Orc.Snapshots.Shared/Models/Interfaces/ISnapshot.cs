@@ -10,8 +10,9 @@ namespace Orc.Snapshots
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using Catel.Data;
 
-    public interface ISnapshot
+    public interface ISnapshot 
     {
         #region Properties
         string Title { get; set; }
