@@ -11,7 +11,7 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)..\..\SolutionAssemblyInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)..\..\GlobalSuppressions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)GlobalInitialization.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GlobalInitialization.approvaltests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\AssemblyDirectoryHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Managers\SnapshotManagerFacts.Add.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Managers\SnapshotManagerFacts.CreateSnapshotAsync.cs" />
@@ -29,6 +29,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Providers\TestSnapshotProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ModuleInitializer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Properties\AssemblyInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PublicApiFacts.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TemporaryFilesContext.cs" />
   </ItemGroup>
   <ItemGroup>
