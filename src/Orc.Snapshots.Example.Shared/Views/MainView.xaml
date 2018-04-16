@@ -1,0 +1,65 @@
+<catel:UserControl x:Class="Orc.Snapshots.Example.Views.MainView"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:catel="http://schemas.catelproject.com"
+                   xmlns:orc="http://www.wildgums.net.au/orc"
+                   mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="400">
+
+    <orc:StackGrid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0" Grid.ColumnSpan="5">
+            <TextBlock TextWrapping="Wrap">
+                This application shows how to use the snapshots library including the xaml controls. Below
+                is data that represents the state of a project or data at a specific moment in time.
+                <LineBreak /><LineBreak />
+                To create a snapshot, use the 'Create snapshot' button. To restore a snapshot, use the 
+                drop down button that shows the list of available snapshots.
+                <LineBreak /><LineBreak />
+                The snapshots in this example are persisted to disk so will survive multiple application 
+                instances. This library also provides an out-of-the-box solution of in-memory storage.
+            </TextBlock>
+        </Label>
+		
+        <orc:StackGrid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            
+            <Label Content="First name" />
+            <TextBox Text="{Binding Person.FirstName}" />
+
+            <Label Content="Last name" />
+            <TextBox Text="{Binding Person.LastName}" />
+
+            <Label Content="Company name" />
+            <TextBox Text="{Binding Company.Name}" />
+
+            <WrapPanel Grid.ColumnSpan="2">
+                <Button Content="Fill" Command="{Binding FillData}" />
+                <Button Content="Clear" Command="{Binding ClearData}" />
+            </WrapPanel>
+        </orc:StackGrid>
+
+        <orc:LogViewerControl Grid.Row="3" />
+    </orc:StackGrid>
+
+</catel:UserControl>
+
+
+
