@@ -32,15 +32,11 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Orc.Snapshots.Example.Share
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orc.Snapshots.Example.NET", "Orc.Snapshots.Example.NET\Orc.Snapshots.Example.NET.csproj", "{A4E1995D-963D-4996-9B69-CB7E62E82335}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Orc.Snapshots.Tests.Shared", "Orc.Snapshots.Tests.Shared\Orc.Snapshots.Tests.Shared.shproj", "{C324DCC4-F921-428B-AEAB-0AB56FD1BCF5}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orc.Snapshots.Tests.NET", "Orc.Snapshots.Tests.NET\Orc.Snapshots.Tests.NET.csproj", "{AE246FF9-BEE2-4DCB-A8D3-5B3B21BCFAF6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orc.Snapshots.Tests", "Orc.Snapshots.Tests\Orc.Snapshots.Tests.csproj", "{1B203609-FC87-4E72-A88B-649825CEC7FC}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		Orc.Snapshots.Tests.Shared\Orc.Snapshots.Tests.Shared.projitems*{ae246ff9-bee2-4dcb-a8d3-5b3b21bcfaf6}*SharedItemsImports = 4
 		Orc.Snapshots.Example.Shared\Orc.Snapshots.Example.Shared.projitems*{af9fd050-cc3a-495d-ab09-b549745a72f6}*SharedItemsImports = 13
-		Orc.Snapshots.Tests.Shared\Orc.Snapshots.Tests.Shared.projitems*{c324dcc4-f921-428b-aeab-0ab56fd1bcf5}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,10 +55,10 @@ Global
 		{A4E1995D-963D-4996-9B69-CB7E62E82335}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A4E1995D-963D-4996-9B69-CB7E62E82335}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A4E1995D-963D-4996-9B69-CB7E62E82335}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AE246FF9-BEE2-4DCB-A8D3-5B3B21BCFAF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AE246FF9-BEE2-4DCB-A8D3-5B3B21BCFAF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AE246FF9-BEE2-4DCB-A8D3-5B3B21BCFAF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AE246FF9-BEE2-4DCB-A8D3-5B3B21BCFAF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B203609-FC87-4E72-A88B-649825CEC7FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B203609-FC87-4E72-A88B-649825CEC7FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B203609-FC87-4E72-A88B-649825CEC7FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B203609-FC87-4E72-A88B-649825CEC7FC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -75,8 +71,7 @@ Global
 		{9A6A148E-B0B1-4393-8793-CE70EABEB963} = {0787DFC6-AB24-4D00-A8A4-FF203DC7D080}
 		{AF9FD050-CC3A-495D-AB09-B549745A72F6} = {672BFA2E-9F93-496F-B188-40579FB5D301}
 		{A4E1995D-963D-4996-9B69-CB7E62E82335} = {672BFA2E-9F93-496F-B188-40579FB5D301}
-		{C324DCC4-F921-428B-AEAB-0AB56FD1BCF5} = {D3EA1078-BF3D-4709-871C-AAFF70B95045}
-		{AE246FF9-BEE2-4DCB-A8D3-5B3B21BCFAF6} = {D3EA1078-BF3D-4709-871C-AAFF70B95045}
+		{1B203609-FC87-4E72-A88B-649825CEC7FC} = {D3EA1078-BF3D-4709-871C-AAFF70B95045}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F5D42B65-FCDF-4A69-9BF7-C80E44F43C24}

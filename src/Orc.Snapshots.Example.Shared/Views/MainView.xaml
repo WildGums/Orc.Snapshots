@@ -4,10 +4,10 @@
                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                    xmlns:catel="http://schemas.catelproject.com"
-                   xmlns:orc="http://www.wildgums.net.au/orc"
+                   xmlns:orccontrols="http://schemas.wildgums.com/orc/controls"
                    mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="400">
 
-    <orc:StackGrid>
+    <orccontrols:StackGrid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -28,7 +28,7 @@
             </TextBlock>
         </Label>
 		
-        <orc:StackGrid Grid.Row="1">
+        <orccontrols:StackGrid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
@@ -54,10 +54,10 @@
                 <Button Content="Fill" Command="{Binding FillData}" />
                 <Button Content="Clear" Command="{Binding ClearData}" />
             </WrapPanel>
-        </orc:StackGrid>
+        </orccontrols:StackGrid>
 
-        <orc:LogViewerControl Grid.Row="3" />
-    </orc:StackGrid>
+        <orccontrols:LogViewerControl Grid.Row="3" />
+    </orccontrols:StackGrid>
 
 </catel:UserControl>
 

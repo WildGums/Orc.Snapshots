@@ -7,6 +7,7 @@
 
 namespace Orc.Snapshots.Tests
 {
+    using System.Runtime.CompilerServices;
     using ApiApprover;
     using NUnit.Framework;
     using Views;
@@ -14,7 +15,7 @@ namespace Orc.Snapshots.Tests
     [TestFixture]
     public class PublicApiFacts
     {
-        [Test]
+        [Test, MethodImpl(MethodImplOptions.NoInlining)]
         public void Orc_Snapshots_HasNoBreakingChanges()
         {
             var assembly = typeof(SnapshotManager).Assembly;
@@ -22,7 +23,7 @@ namespace Orc.Snapshots.Tests
             PublicApiApprover.ApprovePublicApi(assembly);
         }
 
-        [Test]
+        [Test, MethodImpl(MethodImplOptions.NoInlining)]
         public void Orc_Snapshots_Xaml_HasNoBreakingChanges()
         {
             var assembly = typeof(SnapshotsView).Assembly;

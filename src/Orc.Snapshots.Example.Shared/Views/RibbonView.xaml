@@ -6,9 +6,9 @@
                    xmlns:catel="http://schemas.catelproject.com"
                    xmlns:fluent="urn:fluent-ribbon"
                    xmlns:views="clr-namespace:Orc.Snapshots.Views;assembly=Orc.Snapshots.Xaml"
-                   xmlns:orchestra="https://github.com/orcomp/orchestra"
+                   xmlns:orchestra="http://schemas.wildgums.com/orchestra"
                    xmlns:ribbon="clr-namespace:Orc.Snapshots.Example"
-                   xmlns:orc="http://www.wildgums.net.au/orc"
+                   xmlns:orccontrols="http://schemas.wildgums.com/orc/controls"
                    mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="300">
 
     <fluent:Ribbon>

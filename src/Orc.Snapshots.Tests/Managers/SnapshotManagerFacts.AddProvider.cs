@@ -11,6 +11,8 @@ namespace Orc.Snapshots.Tests.Managers
     using Catel;
     using NUnit.Framework;
     using System.Linq;
+    using Catel.IoC;
+    using Providers;
 
     public partial class SnapshotManagerFacts
     {
