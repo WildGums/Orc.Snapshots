@@ -4,6 +4,7 @@
     <AssemblyName>Orc.Snapshots.Example.NET</AssemblyName>
     <RootNamespace>Orc.Snapshots.Example</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
+    <SonarQubeExclude>true</SonarQubeExclude>
   </PropertyGroup>
 
   <PropertyGroup>
