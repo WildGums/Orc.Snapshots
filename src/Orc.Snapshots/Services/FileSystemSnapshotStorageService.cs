@@ -111,14 +111,6 @@ namespace Orc.Snapshots
                         // Note: we cannot yet use this method because we add additional contents to the file
                         // when writing to disk. Therefore we must assume that snapshots will never change once
                         // written to disk.
-
-                        //var fileMd5 = Md5Helper.ComputeMd5ForFile(snapshotFile);
-                        //var contentMd5 = await snapshot.GetContentHashAsync();
-                        //if (!fileMd5.EqualsIgnoreCase(contentMd5))
-                        //{
-                        //    Log.Debug($"Deleting snapshot '{snapshotFile}' because the hashes are incorrect");
-                        //    delete = true;
-                        //}
                     }
 
                     if (delete)

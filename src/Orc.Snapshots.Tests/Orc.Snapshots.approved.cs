@@ -32,7 +32,7 @@ namespace Orc.Snapshots
     {
         string Category { get; set; }
         System.DateTime Created { get; set; }
-        System.Collections.Generic.List<string> Keys { get; }
+        string[] Keys { get; }
         string Title { get; set; }
         void ClearData(string key);
         System.Threading.Tasks.Task<byte[]> GetAllBytesAsync();
@@ -100,7 +100,7 @@ namespace Orc.Snapshots
         public Snapshot() { }
         public string Category { get; set; }
         public System.DateTime Created { get; set; }
-        public System.Collections.Generic.List<string> Keys { get; }
+        public string[] Keys { get; }
         public string Title { get; set; }
         public void ClearData(string key) { }
         public System.Threading.Tasks.Task<byte[]> GetAllBytesAsync() { }
@@ -149,11 +149,11 @@ namespace Orc.Snapshots
         public event Catel.AsyncEventHandler<Orc.Snapshots.SnapshotEventArgs> SnapshotRestoringAsync;
         public event System.EventHandler<System.EventArgs> SnapshotsChanged;
         public void Add(Orc.Snapshots.ISnapshot snapshot) { }
-        public void AddProvider(Orc.Snapshots.ISnapshotProvider provider) { }
+        public void AddProvider(Orc.Snapshots.ISnapshotProvider snapshotProvider) { }
         public virtual System.Threading.Tasks.Task<Orc.Snapshots.ISnapshot> CreateSnapshotAsync(Orc.Snapshots.ISnapshot snapshot) { }
         public System.Threading.Tasks.Task<bool> LoadAsync() { }
         public bool Remove(Orc.Snapshots.ISnapshot snapshot) { }
-        public bool RemoveProvider(Orc.Snapshots.ISnapshotProvider provider) { }
+        public bool RemoveProvider(Orc.Snapshots.ISnapshotProvider snapshotProvider) { }
         public virtual System.Threading.Tasks.Task RestoreSnapshotAsync(Orc.Snapshots.ISnapshot snapshot) { }
         public System.Threading.Tasks.Task<bool> SaveAsync() { }
     }

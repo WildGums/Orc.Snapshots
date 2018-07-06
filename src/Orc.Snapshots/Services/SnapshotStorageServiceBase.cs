@@ -11,11 +11,9 @@ namespace Orc.Snapshots
     using System.Collections.Generic;
     using System.Globalization;
     using System.IO;
-    using System.Text;
     using System.Threading.Tasks;
     using Catel;
     using Catel.Logging;
-    using FileSystem;
     using Ionic.Zip;
 
     public abstract class SnapshotStorageServiceBase : ISnapshotStorageService
@@ -23,10 +21,6 @@ namespace Orc.Snapshots
         private static readonly ILog Log = LogManager.GetCurrentClassLogger();
 
         private const string MetadataSplitter = "=";
-        private static readonly byte[] MetadataSeparatorBytes = Encoding.UTF8.GetBytes("-|-");
-        private static readonly byte[] DataSeparatorBytes = Encoding.UTF8.GetBytes("_|_");
-
-        private static readonly Encoding Encoding = Encoding.UTF8;
 
         public abstract Task<IEnumerable<ISnapshot>> LoadSnapshotsAsync();
         public abstract Task SaveSnapshotsAsync(IEnumerable<ISnapshot> snapshots);
@@ -132,24 +126,22 @@ namespace Orc.Snapshots
 
             using (var memoryStream = new MemoryStream(bytes))
             {
-                using (var reader = new StreamReader(memoryStream))
+                var reader = new StreamReader(memoryStream);
+                var allText = reader.ReadToEnd();
+                var allLines = allText.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+
+                foreach (var line in allLines)
                 {
-                    var allText = reader.ReadToEnd();
-                    var allLines = allText.Split(new[] {Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries);
-
-                    foreach (var line in allLines)
+                    var splitIndex = line.IndexOf(MetadataSplitter);
+                    if (splitIndex < 0)
                     {
-                        var splitIndex = line.IndexOf(MetadataSplitter);
-                        if (splitIndex < 0)
-                        {
-                            continue;
-                        }
-
-                        var key = line.Substring(0, splitIndex);
-                        var value = line.Substring(splitIndex + MetadataSplitter.Length);
-
-                        metadata[key] = value;
+                        continue;
                     }
+
+                    var key = line.Substring(0, splitIndex);
+                    var value = line.Substring(splitIndex + MetadataSplitter.Length);
+
+                    metadata[key] = value;
                 }
             }
 

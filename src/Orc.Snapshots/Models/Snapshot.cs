@@ -23,6 +23,7 @@ namespace Orc.Snapshots
 
         private const string InternalFileExtension = ".dat";
         private readonly Dictionary<string, byte[]> _data = new Dictionary<string, byte[]>();
+        private string[] _dataKeys = Array.Empty<string>();
 
         private string _contentHash;
         private byte[] _allData;
@@ -41,9 +42,9 @@ namespace Orc.Snapshots
 
         public DateTime Created { get; set; }
 
-        public List<string> Keys
+        public string[] Keys
         {
-            get { return _data.Keys.ToList(); }
+            get { return _dataKeys; }
         }
         #endregion
 
@@ -75,6 +76,8 @@ namespace Orc.Snapshots
             {
                 _data[dataItem.Key] = dataItem.Value;
             }
+
+            _dataKeys = _data.Keys.ToArray();
 
             _contentHash = null;
             _isDirty = true;

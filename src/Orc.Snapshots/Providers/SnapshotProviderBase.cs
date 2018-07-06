@@ -22,8 +22,6 @@ namespace Orc.Snapshots
     public abstract class SnapshotProviderBase : ISnapshotProvider
     {
         #region Fields
-        private static readonly ILog Log = LogManager.GetCurrentClassLogger();
-
         protected readonly IServiceLocator ServiceLocator;
 
         private object _scope;

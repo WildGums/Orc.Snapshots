@@ -28,7 +28,7 @@ namespace Orc.Snapshots.Tests.Models
 
                 await snapshot.InitializeFromBytesAsync(bytes);
 
-                Assert.AreEqual(0, snapshot.Keys.Count);
+                Assert.AreEqual(0, snapshot.Keys.Length);
             }
 
             [Test]
@@ -41,7 +41,7 @@ namespace Orc.Snapshots.Tests.Models
 
                 await snapshot.InitializeFromBytesAsync(bytes);
 
-                Assert.AreEqual(4, snapshot.Keys.Count);
+                Assert.AreEqual(4, snapshot.Keys.Length);
                 Assert.AreEqual(Encoding.UTF8.GetBytes("123"), snapshot.GetData("Data A"));
                 Assert.AreEqual(Encoding.UTF8.GetBytes("456"), snapshot.GetData("Data B"));
                 Assert.AreEqual(Encoding.UTF8.GetBytes("789"), snapshot.GetData("Data C"));

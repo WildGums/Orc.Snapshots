@@ -18,7 +18,7 @@ namespace Orc.Snapshots
         string Title { get; set; }
         string Category { get; set; }
 
-        List<string> Keys { get; }
+        string[] Keys { get; }
         DateTime Created { get; set; }
         #endregion
 

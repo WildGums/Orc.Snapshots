@@ -150,40 +150,40 @@ namespace Orc.Snapshots
             return true;
         }
 
-        public void AddProvider(ISnapshotProvider provider)
+        public void AddProvider(ISnapshotProvider snapshotProvider)
         {
-            Argument.IsNotNull(() => provider);
+            Argument.IsNotNull(() => snapshotProvider);
 
 #if DEBUG
-            Log.Debug($"[{Scope}] Adding provider {provider.GetType()} to the SnapshotManager (Scope = '{Scope ?? "null"}')");
+            Log.Debug($"[{Scope}] Adding provider {snapshotProvider.GetType()} to the SnapshotManager (Scope = '{Scope ?? "null"}')");
 #endif
 
             lock (_providers)
             {
-                _providers.Add(provider);
+                _providers.Add(snapshotProvider);
             }
 
-            SnapshotProviderAdded.SafeInvoke(this, new SnapshotProviderEventArgs(provider));
+            SnapshotProviderAdded.SafeInvoke(this, new SnapshotProviderEventArgs(snapshotProvider));
         }
 
-        public bool RemoveProvider(ISnapshotProvider provider)
+        public bool RemoveProvider(ISnapshotProvider snapshotProvider)
         {
-            Argument.IsNotNull(() => provider);
+            Argument.IsNotNull(() => snapshotProvider);
 
 #if DEBUG
-            Log.Debug($"[{Scope}] Removing provider {provider.GetType()} from the SnapshotManager (Tag == \"{Scope ?? "null"}\")");
+            Log.Debug($"[{Scope}] Removing provider {snapshotProvider.GetType()} from the SnapshotManager (Tag == \"{Scope ?? "null"}\")");
 #endif
 
             var removed = false;
 
             lock (_providers)
             {
-                removed = _providers.Remove(provider);
+                removed = _providers.Remove(snapshotProvider);
             }
 
             if (removed)
             {
-                SnapshotProviderRemoved.SafeInvoke(this, new SnapshotProviderEventArgs(provider));
+                SnapshotProviderRemoved.SafeInvoke(this, new SnapshotProviderEventArgs(snapshotProvider));
                 return true;
             }
 
@@ -301,8 +301,6 @@ namespace Orc.Snapshots
                 SnapshotAdded.SafeInvoke(this, () => new SnapshotEventArgs(snapshot));
                 SnapshotsChanged.SafeInvoke(this);
             }
-
-            //snapshot.Scope = Scope;
         }
 
         public bool Remove(ISnapshot snapshot)
