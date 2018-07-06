@@ -35,11 +35,11 @@ namespace Orc.Snapshots.Views
         }
 
         public static readonly DependencyProperty ScopeProperty = DependencyProperty.Register("Scope", typeof(object),
-            typeof(SnapshotsView), new FrameworkPropertyMetadata((sender, e) => ((SnapshotsView)sender).OnScopeChanged(e)));
+            typeof(SnapshotsView), new FrameworkPropertyMetadata((sender, e) => ((SnapshotsView)sender).OnScopeChanged()));
         #endregion
 
         #region Methods
-        private void OnScopeChanged(DependencyPropertyChangedEventArgs e)
+        private void OnScopeChanged()
         {
             var vm = ViewModel as SnapshotsViewModel;
             if (vm != null)

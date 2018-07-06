@@ -9,6 +9,7 @@ namespace Orc.Snapshots.Converters
 {
     using System;
     using System.Windows.Data;
+    using Catel.Collections;
     using Catel.MVVM.Converters;
 
     /// <summary>
@@ -32,7 +33,7 @@ namespace Orc.Snapshots.Converters
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, System.Globalization.CultureInfo culture)
         {
-            return null;
+            return ArrayShim.Empty<object>();
         }
         #endregion
     }
