@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en-US" target-language="es" original="ORC.SNAPSHOTS.XAML/PROPERTIES/RESOURCES.RESX" tool-id="MultilingualAppToolkit" product-name="n/a" product-version="n/a" build-num="n/a">
+    <header>
+      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="4.0.6900.0" tool-company="Microsoft" />
+    </header>
+    <body>
+      <group id="ORC.SNAPSHOTS.XAML/PROPERTIES/RESOURCES.RESX" datatype="resx">
+        <trans-unit id="Snapshots_AreYouSure" translate="yes" xml:space="preserve">
+          <source>Are you sure?</source>
+          <target state="needs-review-translation">Are you sure?</target>
+          <note from="MultilingualUpdate" priority="2">When the XLIFF file support was added via MAT, existing resources were found and auto-imported.  This source and target string contained the same value so the resource was marked as 'Needs review' to ensure the translation could be easily reviewed.</note>
+        </trans-unit>
+        <trans-unit id="Snapshots_AreYouSureYouWantToRemoveTheSnapshot" translate="yes" xml:space="preserve">
+          <source>Are you sure you want to remove snapshot '{0}'?</source>
+          <target state="needs-review-translation">Are you sure you want to remove snapshot '{0}'?</target>
+          <note from="MultilingualUpdate" priority="2">When the XLIFF file support was added via MAT, existing resources were found and auto-imported.  This source and target string contained the same value so the resource was marked as 'Needs review' to ensure the translation could be easily reviewed.</note>
+        </trans-unit>
+        <trans-unit id="Snapshots_CleanupMaxAge" translate="yes" xml:space="preserve">
+          <source>Maximum age of a snapshot in days:</source>
+          <target state="needs-review-translation">Maximum age of a snapshot in days:</target>
+          <note from="MultilingualUpdate" priority="2">When the XLIFF file support was added via MAT, existing resources were found and auto-imported.  This source and target string contained the same value so the resource was marked as 'Needs review' to ensure the translation could be easily reviewed.</note>
+        </trans-unit>
+        <trans-unit id="Snapshots_CleanupSummary" translate="yes" xml:space="preserve">
+          <source>Current number of items selected for cleanup:</source>
+          <target state="needs-review-translation">Current number of items selected for cleanup:</target>
+          <note from="MultilingualUpdate" priority="2">When the XLIFF file support was added via MAT, existing resources were found and auto-imported.  This source and target string contained the same value so the resource was marked as 'Needs review' to ensure the translation could be easily reviewed.</note>
+        </trans-unit>
+        <trans-unit id="Snapshots_CleanupTitle" translate="yes" xml:space="preserve">
+          <source>Clean up snapshots</source>
+          <target state="needs-review-translation">Clean up snapshots</target>
+          <note from="MultilingualUpdate" priority="2">When the XLIFF file support was added via MAT, existing resources were found and auto-imported.  This source and target string contained the same value so the resource was marked as 'Needs review' to ensure the translation could be easily reviewed.</note>
+        </trans-unit>
+        <trans-unit id="Snapshots_CreateNewSnapshot" translate="yes" xml:space="preserve">
+          <source>Create new snapshot</source>
+          <target state="needs-review-translation">Create new snapshot</target>
+          <note from="MultilingualUpdate" priority="2">When the XLIFF file support was added via MAT, existing resources were found and auto-imported.  This source and target string contained the same value so the resource was marked as 'Needs review' to ensure the translation could be easily reviewed.</note>
+        </trans-unit>
+        <trans-unit id="Snapshots_Edit" translate="yes" xml:space="preserve">
+          <source>Edit</source>
+          <target state="needs-review-translation">Edit</target>
+          <note from="MultilingualUpdate" priority="2">When the XLIFF file support was added via MAT, existing resources were found and auto-imported.  This source and target string contained the same value so the resource was marked as 'Needs review' to ensure the translation could be easily reviewed.</note>
+        </trans-unit>
+        <trans-unit id="Snapshots_EditSnapshot" translate="yes" xml:space="preserve">
+          <source>Edit snapshot {0}</source>
+          <target state="needs-review-translation">Edit snapshot {0}</target>
+          <note from="MultilingualUpdate" priority="2">When the XLIFF file support was added via MAT, existing resources were found and auto-imported.  This source and target string contained the same value so the resource was marked as 'Needs review' to ensure the translation could be easily reviewed.</note>
+        </trans-unit>
+        <trans-unit id="Snapshots_NoSnapshots" translate="yes" xml:space="preserve">
+          <source>No snapshots available</source>
+          <target state="needs-review-translation">No snapshots available</target>
+          <note from="MultilingualUpdate" priority="2">When the XLIFF file support was added via MAT, existing resources were found and auto-imported.  This source and target string contained the same value so the resource was marked as 'Needs review' to ensure the translation could be easily reviewed.</note>
+        </trans-unit>
+        <trans-unit id="Snapshots_Remove" translate="yes" xml:space="preserve">
+          <source>Remove</source>
+          <target state="needs-review-translation">Remove</target>
+          <note from="MultilingualUpdate" priority="2">When the XLIFF file support was added via MAT, existing resources were found and auto-imported.  This source and target string contained the same value so the resource was marked as 'Needs review' to ensure the translation could be easily reviewed.</note>
+        </trans-unit>
+        <trans-unit id="Snapshots_Restore" translate="yes" xml:space="preserve">
+          <source>Restore</source>
+          <target state="needs-review-translation">Restore</target>
+          <note from="MultilingualUpdate" priority="2">When the XLIFF file support was added via MAT, existing resources were found and auto-imported.  This source and target string contained the same value so the resource was marked as 'Needs review' to ensure the translation could be easily reviewed.</note>
+        </trans-unit>
+        <trans-unit id="Snapshots_Snapshot" translate="yes" xml:space="preserve">
+          <source>Snapshot</source>
+          <target state="needs-review-translation">Snapshot</target>
+          <note from="MultilingualUpdate" priority="2">When the XLIFF file support was added via MAT, existing resources were found and auto-imported.  This source and target string contained the same value so the resource was marked as 'Needs review' to ensure the translation could be easily reviewed.</note>
+        </trans-unit>
+        <trans-unit id="Snapshots_SnapshotWithCurrentTitleAlreadyExists" translate="yes" xml:space="preserve">
+          <source>Snapshot with current title already exists</source>
+          <target state="needs-review-translation">Snapshot with current title already exists</target>
+          <note from="MultilingualUpdate" priority="2">When the XLIFF file support was added via MAT, existing resources were found and auto-imported.  This source and target string contained the same value so the resource was marked as 'Needs review' to ensure the translation could be easily reviewed.</note>
+        </trans-unit>
+        <trans-unit id="Snapshots_Title" translate="yes" xml:space="preserve">
+          <source>Title</source>
+          <target state="needs-review-translation">Title</target>
+          <note from="MultilingualUpdate" priority="2">When the XLIFF file support was added via MAT, existing resources were found and auto-imported.  This source and target string contained the same value so the resource was marked as 'Needs review' to ensure the translation could be easily reviewed.</note>
+        </trans-unit>
+        <trans-unit id="Snapshots_SnapshotsCleanupWindow_CheckBox_Content_SelectAll" translate="yes" xml:space="preserve">
+          <source>Select all</source>
+          <target state="needs-review-translation">Select all</target>
+          <note from="MultilingualUpdate" priority="2">When the XLIFF file support was added via MAT, existing resources were found and auto-imported.  This source and target string contained the same value so the resource was marked as 'Needs review' to ensure the translation could be easily reviewed.</note>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
+</xliff>

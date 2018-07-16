@@ -2,12 +2,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26020.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orc.Snapshots.NET47", "Orc.Snapshots\Orc.Snapshots.NET47\Orc.Snapshots.NET47.csproj", "{DE5C6A97-C8C9-4013-B6CA-3BA3BAEC67D9}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A8A1A4EE-E04A-43AB-90C9-41E7B82EE1E5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "misc", "misc", "{1FE0D431-A761-4239-B2D6-D32C70723FD2}"
 	ProjectSection(SolutionItems) = preProject
+		Directory.build.project.props = Directory.build.project.props
+		Directory.build.props = Directory.build.props
+		Directory.build.shared.explicit.props = Directory.build.shared.explicit.props
+		Directory.build.shared.implicit.props = Directory.build.shared.implicit.props
+		Directory.build.shared.mat.props = Directory.build.shared.mat.props
+		Directory.build.targets = Directory.build.targets
 		GlobalSuppressions.cs = GlobalSuppressions.cs
 		MethodTimeLogger.cs = MethodTimeLogger.cs
 		nuget.config = nuget.config
@@ -15,140 +19,62 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "misc", "misc", "{1FE0D431-A
 		SolutionAssemblyInfo.cs = SolutionAssemblyInfo.cs
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orc.Snapshots.Tests.NET47", "Orc.Snapshots.Tests\Orc.Snapshots.Tests.NET47\Orc.Snapshots.Tests.NET47.csproj", "{46192429-1BA8-4534-B010-A38C025E8707}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{0787DFC6-AB24-4D00-A8A4-FF203DC7D080}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{D3EA1078-BF3D-4709-871C-AAFF70B95045}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Orc.Snapshots.Shared", "Orc.Snapshots\Orc.Snapshots.Shared\Orc.Snapshots.Shared.shproj", "{C2705B79-7B5B-4F22-9241-4F8609579822}"
-EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Orc.Snapshots.Tests.Shared", "Orc.Snapshots.Tests\Orc.Snapshots.Tests.Shared\Orc.Snapshots.Tests.Shared.shproj", "{C324DCC4-F921-428B-AEAB-0AB56FD1BCF5}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orc.Snapshots.NET45", "Orc.Snapshots\Orc.Snapshots.NET45\Orc.Snapshots.NET45.csproj", "{2C732685-7EDC-4640-95E0-EE50A43E223E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orc.Snapshots.Tests.NET45", "Orc.Snapshots.Tests\Orc.Snapshots.Tests.NET45\Orc.Snapshots.Tests.NET45.csproj", "{0E4E4047-A81E-4E7C-A0F4-3BD81444B99D}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Example", "Example", "{672BFA2E-9F93-496F-B188-40579FB5D301}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orc.Snapshots.Example.NET47", "Orc.Snapshots.Example\Orc.Snapshots.Example.NET47\Orc.Snapshots.Example.NET47.csproj", "{572487D7-803C-4248-A665-C9376A620503}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orc.Snapshots", "Orc.Snapshots\Orc.Snapshots.csproj", "{65BC9E87-DD2E-48E3-951F-8C053CB55BCF}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Orc.Snapshots.Example.Shared", "Orc.Snapshots.Example\Orc.Snapshots.Example.Shared\Orc.Snapshots.Example.Shared.shproj", "{AF9FD050-CC3A-495D-AB09-B549745A72F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orc.Snapshots.Xaml", "Orc.Snapshots.Xaml\Orc.Snapshots.Xaml.csproj", "{9A6A148E-B0B1-4393-8793-CE70EABEB963}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orc.Snapshots.Example.NET45", "Orc.Snapshots.Example\Orc.Snapshots.Example.NET45\Orc.Snapshots.Example.NET45.csproj", "{BB22DDE1-E68D-4F97-9895-D9E6713D5297}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Orc.Snapshots.Example.Shared", "Orc.Snapshots.Example.Shared\Orc.Snapshots.Example.Shared.shproj", "{AF9FD050-CC3A-495D-AB09-B549745A72F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orc.Snapshots.NET46", "Orc.Snapshots\Orc.Snapshots.NET46\Orc.Snapshots.NET46.csproj", "{D161D04D-D20A-4DC0-9773-36D12775860B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orc.Snapshots.Example.NET", "Orc.Snapshots.Example.NET\Orc.Snapshots.Example.NET.csproj", "{A4E1995D-963D-4996-9B69-CB7E62E82335}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orc.Snapshots.Tests.NET46", "Orc.Snapshots.Tests\Orc.Snapshots.Tests.NET46\Orc.Snapshots.Tests.NET46.csproj", "{AE246FF9-BEE2-4DCB-A8D3-5B3B21BCFAF6}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orc.Snapshots.Example.NET46", "Orc.Snapshots.Example\Orc.Snapshots.Example.NET46\Orc.Snapshots.Example.NET46.csproj", "{D0379A8B-3382-45C0-B76A-B0E8606AA5E3}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core.Xaml", "Core.Xaml", "{65294978-6CC3-4B6C-9139-DAA1794C3A17}"
-EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Orc.Snapshots.Xaml.Shared", "Orc.Snapshots.Xaml\Orc.Snapshots.Xaml.Shared\Orc.Snapshots.Xaml.Shared.shproj", "{1940594A-7C07-4417-BDDD-0B6931CA00A8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orc.Snapshots.Xaml.NET47", "Orc.Snapshots.Xaml\Orc.Snapshots.Xaml.NET47\Orc.Snapshots.Xaml.NET47.csproj", "{7AF50048-6441-44E2-A6A0-E183E65125A7}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orc.Snapshots.Xaml.NET45", "Orc.Snapshots.Xaml\Orc.Snapshots.Xaml.NET45\Orc.Snapshots.Xaml.NET45.csproj", "{720B314B-2647-4888-AB96-37C526C7F0C5}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orc.Snapshots.Xaml.NET46", "Orc.Snapshots.Xaml\Orc.Snapshots.Xaml.NET46\Orc.Snapshots.Xaml.NET46.csproj", "{5D2EBFBB-1B04-4E65-B708-7E417F636D66}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orc.Snapshots.Tests", "Orc.Snapshots.Tests\Orc.Snapshots.Tests.csproj", "{1B203609-FC87-4E72-A88B-649825CEC7FC}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		Orc.Snapshots.Tests\Orc.Snapshots.Tests.Shared\Orc.Snapshots.Tests.Shared.projitems*{0e4e4047-a81e-4e7c-a0f4-3bd81444b99d}*SharedItemsImports = 4
-		Orc.Snapshots.Xaml\Orc.Snapshots.Xaml.Shared\Orc.Snapshots.Xaml.Shared.projitems*{1940594a-7c07-4417-bddd-0b6931ca00a8}*SharedItemsImports = 13
-		Orc.Snapshots\Orc.Snapshots.Shared\Orc.Snapshots.Shared.projitems*{2c732685-7edc-4640-95e0-ee50a43e223e}*SharedItemsImports = 4
-		Orc.Snapshots.Tests\Orc.Snapshots.Tests.Shared\Orc.Snapshots.Tests.Shared.projitems*{46192429-1ba8-4534-b010-a38c025e8707}*SharedItemsImports = 4
-		Orc.Snapshots.Example\Orc.Snapshots.Example.Shared\Orc.Snapshots.Example.Shared.projitems*{572487d7-803c-4248-a665-c9376a620503}*SharedItemsImports = 4
-		Orc.Snapshots.Xaml\Orc.Snapshots.Xaml.Shared\Orc.Snapshots.Xaml.Shared.projitems*{5d2ebfbb-1b04-4e65-b708-7e417f636d66}*SharedItemsImports = 4
-		Orc.Snapshots.Xaml\Orc.Snapshots.Xaml.Shared\Orc.Snapshots.Xaml.Shared.projitems*{720b314b-2647-4888-ab96-37c526c7f0c5}*SharedItemsImports = 4
-		Orc.Snapshots.Xaml\Orc.Snapshots.Xaml.Shared\Orc.Snapshots.Xaml.Shared.projitems*{7af50048-6441-44e2-a6a0-e183e65125a7}*SharedItemsImports = 4
-		Orc.Snapshots.Tests\Orc.Snapshots.Tests.Shared\Orc.Snapshots.Tests.Shared.projitems*{ae246ff9-bee2-4dcb-a8d3-5b3b21bcfaf6}*SharedItemsImports = 4
-		Orc.Snapshots.Example\Orc.Snapshots.Example.Shared\Orc.Snapshots.Example.Shared.projitems*{af9fd050-cc3a-495d-ab09-b549745a72f6}*SharedItemsImports = 13
-		Orc.Snapshots.Example\Orc.Snapshots.Example.Shared\Orc.Snapshots.Example.Shared.projitems*{bb22dde1-e68d-4f97-9895-d9e6713d5297}*SharedItemsImports = 4
-		Orc.Snapshots\Orc.Snapshots.Shared\Orc.Snapshots.Shared.projitems*{c2705b79-7b5b-4f22-9241-4f8609579822}*SharedItemsImports = 13
-		Orc.Snapshots.Tests\Orc.Snapshots.Tests.Shared\Orc.Snapshots.Tests.Shared.projitems*{c324dcc4-f921-428b-aeab-0ab56fd1bcf5}*SharedItemsImports = 13
-		Orc.Snapshots.Example\Orc.Snapshots.Example.Shared\Orc.Snapshots.Example.Shared.projitems*{d0379a8b-3382-45c0-b76a-b0e8606aa5e3}*SharedItemsImports = 4
-		Orc.Snapshots\Orc.Snapshots.Shared\Orc.Snapshots.Shared.projitems*{d161d04d-d20a-4dc0-9773-36d12775860b}*SharedItemsImports = 4
-		Orc.Snapshots\Orc.Snapshots.Shared\Orc.Snapshots.Shared.projitems*{de5c6a97-c8c9-4013-b6ca-3ba3baec67d9}*SharedItemsImports = 4
+		Orc.Snapshots.Example.Shared\Orc.Snapshots.Example.Shared.projitems*{af9fd050-cc3a-495d-ab09-b549745a72f6}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{DE5C6A97-C8C9-4013-B6CA-3BA3BAEC67D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DE5C6A97-C8C9-4013-B6CA-3BA3BAEC67D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DE5C6A97-C8C9-4013-B6CA-3BA3BAEC67D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DE5C6A97-C8C9-4013-B6CA-3BA3BAEC67D9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{46192429-1BA8-4534-B010-A38C025E8707}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{46192429-1BA8-4534-B010-A38C025E8707}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{46192429-1BA8-4534-B010-A38C025E8707}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{46192429-1BA8-4534-B010-A38C025E8707}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2C732685-7EDC-4640-95E0-EE50A43E223E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2C732685-7EDC-4640-95E0-EE50A43E223E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2C732685-7EDC-4640-95E0-EE50A43E223E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2C732685-7EDC-4640-95E0-EE50A43E223E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0E4E4047-A81E-4E7C-A0F4-3BD81444B99D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0E4E4047-A81E-4E7C-A0F4-3BD81444B99D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0E4E4047-A81E-4E7C-A0F4-3BD81444B99D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0E4E4047-A81E-4E7C-A0F4-3BD81444B99D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{572487D7-803C-4248-A665-C9376A620503}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{572487D7-803C-4248-A665-C9376A620503}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{572487D7-803C-4248-A665-C9376A620503}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{572487D7-803C-4248-A665-C9376A620503}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BB22DDE1-E68D-4F97-9895-D9E6713D5297}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BB22DDE1-E68D-4F97-9895-D9E6713D5297}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BB22DDE1-E68D-4F97-9895-D9E6713D5297}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BB22DDE1-E68D-4F97-9895-D9E6713D5297}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D161D04D-D20A-4DC0-9773-36D12775860B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D161D04D-D20A-4DC0-9773-36D12775860B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D161D04D-D20A-4DC0-9773-36D12775860B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D161D04D-D20A-4DC0-9773-36D12775860B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AE246FF9-BEE2-4DCB-A8D3-5B3B21BCFAF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AE246FF9-BEE2-4DCB-A8D3-5B3B21BCFAF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AE246FF9-BEE2-4DCB-A8D3-5B3B21BCFAF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AE246FF9-BEE2-4DCB-A8D3-5B3B21BCFAF6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D0379A8B-3382-45C0-B76A-B0E8606AA5E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D0379A8B-3382-45C0-B76A-B0E8606AA5E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D0379A8B-3382-45C0-B76A-B0E8606AA5E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D0379A8B-3382-45C0-B76A-B0E8606AA5E3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7AF50048-6441-44E2-A6A0-E183E65125A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7AF50048-6441-44E2-A6A0-E183E65125A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7AF50048-6441-44E2-A6A0-E183E65125A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7AF50048-6441-44E2-A6A0-E183E65125A7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{720B314B-2647-4888-AB96-37C526C7F0C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{720B314B-2647-4888-AB96-37C526C7F0C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{720B314B-2647-4888-AB96-37C526C7F0C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{720B314B-2647-4888-AB96-37C526C7F0C5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5D2EBFBB-1B04-4E65-B708-7E417F636D66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5D2EBFBB-1B04-4E65-B708-7E417F636D66}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5D2EBFBB-1B04-4E65-B708-7E417F636D66}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5D2EBFBB-1B04-4E65-B708-7E417F636D66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65BC9E87-DD2E-48E3-951F-8C053CB55BCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65BC9E87-DD2E-48E3-951F-8C053CB55BCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65BC9E87-DD2E-48E3-951F-8C053CB55BCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65BC9E87-DD2E-48E3-951F-8C053CB55BCF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A6A148E-B0B1-4393-8793-CE70EABEB963}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A6A148E-B0B1-4393-8793-CE70EABEB963}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A6A148E-B0B1-4393-8793-CE70EABEB963}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A6A148E-B0B1-4393-8793-CE70EABEB963}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4E1995D-963D-4996-9B69-CB7E62E82335}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4E1995D-963D-4996-9B69-CB7E62E82335}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4E1995D-963D-4996-9B69-CB7E62E82335}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4E1995D-963D-4996-9B69-CB7E62E82335}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B203609-FC87-4E72-A88B-649825CEC7FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B203609-FC87-4E72-A88B-649825CEC7FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B203609-FC87-4E72-A88B-649825CEC7FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B203609-FC87-4E72-A88B-649825CEC7FC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{DE5C6A97-C8C9-4013-B6CA-3BA3BAEC67D9} = {0787DFC6-AB24-4D00-A8A4-FF203DC7D080}
-		{46192429-1BA8-4534-B010-A38C025E8707} = {D3EA1078-BF3D-4709-871C-AAFF70B95045}
 		{0787DFC6-AB24-4D00-A8A4-FF203DC7D080} = {A8A1A4EE-E04A-43AB-90C9-41E7B82EE1E5}
 		{D3EA1078-BF3D-4709-871C-AAFF70B95045} = {A8A1A4EE-E04A-43AB-90C9-41E7B82EE1E5}
-		{C2705B79-7B5B-4F22-9241-4F8609579822} = {0787DFC6-AB24-4D00-A8A4-FF203DC7D080}
-		{C324DCC4-F921-428B-AEAB-0AB56FD1BCF5} = {D3EA1078-BF3D-4709-871C-AAFF70B95045}
-		{2C732685-7EDC-4640-95E0-EE50A43E223E} = {0787DFC6-AB24-4D00-A8A4-FF203DC7D080}
-		{0E4E4047-A81E-4E7C-A0F4-3BD81444B99D} = {D3EA1078-BF3D-4709-871C-AAFF70B95045}
 		{672BFA2E-9F93-496F-B188-40579FB5D301} = {A8A1A4EE-E04A-43AB-90C9-41E7B82EE1E5}
-		{572487D7-803C-4248-A665-C9376A620503} = {672BFA2E-9F93-496F-B188-40579FB5D301}
+		{65BC9E87-DD2E-48E3-951F-8C053CB55BCF} = {0787DFC6-AB24-4D00-A8A4-FF203DC7D080}
+		{9A6A148E-B0B1-4393-8793-CE70EABEB963} = {0787DFC6-AB24-4D00-A8A4-FF203DC7D080}
 		{AF9FD050-CC3A-495D-AB09-B549745A72F6} = {672BFA2E-9F93-496F-B188-40579FB5D301}
-		{BB22DDE1-E68D-4F97-9895-D9E6713D5297} = {672BFA2E-9F93-496F-B188-40579FB5D301}
-		{D161D04D-D20A-4DC0-9773-36D12775860B} = {0787DFC6-AB24-4D00-A8A4-FF203DC7D080}
-		{AE246FF9-BEE2-4DCB-A8D3-5B3B21BCFAF6} = {D3EA1078-BF3D-4709-871C-AAFF70B95045}
-		{D0379A8B-3382-45C0-B76A-B0E8606AA5E3} = {672BFA2E-9F93-496F-B188-40579FB5D301}
-		{65294978-6CC3-4B6C-9139-DAA1794C3A17} = {A8A1A4EE-E04A-43AB-90C9-41E7B82EE1E5}
-		{1940594A-7C07-4417-BDDD-0B6931CA00A8} = {65294978-6CC3-4B6C-9139-DAA1794C3A17}
-		{7AF50048-6441-44E2-A6A0-E183E65125A7} = {65294978-6CC3-4B6C-9139-DAA1794C3A17}
-		{720B314B-2647-4888-AB96-37C526C7F0C5} = {65294978-6CC3-4B6C-9139-DAA1794C3A17}
-		{5D2EBFBB-1B04-4E65-B708-7E417F636D66} = {65294978-6CC3-4B6C-9139-DAA1794C3A17}
+		{A4E1995D-963D-4996-9B69-CB7E62E82335} = {672BFA2E-9F93-496F-B188-40579FB5D301}
+		{1B203609-FC87-4E72-A88B-649825CEC7FC} = {D3EA1078-BF3D-4709-871C-AAFF70B95045}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F5D42B65-FCDF-4A69-9BF7-C80E44F43C24}
 	EndGlobalSection
 EndGlobal
