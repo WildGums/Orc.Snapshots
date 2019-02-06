@@ -1,4 +1,4 @@
-// --------------------------------------------------------------------------------------------------------------------
+﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="App.xaml.cs" company="WildGums">
 //   Copyright (c) 2008 - 2016 WildGums. All rights reserved.
 // </copyright>
@@ -50,7 +50,7 @@ namespace Orc.Snapshots.Example
 
             var serviceLocator = ServiceLocator.Default;
             var shellService = serviceLocator.ResolveType<IShellService>();
-            await shellService.CreateWithSplashAsync<ShellWindow>();
+            await shellService.CreateAsync<ShellWindow>();
         }
 
         protected override void OnExit(ExitEventArgs e)

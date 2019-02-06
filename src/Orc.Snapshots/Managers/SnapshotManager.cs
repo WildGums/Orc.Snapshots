@@ -111,7 +111,7 @@ namespace Orc.Snapshots
                 _snapshots.AddRange(snapshots);
             }
 
-            Loaded.SafeInvoke(this);
+            Loaded?.Invoke(this, EventArgs.Empty);
 
             Log.Info($"[{Scope}] Loaded '{snapshots.Count()}' snapshots");
 
@@ -143,7 +143,7 @@ namespace Orc.Snapshots
 
             await _snapshotStorageService.SaveSnapshotsAsync(snapshots);
 
-            Saved.SafeInvoke(this);
+            Saved?.Invoke(this, EventArgs.Empty);
 
             Log.Info($"[{Scope}] Saved '{snapshots.Count}' snapshots");
 
@@ -163,7 +163,7 @@ namespace Orc.Snapshots
                 _providers.Add(snapshotProvider);
             }
 
-            SnapshotProviderAdded.SafeInvoke(this, new SnapshotProviderEventArgs(snapshotProvider));
+            SnapshotProviderAdded?.Invoke(this, new SnapshotProviderEventArgs(snapshotProvider));
         }
 
         public bool RemoveProvider(ISnapshotProvider snapshotProvider)
@@ -183,7 +183,7 @@ namespace Orc.Snapshots
 
             if (removed)
             {
-                SnapshotProviderRemoved.SafeInvoke(this, new SnapshotProviderEventArgs(snapshotProvider));
+                SnapshotProviderRemoved?.Invoke(this, new SnapshotProviderEventArgs(snapshotProvider));
                 return true;
             }
 
@@ -233,7 +233,7 @@ namespace Orc.Snapshots
                 await provider.CreatedSnapshotAsync(snapshot);
             }
 
-            SnapshotCreated.SafeInvoke(this, () => new SnapshotEventArgs(snapshot));
+            SnapshotCreated?.Invoke(this, new SnapshotEventArgs(snapshot));
 
             Log.Info($"Created snapshot '{snapshot}'");
 
@@ -283,7 +283,7 @@ namespace Orc.Snapshots
                 await provider.RestoredSnapshotAsync(snapshot);
             }
 
-            SnapshotRestored.SafeInvoke(this, () => new SnapshotEventArgs(snapshot));
+            SnapshotRestored?.Invoke(this, new SnapshotEventArgs(snapshot));
 
             Log.Info($"Restored snapshot '{snapshot}'");
         }
@@ -298,8 +298,8 @@ namespace Orc.Snapshots
 
                 _snapshots.Add(snapshot);
 
-                SnapshotAdded.SafeInvoke(this, () => new SnapshotEventArgs(snapshot));
-                SnapshotsChanged.SafeInvoke(this);
+                SnapshotAdded?.Invoke(this, new SnapshotEventArgs(snapshot));
+                SnapshotsChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -318,8 +318,8 @@ namespace Orc.Snapshots
             var removed = _snapshots.Remove(snapshot);
             if (removed)
             {
-                SnapshotRemoved.SafeInvoke(this, () => new SnapshotEventArgs(snapshot));
-                SnapshotsChanged.SafeInvoke(this);
+                SnapshotRemoved?.Invoke(this, new SnapshotEventArgs(snapshot));
+                SnapshotsChanged?.Invoke(this, EventArgs.Empty);
             }
 
             return removed;
