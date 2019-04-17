@@ -57,7 +57,7 @@ namespace Orc.Snapshots.Example.Services
             snapshotManager.AddProvider<PersonSnapshotProvider>();
 
             // Watchers
-            _serviceLocator.RegisterTypeAndInstantiate<ShowNotificationOnSnapshotEventsWatcher>();
+            //_serviceLocator.RegisterTypeAndInstantiate<ShowNotificationOnSnapshotEventsWatcher>();
         }
     }
 }
