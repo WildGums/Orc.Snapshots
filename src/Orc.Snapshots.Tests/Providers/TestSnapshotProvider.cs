@@ -24,7 +24,7 @@ namespace Orc.Snapshots.Tests.Providers
         {
             using (var writer = new StreamWriter(stream))
             {
-                writer.Write(TestData);
+                await writer.WriteAsync(TestData);
             }
         }
 
@@ -32,7 +32,7 @@ namespace Orc.Snapshots.Tests.Providers
         {
             using (var reader = new StreamReader(stream))
             {
-                TestData = reader.ReadToEnd();
+                TestData = await reader.ReadToEndAsync();
             }
         }
     }
