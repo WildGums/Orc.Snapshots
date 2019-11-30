@@ -13,6 +13,7 @@ namespace Orc.Snapshots
     using System.Threading.Tasks;
     using Catel;
     using Catel.Logging;
+    using Catel.Services;
     using FileSystem;
     using Path = Catel.IO.Path;
 
@@ -24,16 +25,20 @@ namespace Orc.Snapshots
 
         private readonly IDirectoryService _directoryService;
         private readonly IFileService _fileService;
+        private readonly IAppDataService _appDataService;
 
-        public FileSystemSnapshotStorageService(IDirectoryService directoryService, IFileService fileService)
+        public FileSystemSnapshotStorageService(IDirectoryService directoryService, IFileService fileService,
+            IAppDataService appDataService)
         {
             Argument.IsNotNull(() => directoryService);
             Argument.IsNotNull(() => fileService);
+            Argument.IsNotNull(() => appDataService);
 
             _directoryService = directoryService;
             _fileService = fileService;
+            _appDataService = appDataService;
 
-            Directory = Path.Combine(Path.GetApplicationDataDirectory(), "snapshots");
+            Directory = Path.Combine(_appDataService.GetApplicationDataDirectory(Catel.IO.ApplicationDataTarget.UserRoaming), "snapshots");
         }
 
         public string Directory { get; set; }

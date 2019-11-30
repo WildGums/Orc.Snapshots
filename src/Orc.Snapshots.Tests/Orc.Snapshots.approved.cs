@@ -8,7 +8,7 @@ namespace Orc.Snapshots
 {
     public class FileSystemSnapshotStorageService : Orc.Snapshots.SnapshotStorageServiceBase
     {
-        public FileSystemSnapshotStorageService(Orc.FileSystem.IDirectoryService directoryService, Orc.FileSystem.IFileService fileService) { }
+        public FileSystemSnapshotStorageService(Orc.FileSystem.IDirectoryService directoryService, Orc.FileSystem.IFileService fileService, Catel.Services.IAppDataService appDataService) { }
         public string Directory { get; set; }
         protected virtual string GetSnapshotFileName(string directory, Orc.Snapshots.ISnapshot snapshot) { }
         protected virtual System.Threading.Tasks.Task<Orc.Snapshots.ISnapshot> LoadSnapshotAsync(string source) { }
