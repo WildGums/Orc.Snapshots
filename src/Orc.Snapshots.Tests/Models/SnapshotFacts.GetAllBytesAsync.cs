@@ -30,7 +30,7 @@ namespace Orc.Snapshots.Tests.Models
                     var bytes = await snapshot.GetAllBytesAsync();
 
                     var outputFileName = fileContext.GetFile("snapshot.zip");
-                    File.WriteAllBytes(outputFileName, bytes);
+                    await File.WriteAllBytesAsync(outputFileName, bytes);
 
                     Approvals.VerifyBinaryFile(bytes, "zip");
                     //Approvals.VerifyFile(outputFileName);
@@ -51,7 +51,7 @@ namespace Orc.Snapshots.Tests.Models
                     var bytes = await snapshot.GetAllBytesAsync();
 
                     var outputFileName = fileContext.GetFile("snapshot.zip");
-                    File.WriteAllBytes(outputFileName, bytes);
+                    await File.WriteAllBytesAsync(outputFileName, bytes);
 
                     Approvals.VerifyBinaryFile(bytes, "zip");
                     //Approvals.VerifyFile(outputFileName);
@@ -81,7 +81,7 @@ namespace Orc.Snapshots.Tests.Models
                     Assert.AreNotEqual(bytes1, bytes2);
 
                     var outputFileName = fileContext.GetFile("snapshot.zip");
-                    File.WriteAllBytes(outputFileName, bytes2);
+                    await File.WriteAllBytesAsync(outputFileName, bytes2);
 
                     Approvals.VerifyBinaryFile(bytes2, "zip");
                     //Approvals.VerifyFile(outputFileName);

@@ -1,11 +1,11 @@
-﻿[assembly: System.Resources.NeutralResourcesLanguageAttribute("en-US")]
-[assembly: System.Runtime.Versioning.TargetFrameworkAttribute(".NETFramework,Version=v4.6", FrameworkDisplayName=".NET Framework 4.6")]
-[assembly: System.Windows.Markup.XmlnsDefinitionAttribute("http://schemas.wildgums.com/orc/snapshots", "Orc.Snapshots")]
-[assembly: System.Windows.Markup.XmlnsDefinitionAttribute("http://schemas.wildgums.com/orc/snapshots", "Orc.Snapshots.Converters")]
-[assembly: System.Windows.Markup.XmlnsDefinitionAttribute("http://schemas.wildgums.com/orc/snapshots", "Orc.Snapshots.Views")]
-[assembly: System.Windows.Markup.XmlnsPrefixAttribute("http://schemas.wildgums.com/orc/snapshots", "orcsnapshots")]
-[assembly: System.Windows.ThemeInfoAttribute(System.Windows.ResourceDictionaryLocation.None, System.Windows.ResourceDictionaryLocation.SourceAssembly)]
-public class static ModuleInitializer
+﻿[assembly: System.Resources.NeutralResourcesLanguage("en-US")]
+[assembly: System.Runtime.Versioning.TargetFramework(".NETCoreApp,Version=v3.1", FrameworkDisplayName="")]
+[assembly: System.Windows.Markup.XmlnsDefinition("http://schemas.wildgums.com/orc/snapshots", "Orc.Snapshots")]
+[assembly: System.Windows.Markup.XmlnsDefinition("http://schemas.wildgums.com/orc/snapshots", "Orc.Snapshots.Converters")]
+[assembly: System.Windows.Markup.XmlnsDefinition("http://schemas.wildgums.com/orc/snapshots", "Orc.Snapshots.Views")]
+[assembly: System.Windows.Markup.XmlnsPrefix("http://schemas.wildgums.com/orc/snapshots", "orcsnapshots")]
+[assembly: System.Windows.ThemeInfo(System.Windows.ResourceDictionaryLocation.None, System.Windows.ResourceDictionaryLocation.SourceAssembly)]
+public static class ModuleInitializer
 {
     public static void Initialize() { }
 }
@@ -42,6 +42,17 @@ namespace Orc.Snapshots
 }
 namespace Orc.Snapshots.ViewModels
 {
+    public class SnapshotViewModel : Catel.MVVM.ViewModelBase
+    {
+        public static readonly Catel.Data.PropertyData SnapshotProperty;
+        public static readonly Catel.Data.PropertyData SnapshotTitleProperty;
+        public SnapshotViewModel(Orc.Snapshots.ISnapshot snapshot, Catel.Services.ILanguageService languageService) { }
+        [Catel.MVVM.Model]
+        public Orc.Snapshots.ISnapshot Snapshot { get; }
+        [Catel.MVVM.ViewModelToModel("Snapshot", "Title")]
+        public string SnapshotTitle { get; set; }
+        protected override System.Threading.Tasks.Task InitializeAsync() { }
+    }
     public class SnapshotsCleanupViewModel : Catel.MVVM.ViewModelBase
     {
         public static readonly Catel.Data.PropertyData IncludeAllInCleanupProperty;
@@ -74,20 +85,15 @@ namespace Orc.Snapshots.ViewModels
         protected override System.Threading.Tasks.Task CloseAsync() { }
         protected override System.Threading.Tasks.Task InitializeAsync() { }
     }
-    public class SnapshotViewModel : Catel.MVVM.ViewModelBase
-    {
-        public static readonly Catel.Data.PropertyData SnapshotProperty;
-        public static readonly Catel.Data.PropertyData SnapshotTitleProperty;
-        public SnapshotViewModel(Orc.Snapshots.ISnapshot snapshot, Catel.Services.ILanguageService languageService) { }
-        [Catel.MVVM.ModelAttribute()]
-        public Orc.Snapshots.ISnapshot Snapshot { get; }
-        [Catel.MVVM.ViewModelToModelAttribute("Snapshot", "Title")]
-        public string SnapshotTitle { get; set; }
-        protected override System.Threading.Tasks.Task InitializeAsync() { }
-    }
 }
 namespace Orc.Snapshots.Views
 {
+    public class SnapshotWindow : Catel.Windows.DataWindow, System.Windows.Markup.IComponentConnector
+    {
+        public SnapshotWindow() { }
+        public SnapshotWindow(Orc.Snapshots.ViewModels.SnapshotViewModel viewModel) { }
+        public void InitializeComponent() { }
+    }
     public sealed class SnapshotsCleanupWindow : Catel.Windows.DataWindow, System.Windows.Markup.IComponentConnector
     {
         public SnapshotsCleanupWindow() { }
@@ -97,14 +103,8 @@ namespace Orc.Snapshots.Views
     {
         public static readonly System.Windows.DependencyProperty ScopeProperty;
         public SnapshotsView() { }
-        [Catel.MVVM.Views.ViewToViewModelAttribute("", MappingType=Catel.MVVM.Views.ViewToViewModelMappingType.ViewToViewModel)]
+        [Catel.MVVM.Views.ViewToViewModel("", MappingType=Catel.MVVM.Views.ViewToViewModelMappingType.ViewToViewModel)]
         public object Scope { get; set; }
-        public void InitializeComponent() { }
-    }
-    public class SnapshotWindow : Catel.Windows.DataWindow, System.Windows.Markup.IComponentConnector
-    {
-        public SnapshotWindow() { }
-        public SnapshotWindow(Orc.Snapshots.ViewModels.SnapshotViewModel viewModel) { }
         public void InitializeComponent() { }
     }
 }

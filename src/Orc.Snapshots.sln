@@ -29,9 +29,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orc.Snapshots", "Orc.Snapsh
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orc.Snapshots.Xaml", "Orc.Snapshots.Xaml\Orc.Snapshots.Xaml.csproj", "{9A6A148E-B0B1-4393-8793-CE70EABEB963}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Orc.Snapshots.Example.Shared", "Orc.Snapshots.Example.Shared\Orc.Snapshots.Example.Shared.shproj", "{AF9FD050-CC3A-495D-AB09-B549745A72F6}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orc.Snapshots.Example.NET", "Orc.Snapshots.Example.NET\Orc.Snapshots.Example.NET.csproj", "{A4E1995D-963D-4996-9B69-CB7E62E82335}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orc.Snapshots.Example", "Orc.Snapshots.Example\Orc.Snapshots.Example.csproj", "{A4E1995D-963D-4996-9B69-CB7E62E82335}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orc.Snapshots.Tests", "Orc.Snapshots.Tests\Orc.Snapshots.Tests.csproj", "{1B203609-FC87-4E72-A88B-649825CEC7FC}"
 EndProject

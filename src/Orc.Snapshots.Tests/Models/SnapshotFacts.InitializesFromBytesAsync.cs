@@ -24,7 +24,7 @@ namespace Orc.Snapshots.Tests.Models
                 var snapshot = new Snapshot();
 
                 var fileName = GetExampleFileName("Snapshots.Empty.zip");
-                var bytes = File.ReadAllBytes(fileName);
+                var bytes = await File.ReadAllBytesAsync(fileName);
 
                 await snapshot.InitializeFromBytesAsync(bytes);
 
@@ -37,7 +37,7 @@ namespace Orc.Snapshots.Tests.Models
                 var snapshot = new Snapshot();
 
                 var fileName = GetExampleFileName("Snapshots.WithData.zip");
-                var bytes = File.ReadAllBytes(fileName);
+                var bytes = await File.ReadAllBytesAsync(fileName);
 
                 await snapshot.InitializeFromBytesAsync(bytes);
 
