@@ -8,7 +8,7 @@
                    xmlns:orctheming="http://schemas.wildgums.com/orc/theming"
                    mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="400">
 
-    <orccontrols:StackGrid>
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -17,9 +17,9 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <orctheming:ThemeSwitcherView />
+        <orctheming:ThemeSwitcherView Grid.Row="0" />
 
-        <Label>
+        <Label Grid.Row="1">
             <TextBlock TextWrapping="Wrap">
                 This application shows how to use the snapshots library including the xaml controls. Below
                 is data that represents the state of a project or data at a specific moment in time.
@@ -32,7 +32,7 @@
             </TextBlock>
         </Label>
 
-        <orccontrols:StackGrid>
+        <orccontrols:StackGrid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
@@ -60,10 +60,8 @@
             </WrapPanel>
         </orccontrols:StackGrid>
 
-        <orccontrols:EmptyRow />
-
-        <orccontrols:LogViewerControl />
-    </orccontrols:StackGrid>
+        <orccontrols:LogViewerControl Grid.Row="4" />
+    </Grid>
 
 </catel:UserControl>
 

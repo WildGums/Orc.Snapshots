@@ -6,6 +6,6 @@
         <ResourceDictionary Source="/Orc.Snapshots.Xaml;component/Themes/Generic.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <SolidColorBrush x:Key="AccentColorBrush" Color="Black" />
+    <SolidColorBrush x:Key="AccentColorBrush" Color="Orange" />
     
 </ResourceDictionary>
