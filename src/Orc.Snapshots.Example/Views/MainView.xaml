@@ -4,18 +4,22 @@
                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                    xmlns:catel="http://schemas.catelproject.com"
-                   xmlns:orccontrols="http://schemas.wildgums.com/orc/controls"
+                   xmlns:orccontrols="http://schemas.wildgums.com/orc/controls" 
+                   xmlns:orctheming="http://schemas.wildgums.com/orc/theming"
                    mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="400">
 
     <orccontrols:StackGrid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Label Grid.Row="0" Grid.ColumnSpan="5">
+        <orctheming:ThemeSwitcherView />
+
+        <Label>
             <TextBlock TextWrapping="Wrap">
                 This application shows how to use the snapshots library including the xaml controls. Below
                 is data that represents the state of a project or data at a specific moment in time.
@@ -27,8 +31,8 @@
                 instances. This library also provides an out-of-the-box solution of in-memory storage.
             </TextBlock>
         </Label>
-		
-        <orccontrols:StackGrid Grid.Row="1">
+
+        <orccontrols:StackGrid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
@@ -56,7 +60,9 @@
             </WrapPanel>
         </orccontrols:StackGrid>
 
-        <orccontrols:LogViewerControl Grid.Row="3" />
+        <orccontrols:EmptyRow />
+
+        <orccontrols:LogViewerControl />
     </orccontrols:StackGrid>
 
 </catel:UserControl>
