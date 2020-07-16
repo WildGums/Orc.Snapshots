@@ -34,7 +34,7 @@ namespace Orc.Snapshots.Views
             set { SetValue(ScopeProperty, value); }
         }
 
-        public static readonly DependencyProperty ScopeProperty = DependencyProperty.Register("Scope", typeof(object),
+        public static readonly DependencyProperty ScopeProperty = DependencyProperty.Register(nameof(Scope), typeof(object),
             typeof(SnapshotsView), new FrameworkPropertyMetadata((sender, e) => ((SnapshotsView)sender).OnScopeChanged()));
         #endregion
 

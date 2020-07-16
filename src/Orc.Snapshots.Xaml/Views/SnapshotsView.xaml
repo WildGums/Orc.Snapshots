@@ -3,7 +3,7 @@
                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                    xmlns:catel="http://schemas.catelproject.com"
                    xmlns:converters="clr-namespace:Orc.Snapshots.Converters"
-                   xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity">
+                   xmlns:xamlbehaviors="http://schemas.microsoft.com/xaml/behaviors">
 
     <UserControl.Resources>
         <catel:BooleanToHidingVisibilityConverter x:Key="BooleanToHidingVisibilityConverter" />
@@ -19,11 +19,11 @@
 
         <TextBox Grid.Row="0" Text="{Binding Filter}"
                  Visibility="{Binding HasSnapshots, Converter={catel:BooleanToCollapsingVisibilityConverter}}">
-            <i:Interaction.Behaviors>
+            <xamlbehaviors:Interaction.Behaviors>
                 <catel:UpdateBindingOnTextChanged />
                 <catel:DelayBindingUpdate PropertyName="Text" UpdateDelay="1000" />
                 <catel:SelectTextOnFocus />
-            </i:Interaction.Behaviors>
+            </xamlbehaviors:Interaction.Behaviors>
         </TextBox>
 
         <Label Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"
