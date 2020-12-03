@@ -8,10 +8,17 @@
 namespace Orc.Snapshots
 {
     using System;
+    using System.Runtime.Serialization;
 
+    [Serializable]
     public class SnapshotException : Exception
     {
         #region Constructors
+        public SnapshotException()
+        {
+
+        }
+
         public SnapshotException(ISnapshot snapshot)
             : this(snapshot, string.Empty)
         {
@@ -21,6 +28,12 @@ namespace Orc.Snapshots
             : base(message)
         {
             Snapshot = snapshot;
+        }
+
+        public SnapshotException(SerializationInfo info, StreamingContext context)
+            : base(info, context)
+        {
+
         }
         #endregion
 
