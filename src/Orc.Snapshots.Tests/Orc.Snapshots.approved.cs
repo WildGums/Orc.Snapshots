@@ -91,9 +91,12 @@ namespace Orc.Snapshots
         protected virtual System.Threading.Tasks.Task SaveSnapshotAsync(string source, Orc.Snapshots.ISnapshot snapshot) { }
         public override System.Threading.Tasks.Task SaveSnapshotsAsync(System.Collections.Generic.IEnumerable<Orc.Snapshots.ISnapshot> snapshots) { }
     }
+    [System.Serializable]
     public class InvalidSnapshotException : Orc.Snapshots.SnapshotException
     {
+        public InvalidSnapshotException() { }
         public InvalidSnapshotException(Orc.Snapshots.ISnapshot snapshot) { }
+        public InvalidSnapshotException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
     }
     public class Snapshot : Orc.Snapshots.ISnapshot
     {
@@ -117,15 +120,21 @@ namespace Orc.Snapshots
         public SnapshotEventArgs(Orc.Snapshots.ISnapshot snapshot) { }
         public Orc.Snapshots.ISnapshot Snapshot { get; }
     }
+    [System.Serializable]
     public class SnapshotException : System.Exception
     {
+        public SnapshotException() { }
         public SnapshotException(Orc.Snapshots.ISnapshot snapshot) { }
         public SnapshotException(Orc.Snapshots.ISnapshot snapshot, string message) { }
+        public SnapshotException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public Orc.Snapshots.ISnapshot Snapshot { get; }
     }
+    [System.Serializable]
     public class SnapshotManagementInitializationException : System.Exception
     {
+        public SnapshotManagementInitializationException() { }
         public SnapshotManagementInitializationException(Orc.Snapshots.ISnapshotManager snapshotManager) { }
+        public SnapshotManagementInitializationException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public Orc.Snapshots.ISnapshotManager SnapshotManager { get; }
     }
     public class SnapshotManager : Orc.Snapshots.ISnapshotManager
