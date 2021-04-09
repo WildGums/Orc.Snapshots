@@ -56,7 +56,7 @@ namespace Orc.Snapshots
                 foreach (var snapshotFile in _directoryService.GetFiles(directory, $"*{SnapshotExtension}"))
                 {
                     var snapshot = await LoadSnapshotAsync(snapshotFile);
-                    if (snapshot != null)
+                    if (snapshot is not null)
                     {
                         snapshots.Add(snapshot);
                     }
@@ -79,7 +79,7 @@ namespace Orc.Snapshots
                 Log.Debug($"Loading snapshot from '{source}'");
 
                 var bytes = await _fileService.ReadAllBytesAsync(source);
-                if (bytes != null && bytes.Length > 0)
+                if (bytes is not null && bytes.Length > 0)
                 {
                     result = await ConvertBytesToSnapshotAsync(bytes);
                 }
@@ -159,7 +159,7 @@ namespace Orc.Snapshots
             Log.Debug($"Saving snapshot '{snapshot}' to '{source}'");
 
             var bytes = await ConvertSnapshotToBytesAsync(snapshot);
-            if (bytes != null)
+            if (bytes is not null)
             {
                 await _fileService.WriteAllBytesAsync(source, bytes);
             }

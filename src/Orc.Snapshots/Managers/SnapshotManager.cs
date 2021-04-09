@@ -92,7 +92,7 @@ namespace Orc.Snapshots
             Log.Debug($"[{Scope}] Loading snapshots");
 
             var loadingAsync = LoadingAsync;
-            if (loadingAsync != null)
+            if (loadingAsync is not null)
             {
                 var cancelEventArgs = new CancelEventArgs();
                 await loadingAsync(this, cancelEventArgs);
@@ -123,7 +123,7 @@ namespace Orc.Snapshots
             Log.Debug($"[{Scope}] Saving snapshots");
 
             var savingAsync = SavingAsync;
-            if (savingAsync != null)
+            if (savingAsync is not null)
             {
                 var cancelEventArgs = new CancelEventArgs();
                 await savingAsync(this, cancelEventArgs);
@@ -266,7 +266,7 @@ namespace Orc.Snapshots
                     Log.Debug($"Restoring data for snapshot '{snapshot}' using provider '{provider}::{name}'");
 
                     var providerData = snapshot.GetData(name);
-                    if (providerData == null)
+                    if (providerData is null)
                     {
                         providerData = new byte[] {};
                     }

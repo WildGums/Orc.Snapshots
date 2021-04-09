@@ -168,7 +168,7 @@ namespace Orc.Snapshots
                         var bytes = dataItem.Value;
 
                         // Even store empty data
-                        if (bytes == null)
+                        if (bytes is null)
                         {
                             bytes = new byte[] { };
                         }

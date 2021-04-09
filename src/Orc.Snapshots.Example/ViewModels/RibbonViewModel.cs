@@ -49,7 +49,7 @@ namespace Orc.Snapshots.Example.ViewModels
             if (await _uiVisualizerService.ShowDialogAsync<SnapshotViewModel>(snapshot) ?? false)
             {
                 var existingSnapshot = _snapshotManager.FindSnapshot(snapshot.Title);
-                if (existingSnapshot != null)
+                if (existingSnapshot is not null)
                 {
                     if (await _messageService.ShowAsync(
                         $"Snapshot '{snapshot}' already exists. Are you sure you want to overwrite the existing snapshot?",

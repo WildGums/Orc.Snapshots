@@ -69,7 +69,7 @@ namespace Orc.Snapshots.ViewModels
 
         private bool OnRestoreSnapshotCanExecute(ISnapshot snapshot)
         {
-            if (snapshot == null)
+            if (snapshot is null)
             {
                 return false;
             }
@@ -88,7 +88,7 @@ namespace Orc.Snapshots.ViewModels
 
         private bool OnEditSnapshotCanExecute(ISnapshot snapshot)
         {
-            if (snapshot == null)
+            if (snapshot is null)
             {
                 return false;
             }
@@ -110,14 +110,14 @@ namespace Orc.Snapshots.ViewModels
                 }
             };
 
-            if (modelValidation != null)
+            if (modelValidation is not null)
             {
                 modelValidation.Validating += handler;
             }
 
             if (await _uiVisualizerService.ShowDialogAsync<SnapshotViewModel>(snapshot) ?? false)
             {
-                if (modelValidation != null)
+                if (modelValidation is not null)
                 {
                     modelValidation.Validating -= handler;
                 }
@@ -130,7 +130,7 @@ namespace Orc.Snapshots.ViewModels
 
         private bool OnRemoveSnapshotCanExecute(ISnapshot snapshot)
         {
-            if (snapshot == null)
+            if (snapshot is null)
             {
                 return false;
             }
@@ -212,7 +212,7 @@ namespace Orc.Snapshots.ViewModels
                 return;
             }
 
-            if (previousSnapshotManager != null)
+            if (previousSnapshotManager is not null)
             {
                 previousSnapshotManager.Loaded -= OnSnapshotsLoaded;
                 previousSnapshotManager.SnapshotsChanged -= OnSnapshotsChanged;
@@ -222,7 +222,7 @@ namespace Orc.Snapshots.ViewModels
 
             _snapshotManager = snapshotManager;
 
-            if (snapshotManager != null)
+            if (snapshotManager is not null)
             {
                 snapshotManager.Loaded += OnSnapshotsLoaded;
                 snapshotManager.SnapshotsChanged += OnSnapshotsChanged;
@@ -246,7 +246,7 @@ namespace Orc.Snapshots.ViewModels
             Log.Debug($"Deactivating snapshot manager");
 
             var snapshotManager = _snapshotManager;
-            if (snapshotManager != null)
+            if (snapshotManager is not null)
             {
                 snapshotManager.Loaded -= OnSnapshotsLoaded;
                 snapshotManager.SnapshotsChanged -= OnSnapshotsChanged;

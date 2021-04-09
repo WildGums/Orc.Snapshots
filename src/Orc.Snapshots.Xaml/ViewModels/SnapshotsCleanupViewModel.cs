@@ -113,7 +113,7 @@ namespace Orc.Snapshots.ViewModels
         private void OnMaxSnapshotAgeChanged()
         {
             var snapshots = Snapshots;
-            if (snapshots == null)
+            if (snapshots is null)
             {
                 return;
             }

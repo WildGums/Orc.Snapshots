@@ -27,7 +27,7 @@ namespace Orc.Snapshots
 
         protected virtual async Task<ISnapshot> ConvertBytesToSnapshotAsync(byte[] bytes)
         {
-            if (bytes == null || bytes.Length == 0)
+            if (bytes is null || bytes.Length == 0)
             {
                 Log.Warning("No bytes in snapshot data, cannot convert bytes to snapshot");
                 return null;

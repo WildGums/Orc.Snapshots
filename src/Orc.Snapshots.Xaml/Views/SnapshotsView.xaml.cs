@@ -42,7 +42,7 @@ namespace Orc.Snapshots.Views
         private void OnScopeChanged()
         {
             var vm = ViewModel as SnapshotsViewModel;
-            if (vm != null)
+            if (vm is not null)
             {
                 vm.Scope = Scope;
             }
