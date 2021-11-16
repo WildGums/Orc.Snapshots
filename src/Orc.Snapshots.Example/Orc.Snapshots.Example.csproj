@@ -1,6 +1,6 @@
 ﻿<Project Sdk="MSBuild.Sdk.Extras">
   <PropertyGroup>
-    <TargetFrameworks>net5.0-windows</TargetFrameworks>
+    <TargetFrameworks>net6.0-windows</TargetFrameworks>
     <AssemblyName>Orc.Snapshots.Example</AssemblyName>
     <RootNamespace>Orc.Snapshots.Example</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
@@ -23,10 +23,10 @@
     </PackageReference>
     <PackageReference Include="LoadAssembliesOnStartup.Fody" Version="4.6.0" PrivateAssets="all" />
     <PackageReference Include="ModuleInit.Fody" Version="2.1.1" PrivateAssets="all" />
-    <PackageReference Include="Obsolete.Fody" Version="5.2.1" PrivateAssets="all" />
     <PackageReference Include="Orc.Controls" Version="4.6.8" />
     <PackageReference Include="Orc.Notifications" Version="4.2.0" />
     <PackageReference Include="Orchestra.Shell.Ribbon.Fluent" Version="6.6.6" />
+    <PackageReference Include="System.Security.Permissions" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>

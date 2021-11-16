@@ -1,6 +1,6 @@
 ﻿<Project Sdk="MSBuild.Sdk.Extras">
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.1;net5.0-windows</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.1;net5.0-windows;net6.0-windows</TargetFrameworks>
     <AssemblyName>Orc.Snapshots</AssemblyName>
     <RootNamespace>Orc.Snapshots</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
@@ -18,7 +18,6 @@
   <ItemGroup>
     <PackageReference Include="Catel.Core" Version="5.12.20" />
     <PackageReference Include="Catel.Fody" Version="4.7.0" PrivateAssets="all" />
-    <PackageReference Include="DotNetZip" Version="1.15.0" />
     <PackageReference Include="Fody" Version="6.6.0" PrivateAssets="all">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
