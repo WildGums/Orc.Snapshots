@@ -8,17 +8,30 @@
 namespace Orc.Snapshots
 {
     using System.IO;
-    using Ionic.Zip;
+    using System.IO.Compression;
 
     internal static class ZipEntryExtensions
     {
-        public static byte[] GetBytes(this ZipEntry entry)
+        public static byte[] GetBytes(this ZipArchiveEntry entry)
         {
-            using (var memoryStream = new MemoryStream())
+            using (var stream = entry.Open())
             {
-                entry.Extract(memoryStream);
+                using (var memoryStream = new MemoryStream())
+                {
+                    stream.CopyTo(memoryStream);
+                    return memoryStream.ToArray();
+                }
+            }
+        }
 
-                return memoryStream.ToArray();
+        public static void OpenAndWrite(this ZipArchiveEntry entry, byte[] bytes)
+        {
+            using (var stream = entry.Open())
+            {
+                using (var streamWriter = new StreamWriter(stream))
+                {
+                    streamWriter.Write(bytes);
+                }
             }
         }
     }
