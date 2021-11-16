@@ -84,7 +84,7 @@ namespace Orc.Snapshots
         {
             using (var memoryStream = new MemoryStream())
             {
-                using (var archive = new ZipArchive(memoryStream, ZipArchiveMode.Create))
+                using (var archive = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
                 {
                     var metadata = new Dictionary<string, string>();
                     metadata["title"] = snapshot.Title;

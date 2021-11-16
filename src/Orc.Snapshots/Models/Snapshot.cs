@@ -136,7 +136,7 @@ namespace Orc.Snapshots
             _contentHash = string.Empty;
             using (var compressedStream = new MemoryStream(bytes))
             {
-                using (ZipArchive archive = new ZipArchive(compressedStream, ZipArchiveMode.Update))
+                using (var archive = new ZipArchive(compressedStream, ZipArchiveMode.Read))
                 {
                     foreach (var entry in archive.Entries)
                     {
