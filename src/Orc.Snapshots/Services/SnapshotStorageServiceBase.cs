@@ -92,11 +92,11 @@ namespace Orc.Snapshots
                     metadata["created"] = snapshot.Created.ToString("yyyy-MM-dd HH:mm:ss");
 
                     var metadataEntry = archive.CreateEntry("metadata");
-                    metadataEntry.OpenAndWriteAsync(GetMetadataBytes(metadata));
+                    await metadataEntry.OpenAndWriteAsync(GetMetadataBytes(metadata));
 
                     var snapshotBytes = await snapshot.GetAllBytesAsync();
                     var dataEntry = archive.CreateEntry("data");
-                    dataEntry.OpenAndWriteAsync(snapshotBytes);
+                    await dataEntry.OpenAndWriteAsync(snapshotBytes);
                 }
 
                 return memoryStream.ToArray();
