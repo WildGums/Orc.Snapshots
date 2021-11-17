@@ -19,8 +19,8 @@ namespace Orc.Snapshots
             {
                 using (var memoryStream = new MemoryStream())
                 {
-                    await memoryStream.FlushAsync();
                     await stream.CopyToAsync(memoryStream);
+                    await memoryStream.FlushAsync();
                     return memoryStream.ToArray();
                 }
             }
@@ -33,6 +33,7 @@ namespace Orc.Snapshots
                 using (var memoryStream = new MemoryStream(bytes))
                 {
                     await memoryStream.CopyToAsync(stream);
+                    await stream.FlushAsync();
                 }
             }
         }

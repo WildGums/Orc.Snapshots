@@ -142,7 +142,7 @@ namespace Orc.Snapshots
                     {
                         var fileName = entry.Name;
                         var key = fileName.Substring(0, fileName.Length - InternalFileExtension.Length).Replace("/", "\\");
-                        var dataBytes = entry.GetBytesAsync().Result;
+                        var dataBytes = await entry.GetBytesAsync();
 
                         data.Add(new KeyValuePair<string, byte[]>(key, dataBytes));
                     }

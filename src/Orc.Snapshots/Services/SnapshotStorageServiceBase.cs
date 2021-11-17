@@ -41,11 +41,11 @@ namespace Orc.Snapshots
                 using (var archive = new ZipArchive(memoryStream, ZipArchiveMode.Read))
                 {
                     var metadataEntry = archive.GetEntry("metadata");
-                    var metadataBytes = metadataEntry.GetBytesAsync().Result;
+                    var metadataBytes = await metadataEntry.GetBytesAsync();
                     metadata = ParseMetadata(metadataBytes);
 
                     var dataEntry = archive.GetEntry("data");
-                    dataBytes = dataEntry.GetBytesAsync().Result;
+                    dataBytes = await dataEntry.GetBytesAsync();
                 }
             }
 
