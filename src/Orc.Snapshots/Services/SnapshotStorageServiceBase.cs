@@ -11,10 +11,10 @@ namespace Orc.Snapshots
     using System.Collections.Generic;
     using System.Globalization;
     using System.IO;
+    using System.IO.Compression;
     using System.Threading.Tasks;
     using Catel;
     using Catel.Logging;
-    using Ionic.Zip;
 
     public abstract class SnapshotStorageServiceBase : ISnapshotStorageService
     {
@@ -38,14 +38,14 @@ namespace Orc.Snapshots
 
             using (var memoryStream = new MemoryStream(bytes))
             {
-                using (var zip = ZipFile.Read(memoryStream))
+                using (var archive = new ZipArchive(memoryStream, ZipArchiveMode.Read))
                 {
-                    var metadataEntry = zip["metadata"];
-                    var metadataBytes = metadataEntry.GetBytes();
+                    var metadataEntry = archive.GetEntry("metadata");
+                    var metadataBytes = await metadataEntry.GetBytesAsync();
                     metadata = ParseMetadata(metadataBytes);
 
-                    var dataEntry = zip["data"];
-                    dataBytes = dataEntry.GetBytes();
+                    var dataEntry = archive.GetEntry("data");
+                    dataBytes = await dataEntry.GetBytesAsync();
                 }
             }
 
@@ -84,19 +84,19 @@ namespace Orc.Snapshots
         {
             using (var memoryStream = new MemoryStream())
             {
-                using (var zip = new ZipFile())
+                using (var archive = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
                 {
                     var metadata = new Dictionary<string, string>();
                     metadata["title"] = snapshot.Title;
                     metadata["category"] = snapshot.Category ?? string.Empty;
                     metadata["created"] = snapshot.Created.ToString("yyyy-MM-dd HH:mm:ss");
 
-                    zip.AddEntry("metadata", GetMetadataBytes(metadata));
+                    var metadataEntry = archive.CreateEntry("metadata");
+                    await metadataEntry.OpenAndWriteAsync(GetMetadataBytes(metadata));
 
                     var snapshotBytes = await snapshot.GetAllBytesAsync();
-                    zip.AddEntry("data", snapshotBytes);
-
-                    zip.Save(memoryStream);
+                    var dataEntry = archive.CreateEntry("data");
+                    await dataEntry.OpenAndWriteAsync(snapshotBytes);
                 }
 
                 return memoryStream.ToArray();
