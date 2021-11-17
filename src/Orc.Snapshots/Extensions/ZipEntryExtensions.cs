@@ -26,7 +26,7 @@ namespace Orc.Snapshots
             }
         }
 
-        public static async void OpenAndWriteAsync(this ZipArchiveEntry entry, byte[] bytes)
+        public static async Task OpenAndWriteAsync(this ZipArchiveEntry entry, byte[] bytes)
         {
             using (var stream = entry.Open())
             {

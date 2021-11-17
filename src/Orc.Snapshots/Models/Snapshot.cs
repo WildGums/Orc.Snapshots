@@ -169,7 +169,7 @@ namespace Orc.Snapshots
                             bytes = new byte[] { };
                         }
                         var entry = archive.CreateEntry($"{dataItem.Key}{InternalFileExtension}", CompressionLevel.Fastest);
-                        entry.OpenAndWriteAsync(bytes);
+                        await entry.OpenAndWriteAsync(bytes);
                     }
                 }
 
