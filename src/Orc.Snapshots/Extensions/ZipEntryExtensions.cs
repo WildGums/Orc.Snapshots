@@ -9,28 +9,30 @@ namespace Orc.Snapshots
 {
     using System.IO;
     using System.IO.Compression;
+    using System.Threading.Tasks;
 
     internal static class ZipEntryExtensions
     {
-        public static byte[] GetBytes(this ZipArchiveEntry entry)
+        public static async Task<byte[]> GetBytesAsync(this ZipArchiveEntry entry)
         {
             using (var stream = entry.Open())
             {
                 using (var memoryStream = new MemoryStream())
                 {
-                    stream.CopyTo(memoryStream);
+                    await memoryStream.FlushAsync();
+                    await stream.CopyToAsync(memoryStream);
                     return memoryStream.ToArray();
                 }
             }
         }
 
-        public static void OpenAndWrite(this ZipArchiveEntry entry, byte[] bytes)
+        public static async void OpenAndWriteAsync(this ZipArchiveEntry entry, byte[] bytes)
         {
             using (var stream = entry.Open())
             {
-                using (var streamWriter = new StreamWriter(stream))
+                using (var memoryStream = new MemoryStream(bytes))
                 {
-                    streamWriter.Write(bytes);
+                    await memoryStream.CopyToAsync(stream);
                 }
             }
         }

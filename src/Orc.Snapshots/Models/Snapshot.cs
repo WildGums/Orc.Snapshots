@@ -142,7 +142,7 @@ namespace Orc.Snapshots
                     {
                         var fileName = entry.Name;
                         var key = fileName.Substring(0, fileName.Length - InternalFileExtension.Length).Replace("/", "\\");
-                        var dataBytes = entry.GetBytes();
+                        var dataBytes = entry.GetBytesAsync().Result;
 
                         data.Add(new KeyValuePair<string, byte[]>(key, dataBytes));
                     }
@@ -169,7 +169,7 @@ namespace Orc.Snapshots
                             bytes = new byte[] { };
                         }
                         var entry = archive.CreateEntry($"{dataItem.Key}{InternalFileExtension}", CompressionLevel.Fastest);
-                        entry.OpenAndWrite(bytes);
+                        entry.OpenAndWriteAsync(bytes);
                     }
                 }
 

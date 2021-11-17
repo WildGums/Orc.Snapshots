@@ -41,11 +41,11 @@ namespace Orc.Snapshots
                 using (var archive = new ZipArchive(memoryStream, ZipArchiveMode.Read))
                 {
                     var metadataEntry = archive.GetEntry("metadata");
-                    var metadataBytes = metadataEntry.GetBytes();
+                    var metadataBytes = metadataEntry.GetBytesAsync().Result;
                     metadata = ParseMetadata(metadataBytes);
 
                     var dataEntry = archive.GetEntry("data");
-                    dataBytes = dataEntry.GetBytes();
+                    dataBytes = dataEntry.GetBytesAsync().Result;
                 }
             }
 
@@ -92,11 +92,11 @@ namespace Orc.Snapshots
                     metadata["created"] = snapshot.Created.ToString("yyyy-MM-dd HH:mm:ss");
 
                     var metadataEntry = archive.CreateEntry("metadata");
-                    metadataEntry.OpenAndWrite(GetMetadataBytes(metadata));
+                    metadataEntry.OpenAndWriteAsync(GetMetadataBytes(metadata));
 
                     var snapshotBytes = await snapshot.GetAllBytesAsync();
                     var dataEntry = archive.CreateEntry("data");
-                    dataEntry.OpenAndWrite(snapshotBytes);
+                    dataEntry.OpenAndWriteAsync(snapshotBytes);
                 }
 
                 return memoryStream.ToArray();
