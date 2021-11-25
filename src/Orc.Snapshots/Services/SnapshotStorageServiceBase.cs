@@ -126,22 +126,24 @@ namespace Orc.Snapshots
 
             using (var memoryStream = new MemoryStream(bytes))
             {
-                var reader = new StreamReader(memoryStream);
-                var allText = reader.ReadToEnd();
-                var allLines = allText.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-
-                foreach (var line in allLines)
+                using (var reader = new StreamReader(memoryStream))
                 {
-                    var splitIndex = line.IndexOf(MetadataSplitter);
-                    if (splitIndex < 0)
+                    var allText = reader.ReadToEnd();
+                    var allLines = allText.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+
+                    foreach (var line in allLines)
                     {
-                        continue;
+                        var splitIndex = line.IndexOf(MetadataSplitter);
+                        if (splitIndex < 0)
+                        {
+                            continue;
+                        }
+
+                        var key = line.Substring(0, splitIndex);
+                        var value = line.Substring(splitIndex + MetadataSplitter.Length);
+
+                        metadata[key] = value;
                     }
-
-                    var key = line.Substring(0, splitIndex);
-                    var value = line.Substring(splitIndex + MetadataSplitter.Length);
-
-                    metadata[key] = value;
                 }
             }
 
