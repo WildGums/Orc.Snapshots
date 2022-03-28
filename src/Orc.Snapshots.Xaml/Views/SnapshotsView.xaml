@@ -45,7 +45,10 @@
                             <TextBlock Grid.Row="0" Text="{Binding Category}" Visibility="{Binding Category, Converter={catel:EmptyStringToCollapsingVisibilityConverter}}"
                                        Style="{StaticResource SnapshotsCategoryTitleTextBlockStyle}" />
 
-                            <ItemsControl Grid.Row="2" x:Name="listBox" ItemsSource="{Binding Snapshots}" BorderThickness="0">
+                            <ItemsControl x:Name="listBox"
+                                          Grid.Row="2"
+                                          ItemsSource="{Binding Snapshots}"
+                                          BorderThickness="0">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <StackPanel />
