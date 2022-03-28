@@ -1,15 +1,7 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SnapshotViewModel.cs" company="WildGums">
-//   Copyright (c) 2008 - 2016 WildGums. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-
-
-namespace Orc.Snapshots.ViewModels
+﻿namespace Orc.Snapshots.ViewModels
 {
     using System.Threading.Tasks;
     using Catel;
-    using Catel.Fody;
     using Catel.MVVM;
     using Catel.Services;
 

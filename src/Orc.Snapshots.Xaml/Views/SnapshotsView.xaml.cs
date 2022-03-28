@@ -1,15 +1,10 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SnapshotsView.xaml.cs" company="WildGums">
-//   Copyright (c) 2008 - 2014 WildGums. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-
-namespace Orc.Snapshots.Views
+﻿namespace Orc.Snapshots.Views
 {
-    using System;
     using System.Windows;
+    using System.Windows.Automation.Peers;
+    using Automation;
     using Catel.MVVM.Views;
-    using ViewModels;
+    using SnapshotsViewModel = ViewModels.SnapshotsViewModel;
 
     /// <summary>
     /// Interaction logic for SnapshotsView.xaml.
@@ -41,11 +36,15 @@ namespace Orc.Snapshots.Views
         #region Methods
         private void OnScopeChanged()
         {
-            var vm = ViewModel as SnapshotsViewModel;
-            if (vm is not null)
+            if (ViewModel is SnapshotsViewModel vm)
             {
                 vm.Scope = Scope;
             }
+        }
+
+        protected override AutomationPeer OnCreateAutomationPeer()
+        {
+            return new SnapshotsViewPeer(this);
         }
         #endregion
     }
