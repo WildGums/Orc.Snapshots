@@ -2,7 +2,6 @@
 {
     using System.Windows;
     using System.Windows.Automation.Peers;
-    using Automation;
     using Catel.MVVM.Views;
     using SnapshotsViewModel = ViewModels.SnapshotsViewModel;
 
@@ -44,7 +43,7 @@
 
         protected override AutomationPeer OnCreateAutomationPeer()
         {
-            return new SnapshotsViewPeer(this);
+            return new Automation.SnapshotsViewPeer(this);
         }
         #endregion
     }

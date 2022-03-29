@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using System.Windows;
     using Catel;
     using Catel.IoC;
     using Catel.Logging;
@@ -60,12 +61,7 @@
 
         private bool OnRestoreSnapshotCanExecute(ISnapshot snapshot)
         {
-            if (snapshot is null)
-            {
-                return false;
-            }
-
-            return true;
+            return snapshot is not null;
         }
 
         private async Task OnRestoreSnapshotExecuteAsync(ISnapshot snapshot)
@@ -79,38 +75,31 @@
 
         private bool OnEditSnapshotCanExecute(ISnapshot snapshot)
         {
-            if (snapshot is null)
-            {
-                return false;
-            }
-
-            return true;
+            return snapshot is not null;
         }
 
         private async Task OnEditSnapshotExecuteAsync(ISnapshot snapshot)
         {
             var modelValidation = snapshot as IValidatable;
 
-            EventHandler<ValidationEventArgs> handler = null;
-            handler = (sender, e) =>
+            void OnSnapshotValidating(object sender, ValidationEventArgs e)
             {
                 if (_snapshotManager.Snapshots.Any(x => x.Title.EqualsIgnoreCase(snapshot.Title) && x != snapshot))
                 {
-                    e.ValidationContext.Add(FieldValidationResult.CreateError("Title",
-                        _languageService.GetString("Snapshots_SnapshotWithCurrentTitleAlreadyExists")));
+                    e.ValidationContext.Add(FieldValidationResult.CreateError("Title", _languageService.GetString("Snapshots_SnapshotWithCurrentTitleAlreadyExists")));
                 }
-            };
+            }
 
             if (modelValidation is not null)
             {
-                modelValidation.Validating += handler;
+                modelValidation.Validating += OnSnapshotValidating;
             }
 
             if (await _uiVisualizerService.ShowDialogAsync<SnapshotViewModel>(snapshot) ?? false)
             {
                 if (modelValidation is not null)
                 {
-                    modelValidation.Validating -= handler;
+                    modelValidation.Validating -= OnSnapshotValidating;
                 }
 
                 await _snapshotManager.SaveAsync();
@@ -121,12 +110,7 @@
 
         private bool OnRemoveSnapshotCanExecute(ISnapshot snapshot)
         {
-            if (snapshot is null)
-            {
-                return false;
-            }
-
-            return true;
+            return snapshot is not null;
         }
 
         private async Task OnRemoveSnapshotExecuteAsync(ISnapshot snapshot)

@@ -1,12 +1,7 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SnapshotWindow.xaml.cs" company="WildGums">
-//   Copyright (c) 2008 - 2015 WildGums. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-
-
-namespace Orc.Snapshots.Views
+﻿namespace Orc.Snapshots.Views
 {
+    using System.Windows.Automation.Peers;
+    using Automation;
     using ViewModels;
 
     public partial class SnapshotWindow
@@ -33,5 +28,10 @@ namespace Orc.Snapshots.Views
             InitializeComponent();
         }
         #endregion
+
+        protected override AutomationPeer OnCreateAutomationPeer()
+        {
+            return new SnapshotWindowPeer(this);
+        }
     }
 }

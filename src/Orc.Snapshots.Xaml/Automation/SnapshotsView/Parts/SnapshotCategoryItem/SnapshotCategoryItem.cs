@@ -4,7 +4,12 @@
 
     public class SnapshotCategoryItem
     {
+        public SnapshotCategoryItem()
+        {
+            Items = new List<SnapshotItem>();
+        }
+
         public string CategoryName { get; set; }
-        public IReadOnlyList<SnapshotItem> Items { get; set; }
+        public List<SnapshotItem> Items { get; set; }
     }
 }

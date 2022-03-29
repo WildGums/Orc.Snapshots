@@ -56,7 +56,8 @@
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
 
-                                <TextBlock Grid.Row="0" 
+                                <TextBlock x:Name ="SnapshotCategoryTextBlock"
+                                           Grid.Row="0" 
                                            Text="{Binding Category}"
                                            Visibility="{Binding Category, Converter={catel:EmptyStringToCollapsingVisibilityConverter}}"
                                            Style="{StaticResource SnapshotsCategoryTitleTextBlockStyle}" />
@@ -81,7 +82,8 @@
                                                     <ColumnDefinition Width="Auto" />
                                                 </Grid.ColumnDefinitions>
 
-                                                <Label Grid.Column="0" 
+                                                <Label x:Name="SnapshotTitleLabel"
+                                                       Grid.Column="0"
                                                        Content="{Binding Title, Converter={converters:UnderscoreToDoubleUnderscoresStringConverter}}" />
 
                                                 <Button x:Name="RestoreSnapshotButton"
