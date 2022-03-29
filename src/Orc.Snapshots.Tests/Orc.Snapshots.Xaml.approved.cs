@@ -1,5 +1,5 @@
 ﻿[assembly: System.Resources.NeutralResourcesLanguage("en-US")]
-[assembly: System.Runtime.Versioning.TargetFramework(".NETCoreApp,Version=v5.0", FrameworkDisplayName="")]
+[assembly: System.Runtime.Versioning.TargetFramework(".NETCoreApp,Version=v6.0", FrameworkDisplayName="")]
 [assembly: System.Windows.Markup.XmlnsDefinition("http://schemas.wildgums.com/orc/snapshots", "Orc.Snapshots")]
 [assembly: System.Windows.Markup.XmlnsDefinition("http://schemas.wildgums.com/orc/snapshots", "Orc.Snapshots.Converters")]
 [assembly: System.Windows.Markup.XmlnsDefinition("http://schemas.wildgums.com/orc/snapshots", "Orc.Snapshots.Views")]
@@ -8,6 +8,102 @@
 public static class ModuleInitializer
 {
     public static void Initialize() { }
+}
+namespace Orc.Automation
+{
+    [Orc.Automation.AutomatedControl(ClassName="#32770")]
+    public class MessageBox : Orc.Automation.AutomationControl
+    {
+        public MessageBox(System.Windows.Automation.AutomationElement element) { }
+        public string Message { get; }
+        public string Title { get; }
+        public void Cancel() { }
+        public void No() { }
+        public void Ok() { }
+        public void Yes() { }
+    }
+    public class MessageBoxMap : Orc.Automation.AutomationBase
+    {
+        public MessageBoxMap(System.Windows.Automation.AutomationElement element) { }
+        public Orc.Automation.Controls.Button CancelButton { get; }
+        public Orc.Automation.Controls.Text ContentText { get; }
+        public Orc.Automation.Controls.Button NoButton { get; }
+        public Orc.Automation.Controls.Button OkButton { get; }
+        public Orc.Automation.Controls.Button YesButton { get; }
+    }
+}
+namespace Orc.Snapshots.Automation
+{
+    [Orc.Automation.AutomatedControl(ControlTypeName="Pane")]
+    public class SnapshotCategoriesList : Orc.Automation.Controls.FrameworkElement
+    {
+        public SnapshotCategoriesList(System.Windows.Automation.AutomationElement element) { }
+        public System.Collections.Generic.IReadOnlyList<Orc.Snapshots.Automation.SnapshotCategoryItem> GetCategoryItems() { }
+    }
+    public class SnapshotCategoryItem
+    {
+        public SnapshotCategoryItem() { }
+        public string CategoryName { get; set; }
+        public System.Collections.Generic.List<Orc.Snapshots.Automation.SnapshotItem> Items { get; set; }
+    }
+    public class SnapshotItem
+    {
+        public SnapshotItem(Orc.Snapshots.Automation.SnapshotItemMap map) { }
+        public string Title { get; }
+        public bool CanEdit() { }
+        public bool CanRemove() { }
+        public Orc.Snapshots.Automation.SnapshotWindow Edit() { }
+        public void Remove() { }
+        public void Restore() { }
+    }
+    public class SnapshotItemMap
+    {
+        public SnapshotItemMap() { }
+        public Orc.Automation.Controls.Button EditButton { get; set; }
+        public Orc.Automation.Controls.Button RemoveButton { get; set; }
+        public Orc.Automation.Controls.Button RestoreButton { get; set; }
+        public Orc.Automation.Controls.Text TitleText { get; set; }
+    }
+    public class SnapshotWindow : Orc.Automation.Controls.Window
+    {
+        public SnapshotWindow(System.Windows.Automation.AutomationElement element) { }
+        public string Title { get; set; }
+        public void Accept() { }
+        public void Decline() { }
+    }
+    public class SnapshotWindowMap : Orc.Automation.AutomationBase
+    {
+        public SnapshotWindowMap(System.Windows.Automation.AutomationElement element) { }
+        public Orc.Automation.Controls.Button CancelButton { get; }
+        public Orc.Automation.Controls.Button OkButton { get; }
+        public Orc.Automation.Controls.Edit TitleEdit { get; }
+    }
+    public class SnapshotWindowPeer : Orc.Automation.AutomationControlPeerBase<Orc.Snapshots.Views.SnapshotWindow>
+    {
+        public SnapshotWindowPeer(Orc.Snapshots.Views.SnapshotWindow owner) { }
+    }
+    [Orc.Automation.AutomatedControl(Class=typeof(Orc.Snapshots.Automation.SnapshotsView))]
+    public class SnapshotsView : Orc.Automation.Controls.FrameworkElement<Orc.Snapshots.Automation.SnapshotsViewModel, Orc.Snapshots.Automation.SnapshotsViewMap>
+    {
+        public SnapshotsView(System.Windows.Automation.AutomationElement element) { }
+        public System.Collections.Generic.IReadOnlyList<Orc.Snapshots.Automation.SnapshotCategoryItem> SnapshotCategories { get; }
+    }
+    public class SnapshotsViewMap : Orc.Automation.AutomationBase
+    {
+        public SnapshotsViewMap(System.Windows.Automation.AutomationElement element) { }
+        public Orc.Snapshots.Automation.SnapshotCategoriesList SnapshotCategoryList { get; }
+    }
+    [Orc.Automation.ActiveAutomationModel]
+    public class SnapshotsViewModel : Orc.Automation.ControlModel
+    {
+        public static readonly Catel.Data.PropertyData ScopeProperty;
+        public SnapshotsViewModel(Orc.Automation.AutomationElementAccessor accessor) { }
+        public object Scope { get; set; }
+    }
+    public class SnapshotsViewPeer : Orc.Automation.AutomationControlPeerBase<Orc.Snapshots.Views.SnapshotsView>
+    {
+        public SnapshotsViewPeer(Orc.Snapshots.Views.SnapshotsView owner) { }
+    }
 }
 namespace Orc.Snapshots.Converters
 {
@@ -93,6 +189,7 @@ namespace Orc.Snapshots.Views
         public SnapshotWindow() { }
         public SnapshotWindow(Orc.Snapshots.ViewModels.SnapshotViewModel viewModel) { }
         public void InitializeComponent() { }
+        protected override System.Windows.Automation.Peers.AutomationPeer OnCreateAutomationPeer() { }
     }
     public sealed class SnapshotsCleanupWindow : Catel.Windows.DataWindow, System.Windows.Markup.IComponentConnector
     {
@@ -106,5 +203,6 @@ namespace Orc.Snapshots.Views
         [Catel.MVVM.Views.ViewToViewModel("", MappingType=Catel.MVVM.Views.ViewToViewModelMappingType.ViewToViewModel)]
         public object Scope { get; set; }
         public void InitializeComponent() { }
+        protected override System.Windows.Automation.Peers.AutomationPeer OnCreateAutomationPeer() { }
     }
 }

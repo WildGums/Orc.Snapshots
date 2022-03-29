@@ -28,7 +28,7 @@ namespace Orc.Snapshots
             foreach (var snapshotData in _snapshots)
             {
                 var snapshot = await LoadSnapshotAsync(snapshotData.Key);
-                if (snapshot != null)
+                if (snapshot is not null)
                 {
                     snapshots.Add(snapshot);
                 }
@@ -85,7 +85,7 @@ namespace Orc.Snapshots
             Log.Debug($"Saving snapshot '{snapshot}' to '{source}'");
 
             var bytes = await ConvertSnapshotToBytesAsync(snapshot);
-            if (bytes != null)
+            if (bytes is not null)
             {
                 _snapshots[source] = bytes;
             }

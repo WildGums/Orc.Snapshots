@@ -10,12 +10,11 @@ namespace Orc.Snapshots
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.IO.Compression;
     using System.Linq;
     using System.Threading.Tasks;
     using Catel;
     using Catel.Logging;
-    using Ionic.Zip;
-    using CompressionLevel = Ionic.Zlib.CompressionLevel;
 
     public class Snapshot : ISnapshot
     {
@@ -135,16 +134,15 @@ namespace Orc.Snapshots
             var data = new List<KeyValuePair<string, byte[]>>();
 
             _contentHash = string.Empty;
-
-            using (var memoryStream = new MemoryStream(bytes))
+            using (var compressedStream = new MemoryStream(bytes))
             {
-                using (var zipFile = ZipFile.Read(memoryStream))
+                using (var archive = new ZipArchive(compressedStream, ZipArchiveMode.Read))
                 {
-                    foreach (var entry in zipFile.Entries)
+                    foreach (var entry in archive.Entries)
                     {
-                        var fileName = entry.FileName;
+                        var fileName = entry.Name;
                         var key = fileName.Substring(0, fileName.Length - InternalFileExtension.Length).Replace("/", "\\");
-                        var dataBytes = entry.GetBytes();
+                        var dataBytes = await entry.GetBytesAsync();
 
                         data.Add(new KeyValuePair<string, byte[]>(key, dataBytes));
                     }
@@ -159,24 +157,20 @@ namespace Orc.Snapshots
             using (var memoryStream = new MemoryStream())
             {
                 // Note: unfortunately not yet fully async, we could rewrite this to ZipOutputStream if that would make sense
-                using (var zip = new ZipFile())
+                using (ZipArchive archive = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
                 {
-                    zip.CompressionLevel = CompressionLevel.BestSpeed;
-
                     foreach (var dataItem in data)
                     {
                         var bytes = dataItem.Value;
 
                         // Even store empty data
-                        if (bytes == null)
+                        if (bytes is null)
                         {
                             bytes = new byte[] { };
                         }
-
-                        zip.AddEntry($"{dataItem.Key}{InternalFileExtension}", bytes);
+                        var entry = archive.CreateEntry($"{dataItem.Key}{InternalFileExtension}", CompressionLevel.Fastest);
+                        await entry.OpenAndWriteAsync(bytes);
                     }
-
-                    zip.Save(memoryStream);
                 }
 
                 var allBytes = memoryStream.ToArray();

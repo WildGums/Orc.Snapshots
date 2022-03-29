@@ -12,7 +12,7 @@ namespace Orc.Snapshots.Tests
     using Catel.Logging;
     using Catel.Reflection;
 
-    public class TemporaryFilesContext : IDisposable
+    public sealed class TemporaryFilesContext : IDisposable
     {
         #region Constants
         private static readonly ILog Log = LogManager.GetCurrentClassLogger();

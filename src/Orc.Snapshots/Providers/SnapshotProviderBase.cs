@@ -55,7 +55,7 @@ namespace Orc.Snapshots
             set
             {
                 var snapshotManager = ServiceLocator.ResolveType<ISnapshotManager>(value);
-                if (snapshotManager == null)
+                if (snapshotManager is null)
                 {
                     throw new PropertyNotNullableException("SnapshotManager", typeof(ISnapshotManager));
                 }

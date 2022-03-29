@@ -1,23 +1,15 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SnapshotsViewModel.cs" company="WildGums">
-//   Copyright (c) 2008 - 2014 WildGums. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-
-
-namespace Orc.Snapshots.ViewModels
+﻿namespace Orc.Snapshots.ViewModels
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using System.Windows;
     using Catel;
-    using Catel.Collections;
     using Catel.IoC;
     using Catel.Logging;
     using Catel.MVVM;
     using Catel.Services;
-    using Catel.Threading;
     using Catel.Data;
 
     public class SnapshotsViewModel : ViewModelBase
@@ -69,12 +61,7 @@ namespace Orc.Snapshots.ViewModels
 
         private bool OnRestoreSnapshotCanExecute(ISnapshot snapshot)
         {
-            if (snapshot == null)
-            {
-                return false;
-            }
-
-            return true;
+            return snapshot is not null;
         }
 
         private async Task OnRestoreSnapshotExecuteAsync(ISnapshot snapshot)
@@ -88,38 +75,31 @@ namespace Orc.Snapshots.ViewModels
 
         private bool OnEditSnapshotCanExecute(ISnapshot snapshot)
         {
-            if (snapshot == null)
-            {
-                return false;
-            }
-
-            return true;
+            return snapshot is not null;
         }
 
         private async Task OnEditSnapshotExecuteAsync(ISnapshot snapshot)
         {
             var modelValidation = snapshot as IValidatable;
 
-            EventHandler<ValidationEventArgs> handler = null;
-            handler = (sender, e) =>
+            void OnSnapshotValidating(object sender, ValidationEventArgs e)
             {
                 if (_snapshotManager.Snapshots.Any(x => x.Title.EqualsIgnoreCase(snapshot.Title) && x != snapshot))
                 {
-                    e.ValidationContext.Add(FieldValidationResult.CreateError("Title",
-                        _languageService.GetString("Snapshots_SnapshotWithCurrentTitleAlreadyExists")));
+                    e.ValidationContext.Add(FieldValidationResult.CreateError("Title", _languageService.GetString("Snapshots_SnapshotWithCurrentTitleAlreadyExists")));
                 }
-            };
+            }
 
-            if (modelValidation != null)
+            if (modelValidation is not null)
             {
-                modelValidation.Validating += handler;
+                modelValidation.Validating += OnSnapshotValidating;
             }
 
             if (await _uiVisualizerService.ShowDialogAsync<SnapshotViewModel>(snapshot) ?? false)
             {
-                if (modelValidation != null)
+                if (modelValidation is not null)
                 {
-                    modelValidation.Validating -= handler;
+                    modelValidation.Validating -= OnSnapshotValidating;
                 }
 
                 await _snapshotManager.SaveAsync();
@@ -130,12 +110,7 @@ namespace Orc.Snapshots.ViewModels
 
         private bool OnRemoveSnapshotCanExecute(ISnapshot snapshot)
         {
-            if (snapshot == null)
-            {
-                return false;
-            }
-
-            return true;
+            return snapshot is not null;
         }
 
         private async Task OnRemoveSnapshotExecuteAsync(ISnapshot snapshot)
@@ -212,7 +187,7 @@ namespace Orc.Snapshots.ViewModels
                 return;
             }
 
-            if (previousSnapshotManager != null)
+            if (previousSnapshotManager is not null)
             {
                 previousSnapshotManager.Loaded -= OnSnapshotsLoaded;
                 previousSnapshotManager.SnapshotsChanged -= OnSnapshotsChanged;
@@ -222,7 +197,7 @@ namespace Orc.Snapshots.ViewModels
 
             _snapshotManager = snapshotManager;
 
-            if (snapshotManager != null)
+            if (snapshotManager is not null)
             {
                 snapshotManager.Loaded += OnSnapshotsLoaded;
                 snapshotManager.SnapshotsChanged += OnSnapshotsChanged;
@@ -246,7 +221,7 @@ namespace Orc.Snapshots.ViewModels
             Log.Debug($"Deactivating snapshot manager");
 
             var snapshotManager = _snapshotManager;
-            if (snapshotManager != null)
+            if (snapshotManager is not null)
             {
                 snapshotManager.Loaded -= OnSnapshotsLoaded;
                 snapshotManager.SnapshotsChanged -= OnSnapshotsChanged;
