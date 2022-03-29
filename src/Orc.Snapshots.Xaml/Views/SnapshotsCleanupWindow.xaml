@@ -45,7 +45,8 @@
             <TextBlock Grid.Column="1" Grid.Row="0" Text="{catel:LanguageBinding Snapshots_SnapshotsCleanupWindow_CheckBox_Content_SelectAll}" FontSize="14" FontWeight="SemiBold"  />
         </Grid>
             
-        <ItemsControl Grid.Row="3" ItemsSource="{Binding Snapshots}">
+        <ItemsControl Grid.Row="3" 
+                      ItemsSource="{Binding Snapshots}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="0,4,0,4">
