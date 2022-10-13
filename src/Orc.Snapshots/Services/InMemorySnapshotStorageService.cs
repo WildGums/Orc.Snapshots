@@ -1,11 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="InMemorySnapshotStorageService.cs" company="WildGums">
-//   Copyright (c) 2008 - 2016 WildGums. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-
-
-namespace Orc.Snapshots
+﻿namespace Orc.Snapshots
 {
     using System;
     using System.Collections.Generic;
@@ -39,18 +32,17 @@ namespace Orc.Snapshots
             return snapshots;
         }
 
-        protected virtual async Task<ISnapshot> LoadSnapshotAsync(string source)
+        protected virtual async Task<ISnapshot?> LoadSnapshotAsync(string source)
         {
             Argument.IsNotNullOrEmpty(() => source);
 
-            ISnapshot result = null;
+            ISnapshot? result = null;
 
             try
             {
                 Log.Debug($"Loading snapshot from '{source}'");
 
-                byte[] bytes;
-                if (_snapshots.TryGetValue(source, out bytes))
+                if (_snapshots.TryGetValue(source, out var bytes))
                 {
                     result = await ConvertBytesToSnapshotAsync(bytes);
                 }
@@ -65,7 +57,7 @@ namespace Orc.Snapshots
 
         public override async Task SaveSnapshotsAsync(IEnumerable<ISnapshot> snapshots)
         {
-            Argument.IsNotNull(() => snapshots);
+            ArgumentNullException.ThrowIfNull(snapshots);
 
             Log.Debug("Deleting previous snapshot files");
 
@@ -80,7 +72,7 @@ namespace Orc.Snapshots
         protected virtual async Task SaveSnapshotAsync(string source, ISnapshot snapshot)
         {
             Argument.IsNotNullOrEmpty(() => source);
-            Argument.IsNotNull(() => snapshot);
+            ArgumentNullException.ThrowIfNull(snapshot);
 
             Log.Debug($"Saving snapshot '{snapshot}' to '{source}'");
 

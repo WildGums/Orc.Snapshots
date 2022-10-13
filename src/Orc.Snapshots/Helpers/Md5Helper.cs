@@ -1,11 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Md5Helper.cs" company="WildGums">
-//   Copyright (c) 2008 - 2017 WildGums. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-
-
-namespace Orc.Snapshots
+﻿namespace Orc.Snapshots
 {
     using System;
     using System.IO;
@@ -13,7 +6,6 @@ namespace Orc.Snapshots
 
     internal static class Md5Helper
     {
-        #region Methods
         public static string ComputeMd5ForFile(string fileName)
         {
             using (var stream = File.OpenRead(fileName))
@@ -40,6 +32,5 @@ namespace Orc.Snapshots
                 return finalHash;
             }
         }
-        #endregion
     }
 }

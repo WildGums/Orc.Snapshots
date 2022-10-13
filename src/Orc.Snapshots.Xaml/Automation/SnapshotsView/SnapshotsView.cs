@@ -14,6 +14,6 @@
         }
 
         public IReadOnlyList<SnapshotCategoryItem> SnapshotCategories
-            => Map.SnapshotCategoryList.GetCategoryItems();
+            => Map.SnapshotCategoryList?.GetCategoryItems() ?? new List<SnapshotCategoryItem>();
     }
 }

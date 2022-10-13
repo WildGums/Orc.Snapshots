@@ -1,12 +1,6 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SnapshotFacts.SetData.cs" company="WildGums">
-//   Copyright (c) 2008 - 2016 WildGums. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-
-
-namespace Orc.Snapshots.Tests.Models
+﻿namespace Orc.Snapshots.Tests.Models
 {
+    using System;
     using NUnit.Framework;
 
     public partial class SnapshotFacts
@@ -21,7 +15,7 @@ namespace Orc.Snapshots.Tests.Models
 
                 var testBytes = new byte[] { 1, 2, 3 };
 
-                Assert.AreEqual(null, snapshot.GetData("MyData"));
+                Assert.AreEqual(Array.Empty<byte>(), snapshot.GetData("MyData"));
 
                 snapshot.SetData("MyData", testBytes);
 
@@ -50,7 +44,7 @@ namespace Orc.Snapshots.Tests.Models
                 snapshot.SetData("MyData", new byte[] { 4, 5, 6 });
                 snapshot.SetData("MyData", null);
 
-                Assert.AreEqual(null, snapshot.GetData("MyData"));
+                Assert.AreEqual(Array.Empty<byte>(), snapshot.GetData("MyData"));
             }
         }
     }

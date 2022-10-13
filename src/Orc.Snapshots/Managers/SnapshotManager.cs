@@ -1,10 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SnapshotManager.cs" company="WildGums">
-//   Copyright (c) 2008 - 2015 WildGums. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-
-namespace Orc.Snapshots
+﻿namespace Orc.Snapshots
 {
     using System;
     using System.Collections.Generic;
@@ -26,22 +20,19 @@ namespace Orc.Snapshots
         private readonly List<ISnapshot> _snapshots = new List<ISnapshot>();
 
         private ISnapshotStorageService _snapshotStorageService;
-        private object _scope;
+        private object? _scope;
 
-        #region Constructors
         public SnapshotManager(ISnapshotStorageService snapshotStorageService, IServiceLocator serviceLocator)
         {
-            Argument.IsNotNull(() => snapshotStorageService);
-            Argument.IsNotNull(() => serviceLocator);
+            ArgumentNullException.ThrowIfNull(snapshotStorageService);
+            ArgumentNullException.ThrowIfNull(serviceLocator);
 
             _snapshotStorageService = snapshotStorageService;
             _serviceLocator = serviceLocator;
 
             UniqueIdentifier = UniqueIdentifierHelper.GetUniqueIdentifier<SnapshotManager>();
         }
-        #endregion
 
-        #region Properties
         public int UniqueIdentifier { get; private set; }
 
         public IEnumerable<ISnapshotProvider> Providers
@@ -49,13 +40,20 @@ namespace Orc.Snapshots
             get { return _providers.ToArray(); }
         }
 
-        public object Scope
+        public object? Scope
         {
             get { return _scope; }
             set
             {
                 _scope = value;
-                _snapshotStorageService = _serviceLocator.ResolveType<ISnapshotStorageService>(_scope);
+
+                var snapshotStorageService = _serviceLocator.ResolveType<ISnapshotStorageService>(_scope);
+                if (snapshotStorageService is null)
+                {
+                    return;
+                }
+
+                _snapshotStorageService = snapshotStorageService;
             }
         }
 
@@ -63,30 +61,26 @@ namespace Orc.Snapshots
         {
             get { return _snapshots.ToArray(); }
         }
-        #endregion
 
-        #region Events
-        public event AsyncEventHandler<CancelEventArgs> LoadingAsync;
-        public event EventHandler<EventArgs> Loaded;
+        public event AsyncEventHandler<CancelEventArgs>? LoadingAsync;
+        public event EventHandler<EventArgs>? Loaded;
 
-        public event AsyncEventHandler<CancelEventArgs> SavingAsync;
-        public event EventHandler<EventArgs> Saved;
+        public event AsyncEventHandler<CancelEventArgs>? SavingAsync;
+        public event EventHandler<EventArgs>? Saved;
 
-        public event AsyncEventHandler<SnapshotEventArgs> SnapshotCreatingAsync;
-        public event EventHandler<SnapshotEventArgs> SnapshotCreated;
+        public event AsyncEventHandler<SnapshotEventArgs>? SnapshotCreatingAsync;
+        public event EventHandler<SnapshotEventArgs>? SnapshotCreated;
 
-        public event AsyncEventHandler<SnapshotEventArgs> SnapshotRestoringAsync;
-        public event EventHandler<SnapshotEventArgs> SnapshotRestored;
+        public event AsyncEventHandler<SnapshotEventArgs>? SnapshotRestoringAsync;
+        public event EventHandler<SnapshotEventArgs>? SnapshotRestored;
 
-        public event EventHandler<EventArgs> SnapshotsChanged;
-        public event EventHandler<SnapshotEventArgs> SnapshotAdded;
-        public event EventHandler<SnapshotEventArgs> SnapshotRemoved;
+        public event EventHandler<EventArgs>? SnapshotsChanged;
+        public event EventHandler<SnapshotEventArgs>? SnapshotAdded;
+        public event EventHandler<SnapshotEventArgs>? SnapshotRemoved;
 
-        public event EventHandler<SnapshotProviderEventArgs> SnapshotProviderAdded;
-        public event EventHandler<SnapshotProviderEventArgs> SnapshotProviderRemoved;
-        #endregion
+        public event EventHandler<SnapshotProviderEventArgs>? SnapshotProviderAdded;
+        public event EventHandler<SnapshotProviderEventArgs>? SnapshotProviderRemoved;
 
-        #region ISnapshotManager Members
         public async Task<bool> LoadAsync()
         {
             Log.Debug($"[{Scope}] Loading snapshots");
@@ -152,7 +146,7 @@ namespace Orc.Snapshots
 
         public void AddProvider(ISnapshotProvider snapshotProvider)
         {
-            Argument.IsNotNull(() => snapshotProvider);
+            ArgumentNullException.ThrowIfNull(snapshotProvider);
 
 #if DEBUG
             Log.Debug($"[{Scope}] Adding provider {snapshotProvider.GetType()} to the SnapshotManager (Scope = '{Scope ?? "null"}')");
@@ -168,7 +162,7 @@ namespace Orc.Snapshots
 
         public bool RemoveProvider(ISnapshotProvider snapshotProvider)
         {
-            Argument.IsNotNull(() => snapshotProvider);
+            ArgumentNullException.ThrowIfNull(snapshotProvider);
 
 #if DEBUG
             Log.Debug($"[{Scope}] Removing provider {snapshotProvider.GetType()} from the SnapshotManager (Tag == \"{Scope ?? "null"}\")");
@@ -192,7 +186,7 @@ namespace Orc.Snapshots
 
         public virtual async Task<ISnapshot> CreateSnapshotAsync(ISnapshot snapshot)
         {
-            Argument.IsNotNull(() => snapshot);
+            ArgumentNullException.ThrowIfNull(snapshot);
 
             Log.Info($"Creating snapshot '{snapshot}'");
 
@@ -242,7 +236,7 @@ namespace Orc.Snapshots
 
         public virtual async Task RestoreSnapshotAsync(ISnapshot snapshot)
         {
-            Argument.IsNotNull(() => snapshot);
+            ArgumentNullException.ThrowIfNull(snapshot);
 
             Log.Info($"Restoring snapshot '{snapshot}'");
 
@@ -268,7 +262,7 @@ namespace Orc.Snapshots
                     var providerData = snapshot.GetData(name);
                     if (providerData is null)
                     {
-                        providerData = new byte[] {};
+                        providerData = new byte[] { };
                     }
 
                     using (var memoryStream = new MemoryStream(providerData))
@@ -290,7 +284,7 @@ namespace Orc.Snapshots
 
         public void Add(ISnapshot snapshot)
         {
-            Argument.IsNotNull(() => snapshot);
+            ArgumentNullException.ThrowIfNull(snapshot);
 
             if (!_snapshots.Contains(snapshot))
             {
@@ -305,7 +299,7 @@ namespace Orc.Snapshots
 
         public bool Remove(ISnapshot snapshot)
         {
-            Argument.IsNotNull(() => snapshot);
+            ArgumentNullException.ThrowIfNull(snapshot);
 
             Log.Debug($"[{Scope}] Deleting snapshot '{snapshot}'");
 
@@ -336,6 +330,5 @@ namespace Orc.Snapshots
 
             return providers;
         }
-        #endregion
     }
 }

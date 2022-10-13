@@ -1,4 +1,4 @@
-using Catel.IoC;
+﻿using Catel.IoC;
 using Catel.Services;
 using Orc.Snapshots;
 
@@ -17,7 +17,7 @@ public static class ModuleInitializer
         serviceLocator.RegisterType<ISnapshotManager, SnapshotManager>();
         serviceLocator.RegisterType<ISnapshotStorageService, FileSystemSnapshotStorageService>();
 
-        var languageService = serviceLocator.ResolveType<ILanguageService>();
+        var languageService = serviceLocator.ResolveRequiredType<ILanguageService>();
         languageService.RegisterLanguageSource(new LanguageResourceSource("Orc.Snapshots", "Orc.Snapshots.Properties", "Resources"));
     }
 }

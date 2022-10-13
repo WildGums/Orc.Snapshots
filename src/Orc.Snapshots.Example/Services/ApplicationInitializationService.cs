@@ -1,23 +1,12 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ApplicationInitializationService.cs" company="WildGums">
-//   Copyright (c) 2008 - 2015 WildGums. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-
-namespace Orc.Snapshots.Example.Services
+﻿namespace Orc.Snapshots.Example.Services
 {
     using System;
     using Orchestra.Services;
     using System.Threading.Tasks;
     using System.Windows.Media;
-    using Catel;
     using Catel.IoC;
-    using Catel.Threading;
     using Models;
-    using Orchestra.Markup;
-    using Snapshots;
     using Snapshots.Providers;
-    using Watchers;
     using Orc.Theming;
 
     public class ApplicationInitializationService : ApplicationInitializationServiceBase
@@ -26,7 +15,7 @@ namespace Orc.Snapshots.Example.Services
 
         public ApplicationInitializationService(IServiceLocator serviceLocator)
         {
-            Argument.IsNotNull(() => serviceLocator);
+            ArgumentNullException.ThrowIfNull(serviceLocator);
 
             _serviceLocator = serviceLocator;
         }
@@ -36,7 +25,7 @@ namespace Orc.Snapshots.Example.Services
             InitializeFonts();
             RegisterTypes();
 
-            return TaskHelper.Completed;
+            return Task.CompletedTask;
         }
 
         private void InitializeFonts()
@@ -53,7 +42,7 @@ namespace Orc.Snapshots.Example.Services
             _serviceLocator.RegisterTypeAndInstantiate<Project>();
 
             // Snapshot Providers
-            var snapshotManager = _serviceLocator.ResolveType<ISnapshotManager>();
+            var snapshotManager = _serviceLocator.ResolveRequiredType<ISnapshotManager>();
             snapshotManager.AddProvider<CompanySnapshotProvider>();
             snapshotManager.AddProvider<PersonSnapshotProvider>();
 

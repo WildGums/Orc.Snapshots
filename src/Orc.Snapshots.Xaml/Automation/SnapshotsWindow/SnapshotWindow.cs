@@ -14,8 +14,15 @@
 
         public string Title
         {
-            get => Map.TitleEdit.Text;
-            set => Map.TitleEdit.Text = value;
+            get => Map.TitleEdit?.Text ?? string.Empty;
+            set
+            {
+                var titleEdit = Map.TitleEdit;
+                if (titleEdit is not null)
+                {
+                    titleEdit.Text = value;
+                }
+            }
         }
         public void Accept() => Map.OkButton?.Click();
         public void Decline() => Map.CancelButton?.Click();

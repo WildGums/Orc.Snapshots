@@ -1,11 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ISnapshotManagerExtensions.cs" company="WildGums">
-//   Copyright (c) 2008 - 2016 WildGums. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-
-
-namespace Orc.Snapshots
+﻿namespace Orc.Snapshots
 {
     using System;
     using System.Linq;
@@ -15,19 +8,18 @@ namespace Orc.Snapshots
 
     public static class ISnapshotManagerExtensions
     {
-        #region Methods
         public static void AddProvider<TSnapshotProvider>(this ISnapshotManager snapshotManager)
             where TSnapshotProvider : ISnapshotProvider
         {
-            Argument.IsNotNull(() => snapshotManager);
+            ArgumentNullException.ThrowIfNull(snapshotManager);
 
-            var snapshotProvider = TypeFactory.Default.CreateInstance<TSnapshotProvider>();
+            var snapshotProvider = TypeFactory.Default.CreateRequiredInstance<TSnapshotProvider>();
             snapshotManager.AddProvider(snapshotProvider);
         }
 
-        public static async Task<ISnapshot> CreateSnapshotAsync(this ISnapshotManager snapshotManager, string title, string category = null)
+        public static async Task<ISnapshot?> CreateSnapshotAsync(this ISnapshotManager snapshotManager, string title, string category = "")
         {
-            Argument.IsNotNull(() => snapshotManager);
+            ArgumentNullException.ThrowIfNull(snapshotManager);
             Argument.IsNotNullOrWhitespace(() => title);
 
             var snapshot = new Snapshot
@@ -42,22 +34,24 @@ namespace Orc.Snapshots
             return snapshot;
         }
 
-        public static async Task<ISnapshot> CreateSnapshotAndSaveAsync(this ISnapshotManager snapshotManager, string title, string category = null)
+        public static async Task<ISnapshot?> CreateSnapshotAndSaveAsync(this ISnapshotManager snapshotManager, string title, string category = "")
         {
-            Argument.IsNotNull(() => snapshotManager);
+            ArgumentNullException.ThrowIfNull(snapshotManager);
             Argument.IsNotNullOrWhitespace(() => title);
 
             var snapshot = await snapshotManager.CreateSnapshotAsync(title, category);
-
-            snapshotManager.Add(snapshot);
-            await snapshotManager.SaveAsync();
+            if (snapshot is not null)
+            {
+                snapshotManager.Add(snapshot);
+                await snapshotManager.SaveAsync();
+            }
 
             return snapshot;
         }
 
-        public static ISnapshot FindSnapshot(this ISnapshotManager snapshotManager, string title, string category = null)
+        public static ISnapshot? FindSnapshot(this ISnapshotManager snapshotManager, string title, string category = "")
         {
-            Argument.IsNotNull(() => snapshotManager);
+            ArgumentNullException.ThrowIfNull(snapshotManager);
             Argument.IsNotNullOrWhitespace(() => title);
 
             return (from snapshot in snapshotManager.Snapshots
@@ -66,13 +60,12 @@ namespace Orc.Snapshots
                     select snapshot).FirstOrDefault();
         }
 
-        public static TSnapshot FindSnapshot<TSnapshot>(this ISnapshotManager snapshotManager, string title, string category = null)
+        public static TSnapshot? FindSnapshot<TSnapshot>(this ISnapshotManager snapshotManager, string title, string category = "")
             where TSnapshot : ISnapshot
         {
-            Argument.IsNotNull(() => snapshotManager);
+            ArgumentNullException.ThrowIfNull(snapshotManager);
 
-            return (TSnapshot)FindSnapshot(snapshotManager, title, category);
+            return (TSnapshot?)FindSnapshot(snapshotManager, title, category);
         }
-        #endregion
     }
 }

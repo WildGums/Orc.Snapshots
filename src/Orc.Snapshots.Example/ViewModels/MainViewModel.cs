@@ -1,13 +1,6 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="MainViewModel.cs" company="WildGums">
-//   Copyright (c) 2008 - 2015 WildGums. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-
-
-namespace Orc.Snapshots.Example.ViewModels
+﻿namespace Orc.Snapshots.Example.ViewModels
 {
-    using Catel;
+    using System;
     using Catel.Logging;
     using Catel.MVVM;
     using Models;
@@ -21,7 +14,7 @@ namespace Orc.Snapshots.Example.ViewModels
 
         public MainViewModel(Project project)
         {
-            Argument.IsNotNull(() => project);
+            ArgumentNullException.ThrowIfNull(project);
 
             Person = project.Person;
             Company = project.Company;
@@ -34,7 +27,6 @@ namespace Orc.Snapshots.Example.ViewModels
 
         public Company Company { get; private set; }
 
-        #region Commands
         public Command FillData { get; private set; }
 
         private void OnFillDataExecute()
@@ -52,6 +44,5 @@ namespace Orc.Snapshots.Example.ViewModels
             Person.LastName = string.Empty;
             Company.Name = string.Empty;
         }
-        #endregion
     }
 }

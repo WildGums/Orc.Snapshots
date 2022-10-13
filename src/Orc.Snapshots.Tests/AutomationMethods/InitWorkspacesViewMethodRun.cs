@@ -1,5 +1,6 @@
 ﻿namespace Orc.Snapshots.Tests
 {
+    using System.Threading.Tasks;
     using System.Windows;
     using Catel.IoC;
     using Catel.Services;
@@ -31,14 +32,16 @@
             {
                 RegisterScope(scope);
             }
-            
-            var vm = this.GetTypeFactory().CreateInstanceWithParametersAndAutoCompletion<ViewModels.SnapshotsViewModel>();
+
+#pragma warning disable IDISP004 // Don't ignore created IDisposable
+            var vm = this.GetTypeFactory().CreateRequiredInstanceWithParametersAndAutoCompletion<ViewModels.SnapshotsViewModel>();
+#pragma warning restore IDISP004 // Don't ignore created IDisposable
             snapshotsView.DataContext = vm;
 
             return true;
         }
 
-        private void RegisterScope(object scope)
+        private async void RegisterScope(object scope)
         {
 #pragma warning disable IDISP001 // Dispose created
             var serviceLocator = this.GetServiceLocator();
@@ -54,7 +57,7 @@
             var snapshotManager = typeFactory.CreateInstanceWithParametersAndAutoCompletionWithTag<SnapshotManager>(scope);
             snapshotManager.Scope = scope;
 
-            TaskHelper.RunAndWaitAsync(async () => await snapshotManager.LoadAsync());
+            await Task.Run(async () => await snapshotManager.LoadAsync());
 
             serviceLocator.RegisterInstance(typeof(ISnapshotManager), snapshotManager, scope);
         }

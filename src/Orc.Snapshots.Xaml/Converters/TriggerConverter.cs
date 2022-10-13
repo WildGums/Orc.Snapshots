@@ -1,15 +1,7 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="TriggerConverter.cs" company="WildGums">
-//   Copyright (c) 2008 - 2014 WildGums. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-
-
-namespace Orc.Snapshots.Converters
+﻿namespace Orc.Snapshots.Converters
 {
     using System;
     using System.Windows.Data;
-    using Catel.Collections;
     using Catel.MVVM.Converters;
 
     /// <summary>
@@ -18,9 +10,13 @@ namespace Orc.Snapshots.Converters
     /// </summary>
     public class TriggerConverter : IMultiValueConverter
     {
-        #region IMultiValueConverter Members
-        public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        public object? Convert(object?[]? values, Type targetType, object? parameter, System.Globalization.CultureInfo? culture)
         {
+            if (values is null)
+            {
+                return ConverterHelper.UnsetValue;
+            }
+
             // First value is target value.
             // All others are update triggers only.
             if (values.Length < 1)
@@ -31,10 +27,9 @@ namespace Orc.Snapshots.Converters
             return values[0];
         }
 
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, System.Globalization.CultureInfo culture)
+        public object[] ConvertBack(object? value, Type[] targetTypes, object? parameter, System.Globalization.CultureInfo? culture)
         {
-            return ArrayShim.Empty<object>();
+            return Array.Empty<object>();
         }
-        #endregion
     }
 }

@@ -1,12 +1,6 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SnapshotFacts.GetData.cs" company="WildGums">
-//   Copyright (c) 2008 - 2016 WildGums. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-
-
-namespace Orc.Snapshots.Tests.Models
+﻿namespace Orc.Snapshots.Tests.Models
 {
+    using System;
     using NUnit.Framework;
 
     public partial class SnapshotFacts
@@ -15,11 +9,11 @@ namespace Orc.Snapshots.Tests.Models
         public class TheGetDataMethod
         {
             [Test]
-            public void ReturnsNullIfNotExists()
+            public void ReturnsEmptyIfNotExists()
             {
                 var snapshot = new Snapshot();
 
-                Assert.AreEqual(null, snapshot.GetData("MyData"));
+                Assert.AreEqual(Array.Empty<byte>(), snapshot.GetData("MyData"));
             }
 
             [Test]

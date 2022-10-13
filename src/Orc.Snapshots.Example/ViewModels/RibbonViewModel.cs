@@ -1,11 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="RibbonViewModel.cs" company="WildGums">
-//   Copyright (c) 2008 - 2015 WildGums. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-
-
-namespace Orc.Snapshots.Example.ViewModels
+﻿namespace Orc.Snapshots.Example.ViewModels
 {
     using System.Threading.Tasks;
     using Catel.MVVM;
@@ -30,10 +23,6 @@ namespace Orc.Snapshots.Example.ViewModels
             Title = "Orc.Snapshots example";
         }
 
-        #region Properties
-        #endregion
-
-        #region Commands
         public TaskCommand CreateSnapshot { get; private set; }
         
         private bool OnCreateSnapshotCanExecute()
@@ -46,7 +35,8 @@ namespace Orc.Snapshots.Example.ViewModels
             // In theory, we shouldn't have to use this one
             var snapshot = new Snapshot();
 
-            if (await _uiVisualizerService.ShowDialogAsync<SnapshotViewModel>(snapshot) ?? false)
+            var result = await _uiVisualizerService.ShowDialogAsync<SnapshotViewModel>(snapshot);
+            if (result.DialogResult ?? false)
             {
                 var existingSnapshot = _snapshotManager.FindSnapshot(snapshot.Title);
                 if (existingSnapshot is not null)
@@ -72,15 +62,12 @@ namespace Orc.Snapshots.Example.ViewModels
         {
             return _uiVisualizerService.ShowDialogAsync<SnapshotsCleanupViewModel>();
         }
-        #endregion
 
-        #region Methods
         protected override async Task InitializeAsync()
         {
             await base.InitializeAsync();
 
             await _snapshotManager.LoadAsync();
         }
-        #endregion
     }
 }

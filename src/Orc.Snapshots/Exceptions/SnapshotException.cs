@@ -1,11 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SnapshotException.cs" company="WildGums">
-//   Copyright (c) 2008 - 2016 WildGums. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-
-
-namespace Orc.Snapshots
+﻿namespace Orc.Snapshots
 {
     using System;
     using System.Runtime.Serialization;
@@ -13,7 +6,6 @@ namespace Orc.Snapshots
     [Serializable]
     public class SnapshotException : Exception
     {
-        #region Constructors
         public SnapshotException()
         {
 
@@ -35,10 +27,8 @@ namespace Orc.Snapshots
         {
 
         }
-        #endregion
 
-        #region Properties
-        public ISnapshot Snapshot { get; private set; }
-        #endregion
+        public ISnapshot? Snapshot { get; private set; }
+
     }
 }

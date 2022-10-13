@@ -6,7 +6,6 @@
 
     public partial class SnapshotWindow
     {
-        #region Constructors
         /// <summary>
         /// Initializes a new instance of the <see cref="SnapshotWindow"/> class.
         /// </summary>
@@ -22,12 +21,11 @@
         /// <remarks>
         /// This constructor can be used to use view-model injection.
         /// </remarks>
-        public SnapshotWindow(SnapshotViewModel viewModel)
+        public SnapshotWindow(SnapshotViewModel? viewModel)
             : base(viewModel)
         {
             InitializeComponent();
         }
-        #endregion
 
         protected override AutomationPeer OnCreateAutomationPeer()
         {

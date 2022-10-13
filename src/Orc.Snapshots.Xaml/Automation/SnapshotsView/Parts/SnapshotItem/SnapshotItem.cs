@@ -1,8 +1,8 @@
 ﻿namespace Orc.Snapshots.Automation
 {
+    using System;
     using Catel;
     using Orc.Automation;
-    using Views;
 
     public class SnapshotItem
     {
@@ -10,12 +10,12 @@
 
         public SnapshotItem(SnapshotItemMap map)
         {
-            Argument.IsNotNull(() => map);
+            ArgumentNullException.ThrowIfNull(map);
             
             _map = map;
         }
 
-        public string Title => _map.TitleText?.Value;
+        public string Title => _map.TitleText?.Value ?? string.Empty;
 
         public void Restore()
         {
@@ -24,29 +24,29 @@
 
         public bool CanEdit()
         {
-            return _map.EditButton.IsVisible();
+            return _map.EditButton?.IsVisible() ?? false;
         }
 
-        public SnapshotWindow Edit()
+        public SnapshotWindow? Edit()
         {
             if (!CanEdit())
             {
                 return null;
             }
 
-            _map.EditButton.Click();
+            _map.EditButton?.Click();
 
             Wait.UntilResponsive();
 
-            var hostWindow = _map.EditButton.Element.GetHostWindow();
-            var snapshotWindow = hostWindow.Find<SnapshotWindow>();
+            var hostWindow = _map.EditButton?.Element.GetHostWindow();
+            var snapshotWindow = hostWindow?.Find<SnapshotWindow>();
 
             return snapshotWindow;
         }
 
         public bool CanRemove()
         {
-            return _map.RemoveButton.IsVisible();
+            return _map.RemoveButton?.IsVisible() ?? false;
         }
 
         public void Remove()
@@ -58,21 +58,20 @@
 
             var removeButton = _map.RemoveButton;
 
-            removeButton.Click();
+            removeButton?.Click();
 
-            var hostWindow = removeButton.Element.GetHostWindow();
+            var hostWindow = removeButton?.Element.GetHostWindow();
 
-            hostWindow.SetFocus();
+            hostWindow?.SetFocus();
 
             Wait.UntilResponsive();
 
-            var messageBox = hostWindow.Find<MessageBox>();
+            var messageBox = hostWindow?.Find<MessageBox>();
             messageBox?.Yes();
 
             Wait.UntilResponsive();
 
-            hostWindow.SetFocus();
-
+            hostWindow?.SetFocus();
         }
     }
 }

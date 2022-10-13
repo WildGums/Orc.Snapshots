@@ -1,11 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="FileSystemSnapshotStorageService.cs" company="WildGums">
-//   Copyright (c) 2008 - 2016 WildGums. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-
-
-namespace Orc.Snapshots
+﻿namespace Orc.Snapshots
 {
     using System;
     using System.Collections.Generic;
@@ -30,15 +23,15 @@ namespace Orc.Snapshots
         public FileSystemSnapshotStorageService(IDirectoryService directoryService, IFileService fileService,
             IAppDataService appDataService)
         {
-            Argument.IsNotNull(() => directoryService);
-            Argument.IsNotNull(() => fileService);
-            Argument.IsNotNull(() => appDataService);
+            ArgumentNullException.ThrowIfNull(directoryService);
+            ArgumentNullException.ThrowIfNull(fileService);
+            ArgumentNullException.ThrowIfNull(appDataService);
 
             _directoryService = directoryService;
             _fileService = fileService;
             _appDataService = appDataService;
 
-            Directory = Path.Combine(_appDataService.GetApplicationDataDirectory(Catel.IO.ApplicationDataTarget.UserRoaming), "snapshots");
+            Directory = System.IO.Path.Combine(_appDataService.GetApplicationDataDirectory(Catel.IO.ApplicationDataTarget.UserRoaming), "snapshots");
         }
 
         public string Directory { get; set; }
@@ -68,11 +61,11 @@ namespace Orc.Snapshots
             return snapshots;
         }
 
-        protected virtual async Task<ISnapshot> LoadSnapshotAsync(string source)
+        protected virtual async Task<ISnapshot?> LoadSnapshotAsync(string source)
         {
             Argument.IsNotNullOrEmpty(() => source);
 
-            ISnapshot result = null;
+            ISnapshot? result = null;
 
             try
             {
@@ -94,7 +87,7 @@ namespace Orc.Snapshots
 
         public override async Task SaveSnapshotsAsync(IEnumerable<ISnapshot> snapshots)
         {
-            Argument.IsNotNull(() => snapshots);
+            ArgumentNullException.ThrowIfNull(snapshots);
 
             var directory = Directory;
             _directoryService.Create(directory);
@@ -109,8 +102,7 @@ namespace Orc.Snapshots
             {
                 try
                 {
-                    ISnapshot snapshot = null;
-                    var delete = !snapshotFileNames.TryGetValue(snapshotFile, out snapshot);
+                    var delete = !snapshotFileNames.TryGetValue(snapshotFile, out var snapshot);
                     if (!delete)
                     {
                         // Note: we cannot yet use this method because we add additional contents to the file
@@ -154,7 +146,7 @@ namespace Orc.Snapshots
         protected virtual async Task SaveSnapshotAsync(string source, ISnapshot snapshot)
         {
             Argument.IsNotNullOrEmpty(() => source);
-            Argument.IsNotNull(() => snapshot);
+            ArgumentNullException.ThrowIfNull(snapshot);
 
             Log.Debug($"Saving snapshot '{snapshot}' to '{source}'");
 
@@ -167,9 +159,9 @@ namespace Orc.Snapshots
 
         protected virtual string GetSnapshotFileName(string directory, ISnapshot snapshot)
         {
-            Argument.IsNotNull(() => snapshot);
+            ArgumentNullException.ThrowIfNull(snapshot);
 
-            var snapshotFile = Path.Combine(directory, $"{snapshot.Title.GetSlug()}{SnapshotExtension}");
+            var snapshotFile = System.IO.Path.Combine(directory, $"{snapshot.Title.GetSlug()}{SnapshotExtension}");
             return snapshotFile;
         }
     }

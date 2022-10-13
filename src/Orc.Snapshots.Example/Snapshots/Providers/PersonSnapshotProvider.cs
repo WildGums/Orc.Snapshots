@@ -1,16 +1,8 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="PersonSnapshotProvider.cs" company="WildGums">
-//   Copyright (c) 2008 - 2016 WildGums. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-
-
-namespace Orc.Snapshots.Snapshots.Providers
+﻿namespace Orc.Snapshots.Snapshots.Providers
 {
     using System;
     using System.IO;
     using System.Threading.Tasks;
-    using Catel;
     using Catel.IoC;
     using Models;
 
@@ -21,7 +13,7 @@ namespace Orc.Snapshots.Snapshots.Providers
         public PersonSnapshotProvider(Project project, ISnapshotManager snapshotManager, IServiceLocator serviceLocator) 
             : base(snapshotManager, serviceLocator)
         {
-            Argument.IsNotNull(() => project);
+            ArgumentNullException.ThrowIfNull(project);
 
             _project = project;
         }

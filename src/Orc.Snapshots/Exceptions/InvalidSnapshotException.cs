@@ -1,11 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="InvalidSnapshotException.cs" company="WildGums">
-//   Copyright (c) 2008 - 2016 WildGums. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-
-
-namespace Orc.Snapshots
+﻿namespace Orc.Snapshots
 {
     using System;
     using System.Runtime.Serialization;
@@ -14,7 +7,6 @@ namespace Orc.Snapshots
     [Serializable]
     public class InvalidSnapshotException : SnapshotException
     {
-        #region Constructors
         public InvalidSnapshotException()
         {
 
@@ -30,6 +22,5 @@ namespace Orc.Snapshots
         {
 
         }
-        #endregion
     }
 }

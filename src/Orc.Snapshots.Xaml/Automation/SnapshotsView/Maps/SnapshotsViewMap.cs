@@ -10,6 +10,6 @@
         {
         }
 
-        public SnapshotCategoriesList SnapshotCategoryList => By.One<SnapshotCategoriesList>();
+        public SnapshotCategoriesList? SnapshotCategoryList => By.One<SnapshotCategoriesList>();
     }
 }

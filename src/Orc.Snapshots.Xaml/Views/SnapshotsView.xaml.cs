@@ -10,7 +10,6 @@
     /// </summary>
     public partial class SnapshotsView
     {
-        #region Constructors
         /// <summary>
         /// Initializes a new instance of the <see cref="SnapshotsView"/> class.
         /// </summary>
@@ -18,11 +17,9 @@
         {
             InitializeComponent();
         }
-        #endregion
 
-        #region Properties
         [ViewToViewModel(MappingType = ViewToViewModelMappingType.ViewToViewModel)]
-        public object Scope
+        public object? Scope
         {
             get { return GetValue(ScopeProperty); }
             set { SetValue(ScopeProperty, value); }
@@ -30,9 +27,7 @@
 
         public static readonly DependencyProperty ScopeProperty = DependencyProperty.Register(nameof(Scope), typeof(object),
             typeof(SnapshotsView), new FrameworkPropertyMetadata((sender, e) => ((SnapshotsView)sender).OnScopeChanged()));
-        #endregion
 
-        #region Methods
         private void OnScopeChanged()
         {
             if (ViewModel is SnapshotsViewModel vm)
@@ -45,6 +40,5 @@
         {
             return new Automation.SnapshotsViewPeer(this);
         }
-        #endregion
     }
 }

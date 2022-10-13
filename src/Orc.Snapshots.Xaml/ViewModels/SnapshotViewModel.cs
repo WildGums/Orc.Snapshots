@@ -1,5 +1,6 @@
 ﻿namespace Orc.Snapshots.ViewModels
 {
+    using System;
     using System.Threading.Tasks;
     using Catel;
     using Catel.MVVM;
@@ -9,11 +10,10 @@
     {
         private readonly ILanguageService _languageService;
 
-        #region Constructors
         public SnapshotViewModel(ISnapshot snapshot, ILanguageService languageService)
         {
-            Argument.IsNotNull(() => snapshot);
-            Argument.IsNotNull(() => languageService);
+            ArgumentNullException.ThrowIfNull(snapshot);
+            ArgumentNullException.ThrowIfNull(languageService);
 
             DeferValidationUntilFirstSaveCall = true;
 
@@ -21,19 +21,15 @@
 
             Snapshot = snapshot;
 
-            Title = !string.IsNullOrEmpty(snapshot.Title) ? string.Format(languageService.GetString("Snapshots_EditSnapshot"), snapshot.Title) : languageService.GetString("Snapshots_CreateNewSnapshot");
+            Title = !string.IsNullOrEmpty(snapshot.Title) ? string.Format(languageService.GetRequiredString("Snapshots_EditSnapshot"), snapshot.Title) : languageService.GetRequiredString("Snapshots_CreateNewSnapshot");
         }
-        #endregion
 
-        #region Properties
         [Model]
         public ISnapshot Snapshot { get; private set; }
 
         [ViewModelToModel("Snapshot", "Title")]
-        public string SnapshotTitle { get; set; }
-        #endregion
+        public string? SnapshotTitle { get; set; }
 
-        #region Methods
         protected override async Task InitializeAsync()
         {
             await base.InitializeAsync();
@@ -41,9 +37,8 @@
             if (string.IsNullOrWhiteSpace(SnapshotTitle))
             {
                 var dateString = FastDateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                SnapshotTitle = $"{_languageService.GetString("Snapshots_Snapshot")} - {dateString}";
+                SnapshotTitle = $"{_languageService.GetRequiredString("Snapshots_Snapshot")} - {dateString}";
             }
         }
-        #endregion
     }
 }

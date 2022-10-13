@@ -1,11 +1,4 @@
-// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ISnapshotProvider.cs" company="WildGums">
-//   Copyright (c) 2008 - 2016 WildGums. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-
-
-namespace Orc.Snapshots
+﻿namespace Orc.Snapshots
 {
     using System.Collections.Generic;
     using System.IO;
@@ -16,11 +9,8 @@ namespace Orc.Snapshots
     /// </summary>
     public interface ISnapshotProvider
     {
-        #region Properties
         string Name { get; }
-        #endregion
 
-        #region Methods
         /// <summary>
         /// Gets the names of the values that needs to be written to a stream.
         /// </summary>
@@ -70,6 +60,5 @@ namespace Orc.Snapshots
         /// <param name="stream">The stream.</param>
         /// <returns></returns>
         Task RestoreDataFromSnapshotAsync(string name, Stream stream);
-        #endregion
     }
 }

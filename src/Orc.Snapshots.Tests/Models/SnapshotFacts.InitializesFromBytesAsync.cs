@@ -52,7 +52,7 @@ namespace Orc.Snapshots.Tests.Models
             {
                 var rootDirectory = AssemblyDirectoryHelper.GetCurrentDirectory();
 
-                var path = Path.Combine(rootDirectory, "Models", relativeFileName);
+                var path = System.IO.Path.Combine(rootDirectory, "Models", relativeFileName);
                 return path;
             }
         }

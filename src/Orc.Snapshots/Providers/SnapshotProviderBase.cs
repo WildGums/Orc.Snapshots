@@ -1,12 +1,6 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SnapshotProviderBase.cs" company="WildGums">
-//   Copyright (c) 2008 - 2015 WildGums. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-
-
-namespace Orc.Snapshots
+﻿namespace Orc.Snapshots
 {
+    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Threading.Tasks;
@@ -21,13 +15,10 @@ namespace Orc.Snapshots
     /// </summary>
     public abstract class SnapshotProviderBase : ISnapshotProvider
     {
-        #region Fields
         protected readonly IServiceLocator ServiceLocator;
 
-        private object _scope;
-        #endregion
+        private object? _scope;
 
-        #region Constructors
         /// <summary>
         /// Initializes a new instance of the <see cref="SnapshotProviderBase" /> class.
         /// </summary>
@@ -35,21 +26,18 @@ namespace Orc.Snapshots
         /// <param name="serviceLocator">The service locator.</param>
         protected SnapshotProviderBase(ISnapshotManager snapshotManager, IServiceLocator serviceLocator)
         {
-            Argument.IsNotNull(() => snapshotManager);
-            Argument.IsNotNull(() => serviceLocator);
+            ArgumentNullException.ThrowIfNull(snapshotManager);
+            ArgumentNullException.ThrowIfNull(serviceLocator);
 
             ServiceLocator = serviceLocator;
-
             SnapshotManager = snapshotManager;
 
             Name = GetType().Name;
         }
-        #endregion
 
-        #region Properties
         protected ISnapshotManager SnapshotManager { get; set; }
 
-        public virtual object Scope
+        public virtual object? Scope
         {
             get { return _scope; }
             set
@@ -67,10 +55,8 @@ namespace Orc.Snapshots
 
         public virtual string Name { get; protected set; }
 
-        public object Tag { get; set; }
-        #endregion
+        public object? Tag { get; set; }
 
-        #region Methods
         /// <summary>
         /// Called when a snapshot manager is about to create a snapshot.
         /// </summary>
@@ -78,7 +64,7 @@ namespace Orc.Snapshots
         /// <returns></returns>
         public virtual Task CreatingSnapshotAsync(ISnapshot snapshot)
         {
-            return TaskHelper.Completed;
+            return Task.CompletedTask;
         }
 
         /// <summary>
@@ -88,7 +74,7 @@ namespace Orc.Snapshots
         /// <returns></returns>
         public virtual Task CreatedSnapshotAsync(ISnapshot snapshot)
         {
-            return TaskHelper.Completed;
+            return Task.CompletedTask;
         }
 
         /// <summary>
@@ -98,7 +84,7 @@ namespace Orc.Snapshots
         /// <returns></returns>
         public virtual Task RestoringSnapshotAsync(ISnapshot snapshot)
         {
-            return TaskHelper.Completed;
+            return Task.CompletedTask;
         }
 
         /// <summary>
@@ -108,7 +94,7 @@ namespace Orc.Snapshots
         /// <returns></returns>
         public virtual Task RestoredSnapshotAsync(ISnapshot snapshot)
         {
-            return TaskHelper.Completed;
+            return Task.CompletedTask;
         }
 
         /// <summary>
@@ -135,6 +121,5 @@ namespace Orc.Snapshots
         {
             return new List<string>(new[] { Name });
         }
-        #endregion
     }
 }

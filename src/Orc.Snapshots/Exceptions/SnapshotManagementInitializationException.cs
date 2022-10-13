@@ -1,11 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SnapshotManagementInitializationException.cs" company="WildGums">
-//   Copyright (c) 2008 - 2016 WildGums. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-
-
-namespace Orc.Snapshots
+﻿namespace Orc.Snapshots
 {
     using System;
     using System.Runtime.Serialization;
@@ -13,7 +6,6 @@ namespace Orc.Snapshots
     [Serializable]
     public class SnapshotManagementInitializationException : Exception
     {
-        #region Constructors
         public SnapshotManagementInitializationException()
         {
 
@@ -30,10 +22,7 @@ namespace Orc.Snapshots
         {
 
         }
-        #endregion
 
-        #region Properties
-        public ISnapshotManager SnapshotManager { get; private set; }
-        #endregion
+        public ISnapshotManager? SnapshotManager { get; private set; }
     }
 }

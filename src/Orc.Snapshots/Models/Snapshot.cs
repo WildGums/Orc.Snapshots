@@ -1,11 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Snapshot.cs" company="WildGums">
-//   Copyright (c) 2008 - 2016 WildGums. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-
-
-namespace Orc.Snapshots
+﻿namespace Orc.Snapshots
 {
     using System;
     using System.Collections.Generic;
@@ -24,17 +17,16 @@ namespace Orc.Snapshots
         private readonly Dictionary<string, byte[]> _data = new Dictionary<string, byte[]>();
         private string[] _dataKeys = Array.Empty<string>();
 
-        private string _contentHash;
-        private byte[] _allData;
+        private string? _contentHash;
+        private byte[] _allData = Array.Empty<byte>();
         private bool _isDirty = true;
 
-        #region Constructors
         public Snapshot()
         {
+            Title = string.Empty;
+            Category = string.Empty;
         }
-        #endregion
 
-        #region Properties
         public string Title { get; set; }
 
         public string Category { get; set; }
@@ -45,9 +37,7 @@ namespace Orc.Snapshots
         {
             get { return _dataKeys; }
         }
-        #endregion
 
-        #region Methods
         public override string ToString()
         {
             return $"{Title} (Category = {Category})";
@@ -60,12 +50,12 @@ namespace Orc.Snapshots
                 await GetAllBytesAsync();
             }
 
-            return _contentHash;
+            return _contentHash ?? string.Empty;
         }
 
         public async Task InitializeFromBytesAsync(byte[] bytes)
         {
-            Argument.IsNotNull(() => bytes);
+            ArgumentNullException.ThrowIfNull(bytes);
 
             _data.Clear();
 
@@ -101,10 +91,11 @@ namespace Orc.Snapshots
 
             lock (_data)
             {
-                byte[] data;
-                if (!_data.TryGetValue(key, out data))
+                if (!_data.TryGetValue(key, out var data))
                 {
                     Log.Warning($"Key '{key}' not found in snapshot");
+
+                    data = Array.Empty<byte>();
                 }
 
                 return data;
@@ -117,7 +108,7 @@ namespace Orc.Snapshots
 
             lock (_data)
             {
-                _data[key] = data;
+                _data[key] = data ?? Array.Empty<byte>();
 
                 _contentHash = null;
                 _isDirty = true;
@@ -126,7 +117,7 @@ namespace Orc.Snapshots
 
         public void ClearData(string key)
         {
-            SetData(key, null);
+            SetData(key, Array.Empty<byte>());
         }
 
         protected virtual async Task<List<KeyValuePair<string, byte[]>>> LoadSnapshotDataAsync(byte[] bytes)
@@ -177,6 +168,5 @@ namespace Orc.Snapshots
                 return allBytes;
             }
         }
-        #endregion
     }
 }

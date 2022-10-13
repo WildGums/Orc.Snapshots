@@ -6,6 +6,7 @@
     {
         public SnapshotCategoryItem()
         {
+            CategoryName = string.Empty;
             Items = new List<SnapshotItem>();
         }
 

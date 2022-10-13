@@ -1,11 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ShowNotificationOnSnapshotEventsWatcher.cs" company="WildGums">
-//   Copyright (c) 2008 - 2016 WildGums. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-
-
-namespace Orc.Snapshots.Watchers
+﻿namespace Orc.Snapshots.Watchers
 {
     using System;
     using System.Linq;
@@ -19,8 +12,8 @@ namespace Orc.Snapshots.Watchers
 
         public ShowNotificationOnSnapshotEventsWatcher(ISnapshotManager snapshotManager, INotificationService notificationService)
         {
-            Argument.IsNotNull(() => snapshotManager);
-            Argument.IsNotNull(() => notificationService);
+            ArgumentNullException.ThrowIfNull(snapshotManager);
+            ArgumentNullException.ThrowIfNull(notificationService);
 
             _snapshotManager = snapshotManager;
             _notificationService = notificationService;

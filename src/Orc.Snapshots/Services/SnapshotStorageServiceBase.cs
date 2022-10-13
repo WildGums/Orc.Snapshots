@@ -1,11 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SnapshotStorageServiceBase.cs" company="WildGums">
-//   Copyright (c) 2008 - 2016 WildGums. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-
-
-namespace Orc.Snapshots
+﻿namespace Orc.Snapshots
 {
     using System;
     using System.Collections.Generic;
@@ -25,7 +18,7 @@ namespace Orc.Snapshots
         public abstract Task<IEnumerable<ISnapshot>> LoadSnapshotsAsync();
         public abstract Task SaveSnapshotsAsync(IEnumerable<ISnapshot> snapshots);
 
-        protected virtual async Task<ISnapshot> ConvertBytesToSnapshotAsync(byte[] bytes)
+        protected virtual async Task<ISnapshot?> ConvertBytesToSnapshotAsync(byte[] bytes)
         {
             if (bytes is null || bytes.Length == 0)
             {
@@ -33,36 +26,44 @@ namespace Orc.Snapshots
                 return null;
             }
 
-            Dictionary<string, string> metadata;
-            byte[] dataBytes;
+            Dictionary<string, string>? metadata = null;
+            byte[]? dataBytes = null;
 
             using (var memoryStream = new MemoryStream(bytes))
             {
                 using (var archive = new ZipArchive(memoryStream, ZipArchiveMode.Read))
                 {
                     var metadataEntry = archive.GetEntry("metadata");
-                    var metadataBytes = await metadataEntry.GetBytesAsync();
-                    metadata = ParseMetadata(metadataBytes);
+                    if (metadataEntry is not null)
+                    {
+                        var metadataBytes = await metadataEntry.GetBytesAsync();
+                        metadata = ParseMetadata(metadataBytes);
 
-                    var dataEntry = archive.GetEntry("data");
-                    dataBytes = await dataEntry.GetBytesAsync();
+                        var dataEntry = archive.GetEntry("data");
+                        if (dataEntry is not null)
+                        {
+                            dataBytes = await dataEntry.GetBytesAsync();
+                        }
+                    }
                 }
             }
 
-            string title;
-            if (!metadata.TryGetValue("title", out title))
+            if (metadata is null || dataBytes is null)
+            {
+                return null;
+            }
+
+            if (!metadata.TryGetValue("title", out var title))
             {
                 title = "-";
             }
 
-            string category;
-            if (!metadata.TryGetValue("category", out category))
+            if (!metadata.TryGetValue("category", out var category))
             {
                 category = null;
             }
 
-            string created;
-            if (!metadata.TryGetValue("created", out created))
+            if (!metadata.TryGetValue("created", out var created))
             {
                 created = FastDateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             }
@@ -70,7 +71,7 @@ namespace Orc.Snapshots
             var snapshot = new Snapshot
             {
                 Title = title,
-                Category = string.IsNullOrWhiteSpace(category) ? null : category,
+                Category = category ?? string.Empty,
                 Created = DateTime.ParseExact(created, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture)
             };
 

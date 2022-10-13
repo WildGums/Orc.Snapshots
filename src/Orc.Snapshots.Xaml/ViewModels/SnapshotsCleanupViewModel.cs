@@ -1,12 +1,6 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SnapshotsCleanupViewModel.cs" company="WildGums">
-//   Copyright (c) 2008 - 2016 WildGums. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-
-
-namespace Orc.Snapshots.ViewModels
+﻿namespace Orc.Snapshots.ViewModels
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Linq;
@@ -25,8 +19,8 @@ namespace Orc.Snapshots.ViewModels
 
         public SnapshotsCleanupViewModel(ISnapshotManager snapshotManager, ILanguageService languageService)
         {
-            Argument.IsNotNull(() => snapshotManager);
-            Argument.IsNotNull(() => languageService);
+            ArgumentNullException.ThrowIfNull(snapshotManager);
+            ArgumentNullException.ThrowIfNull(languageService);
 
             _snapshotManager = snapshotManager;
 
@@ -35,10 +29,9 @@ namespace Orc.Snapshots.ViewModels
 
             MaxSnapshotAge = 7;
 
-            Title = languageService.GetString("Snapshots_CleanupTitle");
+            Title = languageService.GetRequiredString("Snapshots_CleanupTitle");
         }
 
-        #region Properties
         public List<SnapshotCleanup> Snapshots { get; private set; }
 
         public int MaxSnapshotAge { get; set; }
@@ -47,12 +40,6 @@ namespace Orc.Snapshots.ViewModels
 
         public bool IncludeAllInCleanup { get; set; }
 
-        #endregion
-
-        #region Commands
-        #endregion
-
-        #region Methods
         protected override async Task InitializeAsync()
         {
             await base.InitializeAsync();
@@ -96,7 +83,7 @@ namespace Orc.Snapshots.ViewModels
             return true;
         }
 
-        private void OnSnapshotPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void OnSnapshotPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             UpdateSnapshotCount();
             using (SuspendChangeCallbacks())
@@ -138,7 +125,5 @@ namespace Orc.Snapshots.ViewModels
 
             UpdateSnapshotCount();
         }
-
-        #endregion
     }
 }

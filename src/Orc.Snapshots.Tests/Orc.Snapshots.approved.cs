@@ -11,7 +11,7 @@ namespace Orc.Snapshots
         public FileSystemSnapshotStorageService(Orc.FileSystem.IDirectoryService directoryService, Orc.FileSystem.IFileService fileService, Catel.Services.IAppDataService appDataService) { }
         public string Directory { get; set; }
         protected virtual string GetSnapshotFileName(string directory, Orc.Snapshots.ISnapshot snapshot) { }
-        protected virtual System.Threading.Tasks.Task<Orc.Snapshots.ISnapshot> LoadSnapshotAsync(string source) { }
+        protected virtual System.Threading.Tasks.Task<Orc.Snapshots.ISnapshot?> LoadSnapshotAsync(string source) { }
         public override System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Orc.Snapshots.ISnapshot>> LoadSnapshotsAsync() { }
         protected virtual System.Threading.Tasks.Task SaveSnapshotAsync(string source, Orc.Snapshots.ISnapshot snapshot) { }
         public override System.Threading.Tasks.Task SaveSnapshotsAsync(System.Collections.Generic.IEnumerable<Orc.Snapshots.ISnapshot> snapshots) { }
@@ -33,21 +33,21 @@ namespace Orc.Snapshots
     public interface ISnapshotManager
     {
         System.Collections.Generic.IEnumerable<Orc.Snapshots.ISnapshotProvider> Providers { get; }
-        object Scope { get; set; }
+        object? Scope { get; set; }
         System.Collections.Generic.IEnumerable<Orc.Snapshots.ISnapshot> Snapshots { get; }
-        event System.EventHandler<System.EventArgs> Loaded;
-        event Catel.AsyncEventHandler<System.ComponentModel.CancelEventArgs> LoadingAsync;
-        event System.EventHandler<System.EventArgs> Saved;
-        event Catel.AsyncEventHandler<System.ComponentModel.CancelEventArgs> SavingAsync;
-        event System.EventHandler<Orc.Snapshots.SnapshotEventArgs> SnapshotAdded;
-        event System.EventHandler<Orc.Snapshots.SnapshotEventArgs> SnapshotCreated;
-        event Catel.AsyncEventHandler<Orc.Snapshots.SnapshotEventArgs> SnapshotCreatingAsync;
-        event System.EventHandler<Orc.Snapshots.SnapshotProviderEventArgs> SnapshotProviderAdded;
-        event System.EventHandler<Orc.Snapshots.SnapshotProviderEventArgs> SnapshotProviderRemoved;
-        event System.EventHandler<Orc.Snapshots.SnapshotEventArgs> SnapshotRemoved;
-        event System.EventHandler<Orc.Snapshots.SnapshotEventArgs> SnapshotRestored;
-        event Catel.AsyncEventHandler<Orc.Snapshots.SnapshotEventArgs> SnapshotRestoringAsync;
-        event System.EventHandler<System.EventArgs> SnapshotsChanged;
+        event System.EventHandler<System.EventArgs>? Loaded;
+        event Catel.AsyncEventHandler<System.ComponentModel.CancelEventArgs>? LoadingAsync;
+        event System.EventHandler<System.EventArgs>? Saved;
+        event Catel.AsyncEventHandler<System.ComponentModel.CancelEventArgs>? SavingAsync;
+        event System.EventHandler<Orc.Snapshots.SnapshotEventArgs>? SnapshotAdded;
+        event System.EventHandler<Orc.Snapshots.SnapshotEventArgs>? SnapshotCreated;
+        event Catel.AsyncEventHandler<Orc.Snapshots.SnapshotEventArgs>? SnapshotCreatingAsync;
+        event System.EventHandler<Orc.Snapshots.SnapshotProviderEventArgs>? SnapshotProviderAdded;
+        event System.EventHandler<Orc.Snapshots.SnapshotProviderEventArgs>? SnapshotProviderRemoved;
+        event System.EventHandler<Orc.Snapshots.SnapshotEventArgs>? SnapshotRemoved;
+        event System.EventHandler<Orc.Snapshots.SnapshotEventArgs>? SnapshotRestored;
+        event Catel.AsyncEventHandler<Orc.Snapshots.SnapshotEventArgs>? SnapshotRestoringAsync;
+        event System.EventHandler<System.EventArgs>? SnapshotsChanged;
         void Add(Orc.Snapshots.ISnapshot snapshot);
         void AddProvider(Orc.Snapshots.ISnapshotProvider snapshotProvider);
         System.Threading.Tasks.Task<Orc.Snapshots.ISnapshot> CreateSnapshotAsync(Orc.Snapshots.ISnapshot snapshot);
@@ -61,10 +61,10 @@ namespace Orc.Snapshots
     {
         public static void AddProvider<TSnapshotProvider>(this Orc.Snapshots.ISnapshotManager snapshotManager)
             where TSnapshotProvider : Orc.Snapshots.ISnapshotProvider { }
-        public static System.Threading.Tasks.Task<Orc.Snapshots.ISnapshot> CreateSnapshotAndSaveAsync(this Orc.Snapshots.ISnapshotManager snapshotManager, string title, string category = null) { }
-        public static System.Threading.Tasks.Task<Orc.Snapshots.ISnapshot> CreateSnapshotAsync(this Orc.Snapshots.ISnapshotManager snapshotManager, string title, string category = null) { }
-        public static Orc.Snapshots.ISnapshot FindSnapshot(this Orc.Snapshots.ISnapshotManager snapshotManager, string title, string category = null) { }
-        public static TSnapshot FindSnapshot<TSnapshot>(this Orc.Snapshots.ISnapshotManager snapshotManager, string title, string category = null)
+        public static System.Threading.Tasks.Task<Orc.Snapshots.ISnapshot?> CreateSnapshotAndSaveAsync(this Orc.Snapshots.ISnapshotManager snapshotManager, string title, string category = "") { }
+        public static System.Threading.Tasks.Task<Orc.Snapshots.ISnapshot?> CreateSnapshotAsync(this Orc.Snapshots.ISnapshotManager snapshotManager, string title, string category = "") { }
+        public static Orc.Snapshots.ISnapshot? FindSnapshot(this Orc.Snapshots.ISnapshotManager snapshotManager, string title, string category = "") { }
+        public static TSnapshot? FindSnapshot<TSnapshot>(this Orc.Snapshots.ISnapshotManager snapshotManager, string title, string category = "")
             where TSnapshot : Orc.Snapshots.ISnapshot { }
     }
     public interface ISnapshotProvider
@@ -86,7 +86,7 @@ namespace Orc.Snapshots
     public class InMemorySnapshotStorageService : Orc.Snapshots.SnapshotStorageServiceBase
     {
         public InMemorySnapshotStorageService() { }
-        protected virtual System.Threading.Tasks.Task<Orc.Snapshots.ISnapshot> LoadSnapshotAsync(string source) { }
+        protected virtual System.Threading.Tasks.Task<Orc.Snapshots.ISnapshot?> LoadSnapshotAsync(string source) { }
         public override System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Orc.Snapshots.ISnapshot>> LoadSnapshotsAsync() { }
         protected virtual System.Threading.Tasks.Task SaveSnapshotAsync(string source, Orc.Snapshots.ISnapshot snapshot) { }
         public override System.Threading.Tasks.Task SaveSnapshotsAsync(System.Collections.Generic.IEnumerable<Orc.Snapshots.ISnapshot> snapshots) { }
@@ -127,7 +127,7 @@ namespace Orc.Snapshots
         public SnapshotException(Orc.Snapshots.ISnapshot snapshot) { }
         public SnapshotException(Orc.Snapshots.ISnapshot snapshot, string message) { }
         public SnapshotException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
-        public Orc.Snapshots.ISnapshot Snapshot { get; }
+        public Orc.Snapshots.ISnapshot? Snapshot { get; }
     }
     [System.Serializable]
     public class SnapshotManagementInitializationException : System.Exception
@@ -135,28 +135,28 @@ namespace Orc.Snapshots
         public SnapshotManagementInitializationException() { }
         public SnapshotManagementInitializationException(Orc.Snapshots.ISnapshotManager snapshotManager) { }
         public SnapshotManagementInitializationException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
-        public Orc.Snapshots.ISnapshotManager SnapshotManager { get; }
+        public Orc.Snapshots.ISnapshotManager? SnapshotManager { get; }
     }
     public class SnapshotManager : Orc.Snapshots.ISnapshotManager
     {
         public SnapshotManager(Orc.Snapshots.ISnapshotStorageService snapshotStorageService, Catel.IoC.IServiceLocator serviceLocator) { }
         public System.Collections.Generic.IEnumerable<Orc.Snapshots.ISnapshotProvider> Providers { get; }
-        public object Scope { get; set; }
+        public object? Scope { get; set; }
         public System.Collections.Generic.IEnumerable<Orc.Snapshots.ISnapshot> Snapshots { get; }
         public int UniqueIdentifier { get; }
-        public event System.EventHandler<System.EventArgs> Loaded;
-        public event Catel.AsyncEventHandler<System.ComponentModel.CancelEventArgs> LoadingAsync;
-        public event System.EventHandler<System.EventArgs> Saved;
-        public event Catel.AsyncEventHandler<System.ComponentModel.CancelEventArgs> SavingAsync;
-        public event System.EventHandler<Orc.Snapshots.SnapshotEventArgs> SnapshotAdded;
-        public event System.EventHandler<Orc.Snapshots.SnapshotEventArgs> SnapshotCreated;
-        public event Catel.AsyncEventHandler<Orc.Snapshots.SnapshotEventArgs> SnapshotCreatingAsync;
-        public event System.EventHandler<Orc.Snapshots.SnapshotProviderEventArgs> SnapshotProviderAdded;
-        public event System.EventHandler<Orc.Snapshots.SnapshotProviderEventArgs> SnapshotProviderRemoved;
-        public event System.EventHandler<Orc.Snapshots.SnapshotEventArgs> SnapshotRemoved;
-        public event System.EventHandler<Orc.Snapshots.SnapshotEventArgs> SnapshotRestored;
-        public event Catel.AsyncEventHandler<Orc.Snapshots.SnapshotEventArgs> SnapshotRestoringAsync;
-        public event System.EventHandler<System.EventArgs> SnapshotsChanged;
+        public event System.EventHandler<System.EventArgs>? Loaded;
+        public event Catel.AsyncEventHandler<System.ComponentModel.CancelEventArgs>? LoadingAsync;
+        public event System.EventHandler<System.EventArgs>? Saved;
+        public event Catel.AsyncEventHandler<System.ComponentModel.CancelEventArgs>? SavingAsync;
+        public event System.EventHandler<Orc.Snapshots.SnapshotEventArgs>? SnapshotAdded;
+        public event System.EventHandler<Orc.Snapshots.SnapshotEventArgs>? SnapshotCreated;
+        public event Catel.AsyncEventHandler<Orc.Snapshots.SnapshotEventArgs>? SnapshotCreatingAsync;
+        public event System.EventHandler<Orc.Snapshots.SnapshotProviderEventArgs>? SnapshotProviderAdded;
+        public event System.EventHandler<Orc.Snapshots.SnapshotProviderEventArgs>? SnapshotProviderRemoved;
+        public event System.EventHandler<Orc.Snapshots.SnapshotEventArgs>? SnapshotRemoved;
+        public event System.EventHandler<Orc.Snapshots.SnapshotEventArgs>? SnapshotRestored;
+        public event Catel.AsyncEventHandler<Orc.Snapshots.SnapshotEventArgs>? SnapshotRestoringAsync;
+        public event System.EventHandler<System.EventArgs>? SnapshotsChanged;
         public void Add(Orc.Snapshots.ISnapshot snapshot) { }
         public void AddProvider(Orc.Snapshots.ISnapshotProvider snapshotProvider) { }
         public virtual System.Threading.Tasks.Task<Orc.Snapshots.ISnapshot> CreateSnapshotAsync(Orc.Snapshots.ISnapshot snapshot) { }
@@ -172,8 +172,8 @@ namespace Orc.Snapshots
         protected SnapshotProviderBase(Orc.Snapshots.ISnapshotManager snapshotManager, Catel.IoC.IServiceLocator serviceLocator) { }
         public virtual string Name { get; set; }
         protected Orc.Snapshots.ISnapshotManager SnapshotManager { get; set; }
-        public object Tag { get; set; }
-        public virtual object Scope { get; set; }
+        public object? Tag { get; set; }
+        public virtual object? Scope { get; set; }
         public virtual System.Threading.Tasks.Task CreatedSnapshotAsync(Orc.Snapshots.ISnapshot snapshot) { }
         public virtual System.Threading.Tasks.Task CreatingSnapshotAsync(Orc.Snapshots.ISnapshot snapshot) { }
         public virtual System.Collections.Generic.List<string> GetNames() { }
@@ -190,7 +190,7 @@ namespace Orc.Snapshots
     public abstract class SnapshotStorageServiceBase : Orc.Snapshots.ISnapshotStorageService
     {
         protected SnapshotStorageServiceBase() { }
-        protected virtual System.Threading.Tasks.Task<Orc.Snapshots.ISnapshot> ConvertBytesToSnapshotAsync(byte[] bytes) { }
+        protected virtual System.Threading.Tasks.Task<Orc.Snapshots.ISnapshot?> ConvertBytesToSnapshotAsync(byte[] bytes) { }
         protected virtual System.Threading.Tasks.Task<byte[]> ConvertSnapshotToBytesAsync(Orc.Snapshots.ISnapshot snapshot) { }
         public abstract System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Orc.Snapshots.ISnapshot>> LoadSnapshotsAsync();
         public abstract System.Threading.Tasks.Task SaveSnapshotsAsync(System.Collections.Generic.IEnumerable<Orc.Snapshots.ISnapshot> snapshots);
