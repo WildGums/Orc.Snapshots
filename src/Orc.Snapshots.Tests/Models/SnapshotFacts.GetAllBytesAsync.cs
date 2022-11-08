@@ -10,8 +10,8 @@ namespace Orc.Snapshots.Tests.Models
     using System.IO;
     using System.Text;
     using System.Threading.Tasks;
-    using ApprovalTests;
     using NUnit.Framework;
+    using VerifyNUnit;
 
     public partial class SnapshotFacts
     {
@@ -33,7 +33,7 @@ namespace Orc.Snapshots.Tests.Models
                     await File.WriteAllBytesAsync(outputFileName, bytes);
 
                     //Approvals.VerifyBinaryFile(bytes, "zip");
-                    Approvals.VerifyFile(outputFileName);
+                    await Verifier.VerifyFile(outputFileName);
                 }
             }
 
@@ -54,7 +54,7 @@ namespace Orc.Snapshots.Tests.Models
                     await File.WriteAllBytesAsync(outputFileName, bytes);
 
                     //Approvals.VerifyFile(bytes, "zip");
-                    Approvals.VerifyFile(outputFileName);
+                    await Verifier.VerifyFile(outputFileName);
                 }
             }
 
@@ -84,7 +84,7 @@ namespace Orc.Snapshots.Tests.Models
                     await File.WriteAllBytesAsync(outputFileName, bytes2);
 
                     //Approvals.VerifyBinaryFile(bytes2, "zip");
-                    Approvals.VerifyFile(outputFileName);
+                    await Verifier.VerifyFile(outputFileName);
                 }
             }
 
