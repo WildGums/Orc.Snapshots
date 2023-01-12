@@ -1,11 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SnapshotManagerFacts.RestoreSnapshotsAsync.cs" company="WildGums">
-//   Copyright (c) 2008 - 2016 WildGums. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-
-
-namespace Orc.Snapshots.Tests.Managers
+﻿namespace Orc.Snapshots.Tests.Managers
 {
     using System.Text;
     using System.Threading.Tasks;

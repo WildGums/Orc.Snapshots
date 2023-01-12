@@ -1,12 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SnapshotManager.AddProvider.cs" company="WildGums">
-//   Copyright (c) 2008 - 2016 WildGums. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-
-
-
-namespace Orc.Snapshots.Tests.Managers
+﻿namespace Orc.Snapshots.Tests.Managers
 {
     using Catel;
     using NUnit.Framework;

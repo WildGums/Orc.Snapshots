@@ -27,7 +27,7 @@
             using (var md5 = MD5.Create())
             {
                 var hash = md5.ComputeHash(input);
-                var finalHash = BitConverter.ToString(hash).Replace("-", "").ToLower();
+                var finalHash = BitConverter.ToString(hash).Replace("-", string.Empty).ToLower();
 
                 return finalHash;
             }
