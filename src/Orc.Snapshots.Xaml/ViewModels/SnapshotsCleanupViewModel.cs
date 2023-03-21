@@ -1,129 +1,128 @@
-﻿namespace Orc.Snapshots.ViewModels
+﻿namespace Orc.Snapshots.ViewModels;
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Threading.Tasks;
+using Catel;
+using Catel.Data;
+using Catel.Logging;
+using Catel.MVVM;
+using Catel.Services;
+
+public class SnapshotsCleanupViewModel : ViewModelBase
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Linq;
-    using System.Threading.Tasks;
-    using Catel;
-    using Catel.Data;
-    using Catel.Logging;
-    using Catel.MVVM;
-    using Catel.Services;
+    private static readonly ILog Log = LogManager.GetCurrentClassLogger();
 
-    public class SnapshotsCleanupViewModel : ViewModelBase
+    private readonly ISnapshotManager _snapshotManager;
+
+    public SnapshotsCleanupViewModel(ISnapshotManager snapshotManager, ILanguageService languageService)
     {
-        private static readonly ILog Log = LogManager.GetCurrentClassLogger();
+        ArgumentNullException.ThrowIfNull(snapshotManager);
+        ArgumentNullException.ThrowIfNull(languageService);
 
-        private readonly ISnapshotManager _snapshotManager;
+        _snapshotManager = snapshotManager;
 
-        public SnapshotsCleanupViewModel(ISnapshotManager snapshotManager, ILanguageService languageService)
+        Snapshots = new List<SnapshotCleanup>(from snapshot in _snapshotManager.Snapshots
+            select new SnapshotCleanup(snapshot));
+
+        MaxSnapshotAge = 7;
+
+        Title = languageService.GetRequiredString("Snapshots_CleanupTitle");
+    }
+
+    public List<SnapshotCleanup> Snapshots { get; private set; }
+
+    public int MaxSnapshotAge { get; set; }
+
+    public int NumberOfSnapshotsToCleanup { get; set; }
+
+    public bool IncludeAllInCleanup { get; set; }
+
+    protected override async Task InitializeAsync()
+    {
+        await base.InitializeAsync();
+
+        foreach (var snapshot in Snapshots)
         {
-            ArgumentNullException.ThrowIfNull(snapshotManager);
-            ArgumentNullException.ThrowIfNull(languageService);
+            snapshot.PropertyChanged += OnSnapshotPropertyChanged;
+        }
+    }
 
-            _snapshotManager = snapshotManager;
-
-            Snapshots = new List<SnapshotCleanup>(from snapshot in _snapshotManager.Snapshots
-                                                  select new SnapshotCleanup(snapshot));
-
-            MaxSnapshotAge = 7;
-
-            Title = languageService.GetRequiredString("Snapshots_CleanupTitle");
+    protected override async Task CloseAsync()
+    {
+        foreach (var snapshot in Snapshots)
+        {
+            snapshot.PropertyChanged -= OnSnapshotPropertyChanged;
         }
 
-        public List<SnapshotCleanup> Snapshots { get; private set; }
+        await base.CloseAsync();
+    }
 
-        public int MaxSnapshotAge { get; set; }
+    protected override async Task<bool> SaveAsync()
+    {
+        Log.Info("Cleaning up snapshots");
 
-        public int NumberOfSnapshotsToCleanup { get; set; }
-
-        public bool IncludeAllInCleanup { get; set; }
-
-        protected override async Task InitializeAsync()
+        foreach (var snapshotCleanup in Snapshots)
         {
-            await base.InitializeAsync();
-
-            foreach (var snapshot in Snapshots)
+            if (snapshotCleanup.IncludeInCleanup)
             {
-                snapshot.PropertyChanged += OnSnapshotPropertyChanged;
+                var snapshot = snapshotCleanup.Snapshot;
+
+                Log.Info($"Cleaning up snapshot '{snapshot}'");
+
+                _snapshotManager.Remove(snapshot);
             }
         }
 
-        protected override async Task CloseAsync()
-        {
-            foreach (var snapshot in Snapshots)
-            {
-                snapshot.PropertyChanged -= OnSnapshotPropertyChanged;
-            }
+        await _snapshotManager.SaveAsync();
 
-            await base.CloseAsync();
+        Log.Info("Cleaned up snapshots");
+
+        return true;
+    }
+
+    private void OnSnapshotPropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        UpdateSnapshotCount();
+        using (SuspendChangeCallbacks())
+        {
+            IncludeAllInCleanup = NumberOfSnapshotsToCleanup == Snapshots.Count;
+        }
+    }
+
+    private void UpdateSnapshotCount()
+    {
+        NumberOfSnapshotsToCleanup = Snapshots.Count(x => x.IncludeInCleanup);
+    }
+
+    private void OnMaxSnapshotAgeChanged()
+    {
+        var snapshots = Snapshots;
+        if (snapshots is null)
+        {
+            return;
         }
 
-        protected override async Task<bool> SaveAsync()
+        var now = FastDateTime.Now;
+        var minCreated = now.AddDays(MaxSnapshotAge * -1);
+
+        foreach (var snapshot in snapshots)
         {
-            Log.Info("Cleaning up snapshots");
+            snapshot.IncludeInCleanup = snapshot.Snapshot.Created < minCreated;
+        }
+    }
 
-            foreach (var snapshotCleanup in Snapshots)
-            {
-                if (snapshotCleanup.IncludeInCleanup)
-                {
-                    var snapshot = snapshotCleanup.Snapshot;
-
-                    Log.Info($"Cleaning up snapshot '{snapshot}'");
-
-                    _snapshotManager.Remove(snapshot);
-                }
-            }
-
-            await _snapshotManager.SaveAsync();
-
-            Log.Info("Cleaned up snapshots");
-
-            return true;
+    private void OnIncludeAllInCleanupChanged()
+    {
+        foreach (var snapshot in Snapshots)
+        {
+            snapshot.PropertyChanged -= OnSnapshotPropertyChanged;
+            snapshot.IncludeInCleanup = IncludeAllInCleanup;
+            snapshot.PropertyChanged += OnSnapshotPropertyChanged;
         }
 
-        private void OnSnapshotPropertyChanged(object? sender, PropertyChangedEventArgs e)
-        {
-            UpdateSnapshotCount();
-            using (SuspendChangeCallbacks())
-            {
-                IncludeAllInCleanup = NumberOfSnapshotsToCleanup == Snapshots.Count;
-            }
-        }
-
-        private void UpdateSnapshotCount()
-        {
-            NumberOfSnapshotsToCleanup = Snapshots.Count(x => x.IncludeInCleanup);
-        }
-
-        private void OnMaxSnapshotAgeChanged()
-        {
-            var snapshots = Snapshots;
-            if (snapshots is null)
-            {
-                return;
-            }
-
-            var now = FastDateTime.Now;
-            var minCreated = now.AddDays(MaxSnapshotAge * -1);
-
-            foreach (var snapshot in snapshots)
-            {
-                snapshot.IncludeInCleanup = snapshot.Snapshot.Created < minCreated;
-            }
-        }
-
-        private void OnIncludeAllInCleanupChanged()
-        {
-            foreach (var snapshot in Snapshots)
-            {
-                snapshot.PropertyChanged -= OnSnapshotPropertyChanged;
-                snapshot.IncludeInCleanup = IncludeAllInCleanup;
-                snapshot.PropertyChanged += OnSnapshotPropertyChanged;
-            }
-
-            UpdateSnapshotCount();
-        }
+        UpdateSnapshotCount();
     }
 }

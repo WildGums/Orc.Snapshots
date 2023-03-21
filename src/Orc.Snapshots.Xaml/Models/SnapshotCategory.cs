@@ -1,17 +1,16 @@
-﻿namespace Orc.Snapshots
+﻿namespace Orc.Snapshots;
+
+using System.Collections.Generic;
+
+public class SnapshotCategory
 {
-    using System.Collections.Generic;
-
-    public class SnapshotCategory
+    public SnapshotCategory()
     {
-        public SnapshotCategory()
-        {
-            Category = string.Empty;
-            Snapshots = new List<ISnapshot>();
-        }
-
-        public string Category { get; set; }
-
-        public List<ISnapshot> Snapshots { get; private set; }
+        Category = string.Empty;
+        Snapshots = new List<ISnapshot>();
     }
+
+    public string Category { get; set; }
+
+    public List<ISnapshot> Snapshots { get; private set; }
 }
