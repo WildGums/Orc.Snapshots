@@ -1,53 +1,51 @@
-﻿namespace Orc.Snapshots.Tests.Models
+﻿namespace Orc.Snapshots.Tests.Models;
+
+using System.IO;
+using System.Text;
+using System.Threading.Tasks;
+using NUnit.Framework;
+
+public partial class SnapshotFacts
 {
-    using System.IO;
-    using System.Text;
-    using System.Threading.Tasks;
-    using NUnit.Framework;
-    using Path = Catel.IO.Path;
-
-    public partial class SnapshotFacts
+    [TestFixture]
+    public class TheInitializeFromBytesAsyncMethod
     {
-        [TestFixture]
-        public class TheInitializeFromBytesAsyncMethod
+        [Test]
+        public async Task InitializesSnapshotWithoutDataAsync()
         {
-            [Test]
-            public async Task InitializesSnapshotWithoutDataAsync()
-            {
-                var snapshot = new Snapshot();
+            var snapshot = new Snapshot();
 
-                var fileName = GetExampleFileName("Snapshots.Empty.zip");
-                var bytes = await File.ReadAllBytesAsync(fileName);
+            var fileName = GetExampleFileName("Snapshots.Empty.zip");
+            var bytes = await File.ReadAllBytesAsync(fileName);
 
-                await snapshot.InitializeFromBytesAsync(bytes);
+            await snapshot.InitializeFromBytesAsync(bytes);
 
-                Assert.AreEqual(0, snapshot.Keys.Length);
-            }
+            Assert.AreEqual(0, snapshot.Keys.Length);
+        }
 
-            [Test]
-            public async Task InitializesSnapshotWithDataAsync()
-            {
-                var snapshot = new Snapshot();
+        [Test]
+        public async Task InitializesSnapshotWithDataAsync()
+        {
+            var snapshot = new Snapshot();
 
-                var fileName = GetExampleFileName("Snapshots.WithData.zip");
-                var bytes = await File.ReadAllBytesAsync(fileName);
+            var fileName = GetExampleFileName("Snapshots.WithData.zip");
+            var bytes = await File.ReadAllBytesAsync(fileName);
 
-                await snapshot.InitializeFromBytesAsync(bytes);
+            await snapshot.InitializeFromBytesAsync(bytes);
 
-                Assert.AreEqual(4, snapshot.Keys.Length);
-                Assert.AreEqual(Encoding.UTF8.GetBytes("123"), snapshot.GetData("Data A"));
-                Assert.AreEqual(Encoding.UTF8.GetBytes("456"), snapshot.GetData("Data B"));
-                Assert.AreEqual(Encoding.UTF8.GetBytes("789"), snapshot.GetData("Data C"));
-                Assert.AreEqual(LargeStringBytes, snapshot.GetData("Large Data"));
-            }
+            Assert.AreEqual(4, snapshot.Keys.Length);
+            Assert.AreEqual(Encoding.UTF8.GetBytes("123"), snapshot.GetData("Data A"));
+            Assert.AreEqual(Encoding.UTF8.GetBytes("456"), snapshot.GetData("Data B"));
+            Assert.AreEqual(Encoding.UTF8.GetBytes("789"), snapshot.GetData("Data C"));
+            Assert.AreEqual(LargeStringBytes, snapshot.GetData("Large Data"));
+        }
 
-            private string GetExampleFileName(string relativeFileName)
-            {
-                var rootDirectory = AssemblyDirectoryHelper.GetCurrentDirectory();
+        private string GetExampleFileName(string relativeFileName)
+        {
+            var rootDirectory = AssemblyDirectoryHelper.GetCurrentDirectory();
 
-                var path = System.IO.Path.Combine(rootDirectory, "Models", relativeFileName);
-                return path;
-            }
+            var path = System.IO.Path.Combine(rootDirectory, "Models", relativeFileName);
+            return path;
         }
     }
 }

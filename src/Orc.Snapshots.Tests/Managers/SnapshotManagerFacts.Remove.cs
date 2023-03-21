@@ -1,96 +1,95 @@
-﻿namespace Orc.Snapshots.Tests.Managers
+﻿namespace Orc.Snapshots.Tests.Managers;
+
+using System.Linq;
+using Catel;
+using NUnit.Framework;
+
+public partial class SnapshotManagerFacts
 {
-    using System.Linq;
-    using Catel;
-    using NUnit.Framework;
-
-    public partial class SnapshotManagerFacts
+    [TestFixture]
+    public class TheRemoveMethod
     {
-        [TestFixture]
-        public class TheRemoveMethod
+        [Test]
+        public void RemovesSnapshotFromSnapshotsList()
         {
-            [Test]
-            public void RemovesSnapshotFromSnapshotsList()
+            var snapshot = new Snapshot
             {
-                var snapshot = new Snapshot
-                {
-                    Title = "Test"
-                };
+                Title = "Test"
+            };
 
-                var snapshotManager = CreateSnapshotManager();
-                snapshotManager.Add(snapshot);
+            var snapshotManager = CreateSnapshotManager();
+            snapshotManager.Add(snapshot);
 
-                Assert.AreEqual(1, snapshotManager.Snapshots.Count());
+            Assert.AreEqual(1, snapshotManager.Snapshots.Count());
 
-                var result = snapshotManager.Remove(snapshot);
+            var result = snapshotManager.Remove(snapshot);
 
-                Assert.IsTrue(result);
-                Assert.AreEqual(0, snapshotManager.Snapshots.Count());
-            }
+            Assert.IsTrue(result);
+            Assert.AreEqual(0, snapshotManager.Snapshots.Count());
+        }
 
-            [Test]
-            public void ReturnsFalseWhenSnapshotCannotBeRemoved()
+        [Test]
+        public void ReturnsFalseWhenSnapshotCannotBeRemoved()
+        {
+            var snapshot = new Snapshot
             {
-                var snapshot = new Snapshot
-                {
-                    Title = "Test"
-                };
+                Title = "Test"
+            };
 
-                var snapshotManager = CreateSnapshotManager();
+            var snapshotManager = CreateSnapshotManager();
 
-                Assert.AreEqual(0, snapshotManager.Snapshots.Count());
+            Assert.AreEqual(0, snapshotManager.Snapshots.Count());
 
-                var result = snapshotManager.Remove(snapshot);
+            var result = snapshotManager.Remove(snapshot);
 
-                Assert.IsFalse(result);
-                Assert.AreEqual(0, snapshotManager.Snapshots.Count());
-            }
+            Assert.IsFalse(result);
+            Assert.AreEqual(0, snapshotManager.Snapshots.Count());
+        }
 
-            [Test]
-            public void RaisesSnapshotRemovedEvent()
+        [Test]
+        public void RaisesSnapshotRemovedEvent()
+        {
+            var snapshot = new Snapshot
             {
-                var snapshot = new Snapshot
-                {
-                    Title = "Test"
-                };
+                Title = "Test"
+            };
 
-                var snapshotManager = CreateSnapshotManager();
-                snapshotManager.Add(snapshot);
+            var snapshotManager = CreateSnapshotManager();
+            snapshotManager.Add(snapshot);
 
-                var isInvoked = false;
+            var isInvoked = false;
 
-                snapshotManager.SnapshotRemoved += (sender, e) =>
-                {
-                    isInvoked = e.Snapshot.Title.EqualsIgnoreCase(snapshot.Title);
-                };
-
-                snapshotManager.Remove(snapshot);
-
-                Assert.IsTrue(isInvoked);
-            }
-
-            [Test]
-            public void RaisesSnapshotsChangedEvent()
+            snapshotManager.SnapshotRemoved += (sender, e) =>
             {
-                var snapshot = new Snapshot
-                {
-                    Title = "Test"
-                };
+                isInvoked = e.Snapshot.Title.EqualsIgnoreCase(snapshot.Title);
+            };
 
-                var snapshotManager = CreateSnapshotManager();
-                snapshotManager.Add(snapshot);
+            snapshotManager.Remove(snapshot);
 
-                var isInvoked = false;
+            Assert.IsTrue(isInvoked);
+        }
 
-                snapshotManager.SnapshotsChanged += (sender, e) =>
-                {
-                    isInvoked = true;
-                };
+        [Test]
+        public void RaisesSnapshotsChangedEvent()
+        {
+            var snapshot = new Snapshot
+            {
+                Title = "Test"
+            };
 
-                snapshotManager.Remove(snapshot);
+            var snapshotManager = CreateSnapshotManager();
+            snapshotManager.Add(snapshot);
 
-                Assert.IsTrue(isInvoked);
-            }
+            var isInvoked = false;
+
+            snapshotManager.SnapshotsChanged += (sender, e) =>
+            {
+                isInvoked = true;
+            };
+
+            snapshotManager.Remove(snapshot);
+
+            Assert.IsTrue(isInvoked);
         }
     }
 }

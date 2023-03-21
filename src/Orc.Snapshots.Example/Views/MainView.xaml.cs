@@ -1,12 +1,9 @@
-namespace Orc.Snapshots.Example.Views
+﻿namespace Orc.Snapshots.Example.Views;
+
+public partial class MainView 
 {
-    public partial class MainView 
+    public MainView()
     {
-        #region Constructors
-        public MainView()
-        {
-            InitializeComponent();
-        }
-        #endregion
+        InitializeComponent();
     }
 }

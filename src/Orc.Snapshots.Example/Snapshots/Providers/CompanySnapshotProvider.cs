@@ -1,42 +1,41 @@
-﻿namespace Orc.Snapshots.Snapshots.Providers
+﻿namespace Orc.Snapshots.Snapshots.Providers;
+
+using System;
+using System.IO;
+using System.Threading.Tasks;
+using Catel;
+using Catel.IoC;
+using Models;
+
+public class CompanySnapshotProvider : SnapshotProviderBase
 {
-    using System;
-    using System.IO;
-    using System.Threading.Tasks;
-    using Catel;
-    using Catel.IoC;
-    using Models;
+    private readonly Project _project;
 
-    public class CompanySnapshotProvider : SnapshotProviderBase
+    public CompanySnapshotProvider(Project project, ISnapshotManager snapshotManager, IServiceLocator serviceLocator) 
+        : base(snapshotManager, serviceLocator)
     {
-        private readonly Project _project;
+        ArgumentNullException.ThrowIfNull(project);
 
-        public CompanySnapshotProvider(Project project, ISnapshotManager snapshotManager, IServiceLocator serviceLocator) 
-            : base(snapshotManager, serviceLocator)
+        _project = project;
+    }
+
+    public override async Task StoreDataToSnapshotAsync(string name, Stream stream)
+    {
+        using (var writer = new StreamWriter(stream))
         {
-            ArgumentNullException.ThrowIfNull(project);
+            var company = _project.Company;
 
-            _project = project;
+            await writer.WriteAsync(company.Name);
         }
+    }
 
-        public override async Task StoreDataToSnapshotAsync(string name, Stream stream)
+    public override async Task RestoreDataFromSnapshotAsync(string name, Stream stream)
+    {
+        using (var reader = new StreamReader(stream))
         {
-            using (var writer = new StreamWriter(stream))
-            {
-                var company = _project.Company;
+            var company = _project.Company;
 
-                await writer.WriteAsync(company.Name);
-            }
-        }
-
-        public override async Task RestoreDataFromSnapshotAsync(string name, Stream stream)
-        {
-            using (var reader = new StreamReader(stream))
-            {
-                var company = _project.Company;
-
-                company.Name = await reader.ReadLineAsync();
-            }
+            company.Name = await reader.ReadLineAsync();
         }
     }
 }

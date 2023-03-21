@@ -1,6 +1,5 @@
-﻿namespace Orc.Snapshots
+﻿namespace Orc.Snapshots;
+
+public static class ISnapshotExtensions
 {
-    public static class ISnapshotExtensions
-    {
-    }
 }
