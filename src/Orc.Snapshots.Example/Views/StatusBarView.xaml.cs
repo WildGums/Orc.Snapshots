@@ -1,10 +1,9 @@
-﻿namespace Orc.Snapshots.Example.Views
+﻿namespace Orc.Snapshots.Example.Views;
+
+public partial class StatusBarView
 {
-    public partial class StatusBarView
+    public StatusBarView()
     {
-        public StatusBarView()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

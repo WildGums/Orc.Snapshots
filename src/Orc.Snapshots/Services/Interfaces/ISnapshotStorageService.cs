@@ -1,11 +1,10 @@
-﻿namespace Orc.Snapshots
-{
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
+﻿namespace Orc.Snapshots;
 
-    public interface ISnapshotStorageService
-    {
-        Task<IEnumerable<ISnapshot>> LoadSnapshotsAsync();
-        Task SaveSnapshotsAsync(IEnumerable<ISnapshot> snapshots);
-    }
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+public interface ISnapshotStorageService
+{
+    Task<IEnumerable<ISnapshot>> LoadSnapshotsAsync();
+    Task SaveSnapshotsAsync(IEnumerable<ISnapshot> snapshots);
 }

@@ -1,10 +1,9 @@
-﻿namespace Orc.Snapshots.Example.Views
+﻿namespace Orc.Snapshots.Example.Views;
+
+public partial class RibbonView
 {
-    public partial class RibbonView
+    public RibbonView()
     {
-        public RibbonView()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

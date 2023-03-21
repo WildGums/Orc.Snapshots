@@ -1,36 +1,35 @@
-﻿namespace Orc.Snapshots.Tests
+﻿namespace Orc.Snapshots.Tests;
+
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+
+public class SnapshotStorageServiceMock : ISnapshotStorageService
 {
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
-    using System.Threading.Tasks;
+    private List<ISnapshot> _snapshotCategories;
 
-    public class SnapshotStorageServiceMock : ISnapshotStorageService
+    public object Scope { get; set; }
+
+    public async Task<IEnumerable<ISnapshot>> LoadSnapshotsAsync()
     {
-        private List<ISnapshot> _snapshotCategories;
+        _snapshotCategories ??= SnapshotTestData.GetSnapshotCategories(Scope)
+            .SelectMany(x => x.Snapshots)
+            .ToList();
 
-        public object Scope { get; set; }
+        await File.AppendAllLinesAsync(@"C:\Temps\Log\log1.txt",
+            _snapshotCategories?.Select(x => $"{Scope} - {x.Title}"));
 
-        public async Task<IEnumerable<ISnapshot>> LoadSnapshotsAsync()
-        {
-            _snapshotCategories ??= SnapshotTestData.GetSnapshotCategories(Scope)
-                .SelectMany(x => x.Snapshots)
-                .ToList();
+        return _snapshotCategories;
+    }
 
-            await File.AppendAllLinesAsync(@"C:\Temps\Log\log1.txt",
-                _snapshotCategories?.Select(x => $"{Scope} - {x.Title}"));
+    public async Task SaveSnapshotsAsync(IEnumerable<ISnapshot> snapshots)
+    {
+        _snapshotCategories = snapshots?.ToList();
 
-            return _snapshotCategories;
-        }
+        await File.AppendAllLinesAsync(@"C:\Temps\Log\log.txt",
+            _snapshotCategories.Select(x => x.Title));
 
-        public async Task SaveSnapshotsAsync(IEnumerable<ISnapshot> snapshots)
-        {
-            _snapshotCategories = snapshots?.ToList();
-
-            await File.AppendAllLinesAsync(@"C:\Temps\Log\log.txt",
-                _snapshotCategories.Select(x => x.Title));
-
-            //   Enumerable.Range(0, 1).Select(x => $"{_snapshotCategories.Count}\r\n"));
-        }
+        //   Enumerable.Range(0, 1).Select(x => $"{_snapshotCategories.Count}\r\n"));
     }
 }

@@ -1,17 +1,16 @@
-﻿namespace Orc.Snapshots.Models
+﻿namespace Orc.Snapshots.Models;
+
+using Catel.Data;
+
+public class Person : ModelBase
 {
-    using Catel.Data;
-
-    public class Person : ModelBase
+    public Person()
     {
-        public Person()
-        {
-            FirstName = string.Empty;
-            LastName = string.Empty;
-        }
-
-        public string FirstName { get; set; }
-
-        public string LastName { get; set; }
+        FirstName = string.Empty;
+        LastName = string.Empty;
     }
+
+    public string FirstName { get; set; }
+
+    public string LastName { get; set; }
 }

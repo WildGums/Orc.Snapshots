@@ -1,73 +1,72 @@
-﻿namespace Orc.Snapshots.Example.ViewModels
+﻿namespace Orc.Snapshots.Example.ViewModels;
+
+using System.Threading.Tasks;
+using Catel.MVVM;
+using Catel.Services;
+using Orc.Snapshots.ViewModels;
+
+public class RibbonViewModel : ViewModelBase
 {
-    using System.Threading.Tasks;
-    using Catel.MVVM;
-    using Catel.Services;
-    using Orc.Snapshots.ViewModels;
+    private readonly IUIVisualizerService _uiVisualizerService;
+    private readonly ISnapshotManager _snapshotManager;
+    private readonly IMessageService _messageService;
 
-    public class RibbonViewModel : ViewModelBase
+    public RibbonViewModel(ISnapshotManager snapshotManager, IUIVisualizerService uiVisualizerService, IMessageService messageService)
     {
-        private readonly IUIVisualizerService _uiVisualizerService;
-        private readonly ISnapshotManager _snapshotManager;
-        private readonly IMessageService _messageService;
+        _snapshotManager = snapshotManager;
+        _uiVisualizerService = uiVisualizerService;
+        _messageService = messageService;
 
-        public RibbonViewModel(ISnapshotManager snapshotManager, IUIVisualizerService uiVisualizerService, IMessageService messageService)
-        {
-            _snapshotManager = snapshotManager;
-            _uiVisualizerService = uiVisualizerService;
-            _messageService = messageService;
+        CreateSnapshot = new TaskCommand(OnCreateSnapshotExecuteAsync, OnCreateSnapshotCanExecute);
+        CleanupSnapshots = new TaskCommand(OnCleanupSnapshotsExecuteAsync);
 
-            CreateSnapshot = new TaskCommand(OnCreateSnapshotExecuteAsync, OnCreateSnapshotCanExecute);
-            CleanupSnapshots = new TaskCommand(OnCleanupSnapshotsExecuteAsync);
+        Title = "Orc.Snapshots example";
+    }
 
-            Title = "Orc.Snapshots example";
-        }
-
-        public TaskCommand CreateSnapshot { get; private set; }
+    public TaskCommand CreateSnapshot { get; }
         
-        private bool OnCreateSnapshotCanExecute()
-        {
-            return true;
-        }
+    private bool OnCreateSnapshotCanExecute()
+    {
+        return true;
+    }
 
-        private async Task OnCreateSnapshotExecuteAsync()
-        {
-            // In theory, we shouldn't have to use this one
-            var snapshot = new Snapshot();
+    private async Task OnCreateSnapshotExecuteAsync()
+    {
+        // In theory, we shouldn't have to use this one
+        var snapshot = new Snapshot();
 
-            var result = await _uiVisualizerService.ShowDialogAsync<SnapshotViewModel>(snapshot);
-            if (result.DialogResult ?? false)
+        var result = await _uiVisualizerService.ShowDialogAsync<SnapshotViewModel>(snapshot);
+        if (result.DialogResult ?? false)
+        {
+            var existingSnapshot = _snapshotManager.FindSnapshot(snapshot.Title);
+            if (existingSnapshot is not null)
             {
-                var existingSnapshot = _snapshotManager.FindSnapshot(snapshot.Title);
-                if (existingSnapshot is not null)
-                {
-                    if (await _messageService.ShowAsync(
+                if (await _messageService.ShowAsync(
                         $"Snapshot '{snapshot}' already exists. Are you sure you want to overwrite the existing snapshot?",
                         "Are you sure?",
                         MessageButton.YesNo) != MessageResult.Yes)
-                    {
-                        return;
-                    }
-
-                    _snapshotManager.Remove(existingSnapshot);
+                {
+                    return;
                 }
 
-                await _snapshotManager.CreateSnapshotAndSaveAsync(snapshot.Title);
+                _snapshotManager.Remove(existingSnapshot);
             }
+
+            await _snapshotManager.CreateSnapshotAndSaveAsync(snapshot.Title);
         }
+    }
 
-        public TaskCommand CleanupSnapshots { get; private set; }
+    public TaskCommand CleanupSnapshots { get; }
 
-        private Task OnCleanupSnapshotsExecuteAsync()
-        {
-            return _uiVisualizerService.ShowDialogAsync<SnapshotsCleanupViewModel>();
-        }
+    private Task OnCleanupSnapshotsExecuteAsync()
+    {
+        return _uiVisualizerService.ShowDialogAsync<SnapshotsCleanupViewModel>();
+    }
 
-        protected override async Task InitializeAsync()
-        {
-            await base.InitializeAsync();
+    protected override async Task InitializeAsync()
+    {
+        await base.InitializeAsync();
 
-            await _snapshotManager.LoadAsync();
-        }
+        await _snapshotManager.LoadAsync();
     }
 }

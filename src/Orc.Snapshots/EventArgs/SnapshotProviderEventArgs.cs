@@ -1,16 +1,15 @@
-﻿namespace Orc.Snapshots
+﻿namespace Orc.Snapshots;
+
+using System;
+
+public class SnapshotProviderEventArgs : EventArgs
 {
-    using System;
-
-    public class SnapshotProviderEventArgs : EventArgs
+    public SnapshotProviderEventArgs(ISnapshotProvider snapshotProvider)
     {
-        public SnapshotProviderEventArgs(ISnapshotProvider snapshotProvider)
-        {
-            ArgumentNullException.ThrowIfNull(snapshotProvider);
+        ArgumentNullException.ThrowIfNull(snapshotProvider);
 
-            SnapshotProvider = snapshotProvider;
-        }
-        
-        public ISnapshotProvider SnapshotProvider { get; private set; }
+        SnapshotProvider = snapshotProvider;
     }
+        
+    public ISnapshotProvider SnapshotProvider { get; private set; }
 }

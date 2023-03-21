@@ -1,13 +1,12 @@
-﻿namespace Orc.Snapshots.Tests.Managers
+﻿namespace Orc.Snapshots.Tests.Managers;
+
+using NUnit.Framework;
+
+public partial class SnapshotManagerFacts
 {
-    using NUnit.Framework;
-
-    public partial class SnapshotManagerFacts
+    [TestFixture]
+    public class TheLoadAsyncMethod
     {
-        [TestFixture]
-        public class TheLoadAsyncMethod
-        {
 
-        }
     }
 }
