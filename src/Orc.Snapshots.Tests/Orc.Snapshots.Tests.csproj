@@ -23,7 +23,7 @@
     <PackageReference Include="ModuleInit.Fody" Version="2.1.1" PrivateAssets="all" />
     <PackageReference Include="NUnit" Version="3.13.3" PrivateAssets="all" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.4.2" PrivateAssets="all" />
-    <PackageReference Include="Orc.Automation.Tests" Version="5.0.0-alpha0175" />
+    <PackageReference Include="Orc.Automation.Tests" Version="5.0.0-alpha0181" />
     <PackageReference Include="Orc.Theming" Version="5.0.0-alpha0198" />
     <PackageReference Include="PublicApiGenerator" Version="11.0.0" PrivateAssets="all" />
     <PackageReference Include="Verify.NUnit" Version="19.13.1" />
