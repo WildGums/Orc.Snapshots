@@ -8,7 +8,6 @@ using Catel;
 using Catel.Logging;
 using Catel.Services;
 using FileSystem;
-using Path = Catel.IO.Path;
 
 public class FileSystemSnapshotStorageService : SnapshotStorageServiceBase
 {

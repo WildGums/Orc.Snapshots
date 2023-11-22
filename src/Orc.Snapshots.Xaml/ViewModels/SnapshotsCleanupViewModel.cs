@@ -6,7 +6,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Catel;
-using Catel.Data;
 using Catel.Logging;
 using Catel.MVVM;
 using Catel.Services;

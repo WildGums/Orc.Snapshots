@@ -1,5 +1,5 @@
 ﻿[assembly: System.Resources.NeutralResourcesLanguage("en-US")]
-[assembly: System.Runtime.Versioning.TargetFramework(".NETCoreApp,Version=v6.0", FrameworkDisplayName=".NET 6.0")]
+[assembly: System.Runtime.Versioning.TargetFramework(".NETCoreApp,Version=v8.0", FrameworkDisplayName=".NET 8.0")]
 public static class ModuleInitializer
 {
     public static void Initialize() { }
@@ -96,7 +96,6 @@ namespace Orc.Snapshots
     {
         public InvalidSnapshotException() { }
         public InvalidSnapshotException(Orc.Snapshots.ISnapshot snapshot) { }
-        public InvalidSnapshotException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
     }
     public class Snapshot : Orc.Snapshots.ISnapshot
     {
@@ -126,7 +125,6 @@ namespace Orc.Snapshots
         public SnapshotException() { }
         public SnapshotException(Orc.Snapshots.ISnapshot snapshot) { }
         public SnapshotException(Orc.Snapshots.ISnapshot snapshot, string message) { }
-        public SnapshotException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public Orc.Snapshots.ISnapshot? Snapshot { get; }
     }
     [System.Serializable]
@@ -134,7 +132,6 @@ namespace Orc.Snapshots
     {
         public SnapshotManagementInitializationException() { }
         public SnapshotManagementInitializationException(Orc.Snapshots.ISnapshotManager snapshotManager) { }
-        public SnapshotManagementInitializationException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public Orc.Snapshots.ISnapshotManager? SnapshotManager { get; }
     }
     public class SnapshotManager : Orc.Snapshots.ISnapshotManager

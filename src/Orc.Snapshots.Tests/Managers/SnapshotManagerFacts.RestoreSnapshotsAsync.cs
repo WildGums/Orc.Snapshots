@@ -1,6 +1,5 @@
 ﻿namespace Orc.Snapshots.Tests.Managers;
 
-using System.Text;
 using System.Threading.Tasks;
 using Catel.IoC;
 using NUnit.Framework;

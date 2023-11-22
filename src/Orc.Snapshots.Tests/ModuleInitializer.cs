@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using Catel.Logging;
 
 /// <summary>

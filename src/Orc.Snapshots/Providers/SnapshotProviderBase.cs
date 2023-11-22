@@ -4,11 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using Catel;
 using Catel.Data;
 using Catel.IoC;
-using Catel.Logging;
-using Catel.Threading;
 
 /// <summary>
 /// Base implementation for snapshot providers.

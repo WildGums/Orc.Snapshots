@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using Catel.IoC;
 using Catel.Services;
-using Catel.Threading;
 using Orc.Automation;
 
 public class InitSnapshotsViewMethodRun : NamedAutomationMethodRun

@@ -16,10 +16,4 @@ public class InvalidSnapshotException : SnapshotException
         : base(snapshot, $"Snapshot '{ObjectToStringHelper.ToString(snapshot)}' is invalid at this stage")
     {
     }
-
-    public InvalidSnapshotException(SerializationInfo info, StreamingContext context)
-        : base(info, context)
-    {
-
-    }
 }
