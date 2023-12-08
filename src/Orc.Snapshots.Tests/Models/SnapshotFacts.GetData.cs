@@ -13,7 +13,7 @@ public partial class SnapshotFacts
         {
             var snapshot = new Snapshot();
 
-            Assert.AreEqual(Array.Empty<byte>(), snapshot.GetData("MyData"));
+            Assert.That(snapshot.GetData("MyData"), Is.EqualTo(Array.Empty<byte>()));
         }
 
         [Test]
@@ -24,7 +24,7 @@ public partial class SnapshotFacts
             var testBytes = new byte[] { 1, 2, 3 };
             snapshot.SetData("MyData", testBytes);
 
-            Assert.AreEqual(testBytes, snapshot.GetData("MyData"));
+            Assert.That(snapshot.GetData("MyData"), Is.EqualTo(testBytes));
         }
     }
 }

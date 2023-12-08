@@ -24,8 +24,8 @@ public partial class SnapshotManagerFacts
 
             var snapshot = await snapshotManager.CreateSnapshotAsync("My title");
 
-            Assert.AreEqual("My title", snapshot.Title);
-            Assert.AreEqual(testBytes, snapshot.GetData(provider.Name));
+            Assert.That(snapshot.Title, Is.EqualTo("My title"));
+            Assert.That(snapshot.GetData(provider.Name), Is.EqualTo(testBytes));
         }
     }
 }

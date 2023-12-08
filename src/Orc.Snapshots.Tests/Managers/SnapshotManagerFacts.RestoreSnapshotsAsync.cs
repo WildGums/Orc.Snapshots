@@ -27,7 +27,7 @@ public partial class SnapshotManagerFacts
 
             await snapshotManager.RestoreSnapshotAsync(snapshot);
 
-            Assert.AreEqual("1234", provider.TestData);
+            Assert.That(provider.TestData, Is.EqualTo("1234"));
         }
     }
 }

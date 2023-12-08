@@ -20,12 +20,12 @@ public partial class SnapshotManagerFacts
             var snapshotManager = CreateSnapshotManager();
             snapshotManager.Add(snapshot);
 
-            Assert.AreEqual(1, snapshotManager.Snapshots.Count());
+            Assert.That(snapshotManager.Snapshots.Count(), Is.EqualTo(1));
 
             var result = snapshotManager.Remove(snapshot);
 
-            Assert.IsTrue(result);
-            Assert.AreEqual(0, snapshotManager.Snapshots.Count());
+            Assert.That(result, Is.True);
+            Assert.That(snapshotManager.Snapshots.Count(), Is.EqualTo(0));
         }
 
         [Test]
@@ -38,12 +38,12 @@ public partial class SnapshotManagerFacts
 
             var snapshotManager = CreateSnapshotManager();
 
-            Assert.AreEqual(0, snapshotManager.Snapshots.Count());
+            Assert.That(snapshotManager.Snapshots.Count(), Is.EqualTo(0));
 
             var result = snapshotManager.Remove(snapshot);
 
-            Assert.IsFalse(result);
-            Assert.AreEqual(0, snapshotManager.Snapshots.Count());
+            Assert.That(result, Is.False);
+            Assert.That(snapshotManager.Snapshots.Count(), Is.EqualTo(0));
         }
 
         [Test]
@@ -66,7 +66,7 @@ public partial class SnapshotManagerFacts
 
             snapshotManager.Remove(snapshot);
 
-            Assert.IsTrue(isInvoked);
+            Assert.That(isInvoked, Is.True);
         }
 
         [Test]
@@ -89,7 +89,7 @@ public partial class SnapshotManagerFacts
 
             snapshotManager.Remove(snapshot);
 
-            Assert.IsTrue(isInvoked);
+            Assert.That(isInvoked, Is.True);
         }
     }
 }

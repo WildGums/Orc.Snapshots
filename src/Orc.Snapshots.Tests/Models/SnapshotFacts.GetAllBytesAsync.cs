@@ -66,7 +66,7 @@ public partial class SnapshotFacts
 
             var bytes2 = await snapshot.GetAllBytesAsync();
 
-            Assert.AreNotEqual(bytes1, bytes2);
+            Assert.That(bytes2, Is.Not.EqualTo(bytes1));
 
             var outputFileName = fileContext.GetFile("snapshot.zip");
             await File.WriteAllBytesAsync(outputFileName, bytes2);

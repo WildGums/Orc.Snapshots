@@ -17,13 +17,13 @@ public partial class SnapshotManagerFacts
             var snapshotManager = CreateSnapshotManager();
             var provider = new TestSnapshotProvider(snapshotManager, ServiceLocator.Default);
 
-            Assert.AreEqual(0, snapshotManager.Providers.Count());
+            Assert.That(snapshotManager.Providers.Count(), Is.EqualTo(0));
 
             snapshotManager.AddProvider(provider);
 
             var providers = snapshotManager.Providers.ToList();
-            Assert.AreEqual(1, providers.Count);
-            Assert.AreEqual(provider.Name, providers[0].Name);
+            Assert.That(providers.Count, Is.EqualTo(1));
+            Assert.That(providers[0].Name, Is.EqualTo(provider.Name));
         }
 
         [Test]
@@ -41,7 +41,7 @@ public partial class SnapshotManagerFacts
 
             snapshotManager.AddProvider(provider);
 
-            Assert.IsTrue(isInvoked);
+            Assert.That(isInvoked, Is.True);
         }
     }
 }

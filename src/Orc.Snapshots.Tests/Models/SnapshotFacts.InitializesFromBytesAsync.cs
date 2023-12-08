@@ -20,7 +20,7 @@ public partial class SnapshotFacts
 
             await snapshot.InitializeFromBytesAsync(bytes);
 
-            Assert.AreEqual(0, snapshot.Keys.Length);
+            Assert.That(snapshot.Keys.Length, Is.EqualTo(0));
         }
 
         [Test]
@@ -33,11 +33,11 @@ public partial class SnapshotFacts
 
             await snapshot.InitializeFromBytesAsync(bytes);
 
-            Assert.AreEqual(4, snapshot.Keys.Length);
-            Assert.AreEqual(Encoding.UTF8.GetBytes("123"), snapshot.GetData("Data A"));
-            Assert.AreEqual(Encoding.UTF8.GetBytes("456"), snapshot.GetData("Data B"));
-            Assert.AreEqual(Encoding.UTF8.GetBytes("789"), snapshot.GetData("Data C"));
-            Assert.AreEqual(LargeStringBytes, snapshot.GetData("Large Data"));
+            Assert.That(snapshot.Keys.Length, Is.EqualTo(4));
+            Assert.That(snapshot.GetData("Data A"), Is.EqualTo(Encoding.UTF8.GetBytes("123")));
+            Assert.That(snapshot.GetData("Data B"), Is.EqualTo(Encoding.UTF8.GetBytes("456")));
+            Assert.That(snapshot.GetData("Data C"), Is.EqualTo(Encoding.UTF8.GetBytes("789")));
+            Assert.That(snapshot.GetData("Large Data"), Is.EqualTo(LargeStringBytes));
         }
 
         private string GetExampleFileName(string relativeFileName)

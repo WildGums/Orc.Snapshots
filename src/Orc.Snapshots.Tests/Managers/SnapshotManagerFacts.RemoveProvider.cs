@@ -19,12 +19,12 @@ public partial class SnapshotManagerFacts
 
             snapshotManager.AddProvider(provider);
 
-            Assert.AreEqual(1, snapshotManager.Providers.Count());
+            Assert.That(snapshotManager.Providers.Count(), Is.EqualTo(1));
 
             var result = snapshotManager.RemoveProvider(provider);
 
-            Assert.IsTrue(result);
-            Assert.AreEqual(0, snapshotManager.Providers.Count());
+            Assert.That(result, Is.True);
+            Assert.That(snapshotManager.Providers.Count(), Is.EqualTo(0));
         }
 
         [Test]
@@ -33,12 +33,12 @@ public partial class SnapshotManagerFacts
             var snapshotManager = CreateSnapshotManager();
             var provider = new TestSnapshotProvider(snapshotManager, ServiceLocator.Default);
 
-            Assert.AreEqual(0, snapshotManager.Providers.Count());
+            Assert.That(snapshotManager.Providers.Count(), Is.EqualTo(0));
 
             var result = snapshotManager.RemoveProvider(provider);
 
-            Assert.IsFalse(result);
-            Assert.AreEqual(0, snapshotManager.Providers.Count());
+            Assert.That(result, Is.False);
+            Assert.That(snapshotManager.Providers.Count(), Is.EqualTo(0));
         }
 
         [Test]
@@ -58,7 +58,7 @@ public partial class SnapshotManagerFacts
 
             snapshotManager.RemoveProvider(provider);
 
-            Assert.IsTrue(isInvoked);
+            Assert.That(isInvoked, Is.True);
         }
     }
 }
