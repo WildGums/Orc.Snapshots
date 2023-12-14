@@ -1,105 +1,97 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="TemporaryFilesContext.cs" company="WildGums">
-//   Copyright (c) 2008 - 2016 WildGums. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
+﻿namespace Orc.Snapshots.Tests;
 
+using System;
+using System.IO;
+using Catel.Logging;
+using Catel.Reflection;
 
-namespace Orc.Snapshots.Tests
+public sealed class TemporaryFilesContext : IDisposable
 {
-    using System;
-    using System.IO;
-    using Catel.Logging;
-    using Catel.Reflection;
+    #region Constants
+    private static readonly ILog Log = LogManager.GetCurrentClassLogger();
+    #endregion
 
-    public sealed class TemporaryFilesContext : IDisposable
+    #region Fields
+    private readonly Guid _randomGuid = Guid.NewGuid();
+    private readonly string _rootDirectory;
+    private readonly bool _cleanUp;
+    #endregion
+
+    #region Constructors
+    public TemporaryFilesContext(string name = null, bool cleanUp = true)
     {
-        #region Constants
-        private static readonly ILog Log = LogManager.GetCurrentClassLogger();
-        #endregion
-
-        #region Fields
-        private readonly Guid _randomGuid = Guid.NewGuid();
-        private readonly string _rootDirectory;
-        private readonly bool _cleanUp;
-        #endregion
-
-        #region Constructors
-        public TemporaryFilesContext(string name = null, bool cleanUp = true)
+        if (string.IsNullOrWhiteSpace(name))
         {
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                name = _randomGuid.ToString();
-            }
-
-            _cleanUp = cleanUp;
-
-            _rootDirectory = Path.Combine(Path.GetTempPath(), GetType().Assembly.Title(), name);
-
-            Directory.CreateDirectory(_rootDirectory);
-        }
-        #endregion
-
-        #region IDisposable Members
-        /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-        /// </summary>
-        public void Dispose()
-        {
-            if (!_cleanUp)
-            {
-                return;
-            }
-
-            Log.Info("Deleting temporary files from '{0}'", _rootDirectory);
-
-            try
-            {
-                if (Directory.Exists(_rootDirectory))
-                {
-                    Directory.Delete(_rootDirectory, true);
-                }
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, "Failed to delete temporary files");
-            }
-        }
-        #endregion
-
-        #region Methods
-        public string GetDirectory(string relativeDirectoryName)
-        {
-            var fullPath = Path.Combine(_rootDirectory, relativeDirectoryName);
-
-            if (!Directory.Exists(fullPath))
-            {
-                Directory.CreateDirectory(fullPath);
-            }
-
-            return fullPath;
+            name = _randomGuid.ToString();
         }
 
-        public string GetFile(string relativeFilePath, bool deleteIfExists = false)
-        {
-            var fullPath = Path.Combine(_rootDirectory, relativeFilePath);
+        _cleanUp = cleanUp;
 
-            var directory = Path.GetDirectoryName(fullPath);
-            if (!Directory.Exists(directory))
-            {
-                Directory.CreateDirectory(directory);
-            }
+        _rootDirectory = Path.Combine(Path.GetTempPath(), GetType().Assembly.Title(), name);
 
-            if (deleteIfExists)
-            {
-                if (File.Exists(fullPath))
-                {
-                    File.Delete(fullPath);
-                }
-            }
-
-            return fullPath;
-        }
-        #endregion
+        Directory.CreateDirectory(_rootDirectory);
     }
+    #endregion
+
+    #region IDisposable Members
+    /// <summary>
+    /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+    /// </summary>
+    public void Dispose()
+    {
+        if (!_cleanUp)
+        {
+            return;
+        }
+
+        Log.Info("Deleting temporary files from '{0}'", _rootDirectory);
+
+        try
+        {
+            if (Directory.Exists(_rootDirectory))
+            {
+                Directory.Delete(_rootDirectory, true);
+            }
+        }
+        catch (Exception ex)
+        {
+            Log.Error(ex, "Failed to delete temporary files");
+        }
+    }
+    #endregion
+
+    #region Methods
+    public string GetDirectory(string relativeDirectoryName)
+    {
+        var fullPath = Path.Combine(_rootDirectory, relativeDirectoryName);
+
+        if (!Directory.Exists(fullPath))
+        {
+            Directory.CreateDirectory(fullPath);
+        }
+
+        return fullPath;
+    }
+
+    public string GetFile(string relativeFilePath, bool deleteIfExists = false)
+    {
+        var fullPath = Path.Combine(_rootDirectory, relativeFilePath);
+
+        var directory = Path.GetDirectoryName(fullPath);
+        if (!Directory.Exists(directory))
+        {
+            Directory.CreateDirectory(directory);
+        }
+
+        if (deleteIfExists)
+        {
+            if (File.Exists(fullPath))
+            {
+                File.Delete(fullPath);
+            }
+        }
+
+        return fullPath;
+    }
+    #endregion
 }

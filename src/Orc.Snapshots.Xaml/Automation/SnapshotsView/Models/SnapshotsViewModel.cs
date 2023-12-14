@@ -1,15 +1,14 @@
-﻿namespace Orc.Snapshots.Automation
+﻿namespace Orc.Snapshots.Automation;
+
+using Orc.Automation;
+
+[ActiveAutomationModel]
+public class SnapshotsViewModel : ControlModel
 {
-    using Orc.Automation;
-
-    [ActiveAutomationModel]
-    public class SnapshotsViewModel : ControlModel
-    {
-        public SnapshotsViewModel(AutomationElementAccessor accessor) 
-            : base(accessor)
-        {              
-        }
-
-        public object Scope { get; set; }
+    public SnapshotsViewModel(AutomationElementAccessor accessor) 
+        : base(accessor)
+    {              
     }
+
+    public object? Scope { get; set; }
 }

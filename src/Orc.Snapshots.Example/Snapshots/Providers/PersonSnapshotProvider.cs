@@ -1,54 +1,45 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="PersonSnapshotProvider.cs" company="WildGums">
-//   Copyright (c) 2008 - 2016 WildGums. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
+﻿namespace Orc.Snapshots.Snapshots.Providers;
 
+using System;
+using System.IO;
+using System.Threading.Tasks;
+using Catel.IoC;
+using Models;
 
-namespace Orc.Snapshots.Snapshots.Providers
+public class PersonSnapshotProvider : SnapshotProviderBase
 {
-    using System;
-    using System.IO;
-    using System.Threading.Tasks;
-    using Catel;
-    using Catel.IoC;
-    using Models;
+    private readonly Project _project;
 
-    public class PersonSnapshotProvider : SnapshotProviderBase
+    public PersonSnapshotProvider(Project project, ISnapshotManager snapshotManager, IServiceLocator serviceLocator) 
+        : base(snapshotManager, serviceLocator)
     {
-        private readonly Project _project;
+        ArgumentNullException.ThrowIfNull(project);
 
-        public PersonSnapshotProvider(Project project, ISnapshotManager snapshotManager, IServiceLocator serviceLocator) 
-            : base(snapshotManager, serviceLocator)
+        _project = project;
+    }
+
+    public override async Task StoreDataToSnapshotAsync(string name, Stream stream)
+    {
+        using (var writer = new StreamWriter(stream))
         {
-            Argument.IsNotNull(() => project);
+            var person = _project.Person;
 
-            _project = project;
+            await writer.WriteLineAsync(person.FirstName);
+            await writer.WriteLineAsync(person.LastName);
         }
+    }
 
-        public override async Task StoreDataToSnapshotAsync(string name, Stream stream)
+    public override async Task RestoreDataFromSnapshotAsync(string name, Stream stream)
+    {
+        using (var reader = new StreamReader(stream))
         {
-            using (var writer = new StreamWriter(stream))
-            {
-                var person = _project.Person;
+            var person = _project.Person;
 
-                await writer.WriteLineAsync(person.FirstName);
-                await writer.WriteLineAsync(person.LastName);
-            }
-        }
+            var allText = await reader.ReadToEndAsync();
+            var allLines = allText.Split(new [] { Environment.NewLine }, StringSplitOptions.None);
 
-        public override async Task RestoreDataFromSnapshotAsync(string name, Stream stream)
-        {
-            using (var reader = new StreamReader(stream))
-            {
-                var person = _project.Person;
-
-                var allText = await reader.ReadToEndAsync();
-                var allLines = allText.Split(new [] { Environment.NewLine }, StringSplitOptions.None);
-
-                person.FirstName = allLines[0];
-                person.LastName = allLines[1];
-            }
+            person.FirstName = allLines[0];
+            person.LastName = allLines[1];
         }
     }
 }

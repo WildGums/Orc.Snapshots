@@ -1,12 +1,11 @@
-﻿namespace Orc.Snapshots.Automation
-{
-    using Orc.Automation;
+﻿namespace Orc.Snapshots.Automation;
 
-    public class SnapshotsViewPeer : AutomationControlPeerBase<Views.SnapshotsView>
+using Orc.Automation;
+
+public class SnapshotsViewPeer : AutomationControlPeerBase<Views.SnapshotsView>
+{
+    public SnapshotsViewPeer(Views.SnapshotsView owner) 
+        : base(owner)
     {
-        public SnapshotsViewPeer(Views.SnapshotsView owner) 
-            : base(owner)
-        {
-        }
     }
 }

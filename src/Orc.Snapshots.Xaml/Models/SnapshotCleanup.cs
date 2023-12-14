@@ -1,26 +1,18 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SnapshotCleanup.cs" company="WildGums">
-//   Copyright (c) 2008 - 2016 WildGums. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
+﻿namespace Orc.Snapshots;
 
+using System;
+using Catel.Data;
 
-namespace Orc.Snapshots
+public class SnapshotCleanup : ModelBase
 {
-    using Catel;
-    using Catel.Data;
-
-    public class SnapshotCleanup : ModelBase
+    public SnapshotCleanup(ISnapshot snapshot)
     {
-        public SnapshotCleanup(ISnapshot snapshot)
-        {
-            Argument.IsNotNull(() => snapshot);
+        ArgumentNullException.ThrowIfNull(snapshot);
 
-            Snapshot = snapshot;
-        }
-
-        public bool IncludeInCleanup { get; set; }
-
-        public ISnapshot Snapshot { get; private set; }
+        Snapshot = snapshot;
     }
+
+    public bool IncludeInCleanup { get; set; }
+
+    public ISnapshot Snapshot { get; private set; }
 }

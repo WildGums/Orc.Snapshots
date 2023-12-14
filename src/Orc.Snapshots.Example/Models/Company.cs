@@ -1,21 +1,13 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Company.cs" company="WildGums">
-//   Copyright (c) 2008 - 2016 WildGums. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
+﻿namespace Orc.Snapshots.Models;
 
+using Catel.Data;
 
-namespace Orc.Snapshots.Models
+public class Company : ModelBase
 {
-    using Catel.Data;
-
-    public class Company : ModelBase
+    public Company()
     {
-        public Company()
-        {
-            Name = string.Empty;
-        }
-
-        public string Name { get; set; }
+        Name = string.Empty;
     }
+
+    public string Name { get; set; }
 }

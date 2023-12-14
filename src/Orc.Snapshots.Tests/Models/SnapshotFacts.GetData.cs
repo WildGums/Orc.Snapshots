@@ -1,37 +1,30 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SnapshotFacts.GetData.cs" company="WildGums">
-//   Copyright (c) 2008 - 2016 WildGums. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
+﻿namespace Orc.Snapshots.Tests.Models;
 
+using System;
+using NUnit.Framework;
 
-namespace Orc.Snapshots.Tests.Models
+public partial class SnapshotFacts
 {
-    using NUnit.Framework;
-
-    public partial class SnapshotFacts
+    [TestFixture]
+    public class TheGetDataMethod
     {
-        [TestFixture]
-        public class TheGetDataMethod
+        [Test]
+        public void ReturnsEmptyIfNotExists()
         {
-            [Test]
-            public void ReturnsNullIfNotExists()
-            {
-                var snapshot = new Snapshot();
+            var snapshot = new Snapshot();
 
-                Assert.AreEqual(null, snapshot.GetData("MyData"));
-            }
+            Assert.That(snapshot.GetData("MyData"), Is.EqualTo(Array.Empty<byte>()));
+        }
 
-            [Test]
-            public void ReturnsDataIfExists()
-            {
-                var snapshot = new Snapshot();
+        [Test]
+        public void ReturnsDataIfExists()
+        {
+            var snapshot = new Snapshot();
 
-                var testBytes = new byte[] { 1, 2, 3 };
-                snapshot.SetData("MyData", testBytes);
+            var testBytes = new byte[] { 1, 2, 3 };
+            snapshot.SetData("MyData", testBytes);
 
-                Assert.AreEqual(testBytes, snapshot.GetData("MyData"));
-            }
+            Assert.That(snapshot.GetData("MyData"), Is.EqualTo(testBytes));
         }
     }
 }

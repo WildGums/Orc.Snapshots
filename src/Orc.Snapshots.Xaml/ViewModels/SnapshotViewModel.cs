@@ -1,49 +1,43 @@
-﻿namespace Orc.Snapshots.ViewModels
+﻿namespace Orc.Snapshots.ViewModels;
+
+using System;
+using System.Threading.Tasks;
+using Catel;
+using Catel.MVVM;
+using Catel.Services;
+
+public class SnapshotViewModel : ViewModelBase
 {
-    using System.Threading.Tasks;
-    using Catel;
-    using Catel.MVVM;
-    using Catel.Services;
+    private readonly ILanguageService _languageService;
 
-    public class SnapshotViewModel : ViewModelBase
+    public SnapshotViewModel(ISnapshot snapshot, ILanguageService languageService)
     {
-        private readonly ILanguageService _languageService;
+        ArgumentNullException.ThrowIfNull(snapshot);
+        ArgumentNullException.ThrowIfNull(languageService);
 
-        #region Constructors
-        public SnapshotViewModel(ISnapshot snapshot, ILanguageService languageService)
+        DeferValidationUntilFirstSaveCall = true;
+
+        _languageService = languageService;
+
+        Snapshot = snapshot;
+
+        Title = !string.IsNullOrEmpty(snapshot.Title) ? string.Format(languageService.GetRequiredString("Snapshots_EditSnapshot"), snapshot.Title) : languageService.GetRequiredString("Snapshots_CreateNewSnapshot");
+    }
+
+    [Model]
+    public ISnapshot Snapshot { get; private set; }
+
+    [ViewModelToModel("Snapshot", "Title")]
+    public string? SnapshotTitle { get; set; }
+
+    protected override async Task InitializeAsync()
+    {
+        await base.InitializeAsync();
+
+        if (string.IsNullOrWhiteSpace(SnapshotTitle))
         {
-            Argument.IsNotNull(() => snapshot);
-            Argument.IsNotNull(() => languageService);
-
-            DeferValidationUntilFirstSaveCall = true;
-
-            _languageService = languageService;
-
-            Snapshot = snapshot;
-
-            Title = !string.IsNullOrEmpty(snapshot.Title) ? string.Format(languageService.GetString("Snapshots_EditSnapshot"), snapshot.Title) : languageService.GetString("Snapshots_CreateNewSnapshot");
+            var dateString = FastDateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            SnapshotTitle = $"{_languageService.GetRequiredString("Snapshots_Snapshot")} - {dateString}";
         }
-        #endregion
-
-        #region Properties
-        [Model]
-        public ISnapshot Snapshot { get; private set; }
-
-        [ViewModelToModel("Snapshot", "Title")]
-        public string SnapshotTitle { get; set; }
-        #endregion
-
-        #region Methods
-        protected override async Task InitializeAsync()
-        {
-            await base.InitializeAsync();
-
-            if (string.IsNullOrWhiteSpace(SnapshotTitle))
-            {
-                var dateString = FastDateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                SnapshotTitle = $"{_languageService.GetString("Snapshots_Snapshot")} - {dateString}";
-            }
-        }
-        #endregion
     }
 }

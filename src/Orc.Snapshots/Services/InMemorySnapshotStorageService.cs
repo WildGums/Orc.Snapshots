@@ -1,94 +1,85 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="InMemorySnapshotStorageService.cs" company="WildGums">
-//   Copyright (c) 2008 - 2016 WildGums. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
+﻿namespace Orc.Snapshots;
 
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Catel;
+using Catel.Logging;
 
-namespace Orc.Snapshots
+public class InMemorySnapshotStorageService : SnapshotStorageServiceBase
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-    using Catel;
-    using Catel.Logging;
+    private static readonly ILog Log = LogManager.GetCurrentClassLogger();
 
-    public class InMemorySnapshotStorageService : SnapshotStorageServiceBase
+    private readonly Dictionary<string, byte[]> _snapshots = new Dictionary<string, byte[]>();
+
+    public override async Task<IEnumerable<ISnapshot>> LoadSnapshotsAsync()
     {
-        private static readonly ILog Log = LogManager.GetCurrentClassLogger();
+        Log.Debug($"Loading snapshots");
 
-        private readonly Dictionary<string, byte[]> _snapshots = new Dictionary<string, byte[]>();
+        var snapshots = new List<ISnapshot>();
 
-        public override async Task<IEnumerable<ISnapshot>> LoadSnapshotsAsync()
+        foreach (var snapshotData in _snapshots)
         {
-            Log.Debug($"Loading snapshots");
-
-            var snapshots = new List<ISnapshot>();
-
-            foreach (var snapshotData in _snapshots)
+            var snapshot = await LoadSnapshotAsync(snapshotData.Key);
+            if (snapshot is not null)
             {
-                var snapshot = await LoadSnapshotAsync(snapshotData.Key);
-                if (snapshot is not null)
-                {
-                    snapshots.Add(snapshot);
-                }
-            }
-
-            Log.Debug($"Loaded '{snapshots.Count}' snapshots");
-
-            return snapshots;
-        }
-
-        protected virtual async Task<ISnapshot> LoadSnapshotAsync(string source)
-        {
-            Argument.IsNotNullOrEmpty(() => source);
-
-            ISnapshot result = null;
-
-            try
-            {
-                Log.Debug($"Loading snapshot from '{source}'");
-
-                byte[] bytes;
-                if (_snapshots.TryGetValue(source, out bytes))
-                {
-                    result = await ConvertBytesToSnapshotAsync(bytes);
-                }
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex, $"Failed to load snapshot from '{source}'");
-            }
-
-            return result;
-        }
-
-        public override async Task SaveSnapshotsAsync(IEnumerable<ISnapshot> snapshots)
-        {
-            Argument.IsNotNull(() => snapshots);
-
-            Log.Debug("Deleting previous snapshot files");
-
-            _snapshots.Clear();
-
-            foreach (var snapshot in snapshots)
-            {
-                await SaveSnapshotAsync(snapshot.Title, snapshot);
+                snapshots.Add(snapshot);
             }
         }
 
-        protected virtual async Task SaveSnapshotAsync(string source, ISnapshot snapshot)
+        Log.Debug($"Loaded '{snapshots.Count}' snapshots");
+
+        return snapshots;
+    }
+
+    protected virtual async Task<ISnapshot?> LoadSnapshotAsync(string source)
+    {
+        Argument.IsNotNullOrEmpty(() => source);
+
+        ISnapshot? result = null;
+
+        try
         {
-            Argument.IsNotNullOrEmpty(() => source);
-            Argument.IsNotNull(() => snapshot);
+            Log.Debug($"Loading snapshot from '{source}'");
 
-            Log.Debug($"Saving snapshot '{snapshot}' to '{source}'");
-
-            var bytes = await ConvertSnapshotToBytesAsync(snapshot);
-            if (bytes is not null)
+            if (_snapshots.TryGetValue(source, out var bytes))
             {
-                _snapshots[source] = bytes;
+                result = await ConvertBytesToSnapshotAsync(bytes);
             }
+        }
+        catch (Exception ex)
+        {
+            Log.Error(ex, $"Failed to load snapshot from '{source}'");
+        }
+
+        return result;
+    }
+
+    public override async Task SaveSnapshotsAsync(IEnumerable<ISnapshot> snapshots)
+    {
+        ArgumentNullException.ThrowIfNull(snapshots);
+
+        Log.Debug("Deleting previous snapshot files");
+
+        _snapshots.Clear();
+
+        foreach (var snapshot in snapshots)
+        {
+            await SaveSnapshotAsync(snapshot.Title, snapshot);
+        }
+    }
+
+    protected virtual async Task SaveSnapshotAsync(string source, ISnapshot snapshot)
+    {
+        Argument.IsNotNullOrEmpty(() => source);
+        ArgumentNullException.ThrowIfNull(snapshot);
+
+        Log.Debug($"Saving snapshot '{snapshot}' to '{source}'");
+
+        var bytes = await ConvertSnapshotToBytesAsync(snapshot);
+        if (bytes is not null)
+        {
+            _snapshots[source] = bytes;
         }
     }
 }

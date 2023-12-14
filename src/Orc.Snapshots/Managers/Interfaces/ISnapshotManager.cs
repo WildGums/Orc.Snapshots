@@ -1,60 +1,46 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="ISnapshotManager.cs" company="WildGums">
-//   Copyright (c) 2008 - 2016 WildGums. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
+﻿namespace Orc.Snapshots;
 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using Catel;
 
-namespace Orc.Snapshots
+public interface ISnapshotManager
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Threading.Tasks;
-    using Catel;
+    IEnumerable<ISnapshot> Snapshots { get; }
+    IEnumerable<ISnapshotProvider> Providers { get; }
 
-    public interface ISnapshotManager
-    {
-        #region Properties
-        IEnumerable<ISnapshot> Snapshots { get; }
-        IEnumerable<ISnapshotProvider> Providers { get; }
+    object? Scope { get; set; }
 
-        object Scope { get; set; }
-        #endregion
+    event AsyncEventHandler<CancelEventArgs>? LoadingAsync;
+    event EventHandler<EventArgs>? Loaded;
 
-        #region Events
-        event AsyncEventHandler<CancelEventArgs> LoadingAsync;
-        event EventHandler<EventArgs> Loaded;
+    event AsyncEventHandler<CancelEventArgs>? SavingAsync;
+    event EventHandler<EventArgs>? Saved;
 
-        event AsyncEventHandler<CancelEventArgs> SavingAsync;
-        event EventHandler<EventArgs> Saved;
+    event AsyncEventHandler<SnapshotEventArgs>? SnapshotCreatingAsync;
+    event EventHandler<SnapshotEventArgs>? SnapshotCreated;
 
-        event AsyncEventHandler<SnapshotEventArgs> SnapshotCreatingAsync;
-        event EventHandler<SnapshotEventArgs> SnapshotCreated;
+    event AsyncEventHandler<SnapshotEventArgs>? SnapshotRestoringAsync;
+    event EventHandler<SnapshotEventArgs>? SnapshotRestored;
 
-        event AsyncEventHandler<SnapshotEventArgs> SnapshotRestoringAsync;
-        event EventHandler<SnapshotEventArgs> SnapshotRestored;
+    event EventHandler<EventArgs>? SnapshotsChanged;
+    event EventHandler<SnapshotEventArgs>? SnapshotAdded;
+    event EventHandler<SnapshotEventArgs>? SnapshotRemoved;
 
-        event EventHandler<EventArgs> SnapshotsChanged;
-        event EventHandler<SnapshotEventArgs> SnapshotAdded;
-        event EventHandler<SnapshotEventArgs> SnapshotRemoved;
+    event EventHandler<SnapshotProviderEventArgs>? SnapshotProviderAdded;
+    event EventHandler<SnapshotProviderEventArgs>? SnapshotProviderRemoved;
 
-        event EventHandler<SnapshotProviderEventArgs> SnapshotProviderAdded;
-        event EventHandler<SnapshotProviderEventArgs> SnapshotProviderRemoved;
-        #endregion
+    Task<bool> LoadAsync();
+    Task<bool> SaveAsync();
 
-        #region Methods
-        Task<bool> LoadAsync();
-        Task<bool> SaveAsync();
+    void AddProvider(ISnapshotProvider snapshotProvider);
+    bool RemoveProvider(ISnapshotProvider snapshotProvider);
 
-        void AddProvider(ISnapshotProvider snapshotProvider);
-        bool RemoveProvider(ISnapshotProvider snapshotProvider);
+    Task<ISnapshot> CreateSnapshotAsync(ISnapshot snapshot);
+    Task RestoreSnapshotAsync(ISnapshot snapshot);
 
-        Task<ISnapshot> CreateSnapshotAsync(ISnapshot snapshot);
-        Task RestoreSnapshotAsync(ISnapshot snapshot);
-
-        void Add(ISnapshot snapshot);
-        bool Remove(ISnapshot snapshot);
-        #endregion
-    }
+    void Add(ISnapshot snapshot);
+    bool Remove(ISnapshot snapshot);
 }

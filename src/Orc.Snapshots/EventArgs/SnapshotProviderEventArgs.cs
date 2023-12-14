@@ -1,25 +1,15 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SnapshotProviderEventArgs.cs" company="WildGums">
-//   Copyright (c) 2008 - 2016 WildGums. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
+﻿namespace Orc.Snapshots;
 
+using System;
 
-namespace Orc.Snapshots
+public class SnapshotProviderEventArgs : EventArgs
 {
-    using System;
-
-    public class SnapshotProviderEventArgs : EventArgs
+    public SnapshotProviderEventArgs(ISnapshotProvider snapshotProvider)
     {
-        #region Constructors
-        public SnapshotProviderEventArgs(ISnapshotProvider snapshotProvider)
-        {
-            SnapshotProvider = snapshotProvider;
-        }
-        #endregion
+        ArgumentNullException.ThrowIfNull(snapshotProvider);
 
-        #region Properties
-        public ISnapshotProvider SnapshotProvider { get; private set; }
-        #endregion
+        SnapshotProvider = snapshotProvider;
     }
+        
+    public ISnapshotProvider SnapshotProvider { get; private set; }
 }

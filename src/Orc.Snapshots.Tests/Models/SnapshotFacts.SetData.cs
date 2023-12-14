@@ -1,57 +1,50 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SnapshotFacts.SetData.cs" company="WildGums">
-//   Copyright (c) 2008 - 2016 WildGums. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
+﻿namespace Orc.Snapshots.Tests.Models;
 
+using System;
+using NUnit.Framework;
 
-namespace Orc.Snapshots.Tests.Models
+public partial class SnapshotFacts
 {
-    using NUnit.Framework;
-
-    public partial class SnapshotFacts
+    [TestFixture]
+    public class TheSetDataMethod
     {
-        [TestFixture]
-        public class TheSetDataMethod
+        [Test]
+        public void SetsData()
         {
-            [Test]
-            public void SetsData()
-            {
-                var snapshot = new Snapshot();
+            var snapshot = new Snapshot();
 
-                var testBytes = new byte[] { 1, 2, 3 };
+            var testBytes = new byte[] { 1, 2, 3 };
 
-                Assert.AreEqual(null, snapshot.GetData("MyData"));
+            Assert.That(snapshot.GetData("MyData"), Is.EqualTo(Array.Empty<byte>()));
 
-                snapshot.SetData("MyData", testBytes);
+            snapshot.SetData("MyData", testBytes);
 
-                Assert.AreEqual(testBytes, snapshot.GetData("MyData"));
-            }
+            Assert.That(snapshot.GetData("MyData"), Is.EqualTo(testBytes));
+        }
 
-            [Test]
-            public void OverwritesData()
-            {
-                var snapshot = new Snapshot();
+        [Test]
+        public void OverwritesData()
+        {
+            var snapshot = new Snapshot();
 
-                snapshot.SetData("MyData", new byte[] { 4, 5, 6 });
+            snapshot.SetData("MyData", new byte[] { 4, 5, 6 });
 
-                var testBytes = new byte[] { 1, 2, 3 };
+            var testBytes = new byte[] { 1, 2, 3 };
 
-                snapshot.SetData("MyData", testBytes);
+            snapshot.SetData("MyData", testBytes);
 
-                Assert.AreEqual(testBytes, snapshot.GetData("MyData"));
-            }
+            Assert.That(snapshot.GetData("MyData"), Is.EqualTo(testBytes));
+        }
 
-            [Test]
-            public void ClearsData()
-            {
-                var snapshot = new Snapshot();
+        [Test]
+        public void ClearsData()
+        {
+            var snapshot = new Snapshot();
 
-                snapshot.SetData("MyData", new byte[] { 4, 5, 6 });
-                snapshot.SetData("MyData", null);
+            snapshot.SetData("MyData", new byte[] { 4, 5, 6 });
+            snapshot.SetData("MyData", null);
 
-                Assert.AreEqual(null, snapshot.GetData("MyData"));
-            }
+            Assert.That(snapshot.GetData("MyData"), Is.EqualTo(Array.Empty<byte>()));
         }
     }
 }

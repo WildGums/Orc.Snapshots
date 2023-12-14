@@ -1,12 +1,11 @@
-﻿namespace Orc.Snapshots.Automation
-{
-    using Orc.Automation.Controls;
+﻿namespace Orc.Snapshots.Automation;
 
-    public class SnapshotItemMap
-    {
-        public Text TitleText { get; set; }
-        public Button RestoreButton { get; set; }
-        public Button EditButton { get; set; }
-        public Button RemoveButton { get; set; }
-    }
+using Orc.Automation.Controls;
+
+public class SnapshotItemMap
+{
+    public Text? TitleText { get; set; }
+    public Button? RestoreButton { get; set; }
+    public Button? EditButton { get; set; }
+    public Button? RemoveButton { get; set; }
 }

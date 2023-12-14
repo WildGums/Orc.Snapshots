@@ -1,101 +1,100 @@
-﻿namespace Orc.Snapshots.Tests
+﻿namespace Orc.Snapshots.Tests;
+
+using System.Linq;
+using Automation;
+using NUnit.Framework;
+using Orc.Automation;
+
+[Explicit]
+[TestFixture]
+public class SnapshotsViewFacts : StyledControlTestFacts<Views.SnapshotsView>
 {
-    using System.Linq;
-    using Automation;
-    using NUnit.Framework;
-    using Orc.Automation;
+    [Target]
+    public SnapshotsView Target { get; set; }
 
-    [Explicit]
-    [TestFixture]
-    public class SnapshotsViewFacts : StyledControlTestFacts<Views.SnapshotsView>
+    protected override void InitializeTarget(string id)
     {
-        [Target]
-        public SnapshotsView Target { get; set; }
+        base.InitializeTarget(id);
 
-        protected override void InitializeTarget(string id)
+        var target = Target;
+
+        target.Execute<InitSnapshotsViewMethodRun>();
+    }
+
+    [TestCase(SnapshotTestData.TestScopeWith0CustomRecords)]
+    [TestCase(SnapshotTestData.TestScopeWith3CustomRecords)]
+    [TestCase(SnapshotTestData.TestScopeWith5CustomRecords)]
+    public void CorrectlySetScope(string scope)
+    {
+        var target = Target;
+        var current = target.Current;
+
+        current.Scope = scope;
+
+        var categories = target.SnapshotCategories;
+        var expectedCategories = SnapshotTestData.GetSnapshotCategories(scope);
+
+        Assert.That(categories, Is.EquivalentTo(expectedCategories)
+            .Using<SnapshotCategoryItem, SnapshotCategory>((x, y) 
+                => Equals(x.CategoryName, y.Category) && x.Items.Select(item => item.Title)
+                    .OrderBy(title => title).SequenceEqual(y.Snapshots.Select(item => item.Title).OrderBy(title => title))));
+    }
+
+    [Test]
+    public void CorrectlyEditSnapshot()
+    {
+        var target = Target;
+        var current = target.Current;
+
+        //Initialize scope items
+        current.Scope = SnapshotTestData.TestScopeWith3CustomRecords;
+
+        Wait.UntilResponsive();
+
+        var snapshotItems = target.SnapshotCategories[0].Items;
+        foreach (var snapshotItem in snapshotItems)
         {
-            base.InitializeTarget(id);
+            var editWindow = snapshotItem.Edit();
 
-            var target = Target;
+            var itemText = snapshotItem.Title;
 
-            target.Execute<InitSnapshotsViewMethodRun>();
-        }
+            Assert.That(editWindow, Is.Not.Null);
+            Assert.That(editWindow.Title, Is.EqualTo(itemText));
 
-        [TestCase(SnapshotTestData.TestScopeWith0CustomRecords)]
-        [TestCase(SnapshotTestData.TestScopeWith3CustomRecords)]
-        [TestCase(SnapshotTestData.TestScopeWith5CustomRecords)]
-        public void CorrectlySetScope(string scope)
-        {
-            var target = Target;
-            var current = target.Current;
+            editWindow.Title = itemText + "_test";
 
-            current.Scope = scope;
-
-            var categories = target.SnapshotCategories;
-            var expectedCategories = SnapshotTestData.GetSnapshotCategories(scope);
-
-            Assert.That(categories, Is.EquivalentTo(expectedCategories)
-                .Using<SnapshotCategoryItem, SnapshotCategory>((x, y) 
-                    => Equals(x.CategoryName, y.Category) && x.Items.Select(item => item.Title)
-                        .OrderBy(title => title).SequenceEqual(y.Snapshots.Select(item => item.Title).OrderBy(title => title))));
-        }
-
-        [Test]
-        public void CorrectlyEditSnapshot()
-        {
-            var target = Target;
-            var current = target.Current;
-
-            //Initialize scope items
-            current.Scope = SnapshotTestData.TestScopeWith3CustomRecords;
+            editWindow.Accept();
 
             Wait.UntilResponsive();
-
-            var snapshotItems = target.SnapshotCategories[0].Items;
-            foreach (var snapshotItem in snapshotItems)
-            {
-                var editWindow = snapshotItem.Edit();
-
-                var itemText = snapshotItem.Title;
-
-                Assert.That(editWindow, Is.Not.Null);
-                Assert.That(editWindow.Title, Is.EqualTo(itemText));
-
-                editWindow.Title = itemText + "_test";
-
-                editWindow.Accept();
-
-                Wait.UntilResponsive();
-            }
-
-            snapshotItems = target.SnapshotCategories[0].Items;
-
-            Assert.That(snapshotItems, Has.All
-                .Property(nameof(SnapshotItem.Title)).EndWith("_test"));
         }
 
-        [Test]
-        public void CorrectlyRemoveWorkspace()
-        {
-            var target = Target;
-            var current = target.Current;
+        snapshotItems = target.SnapshotCategories[0].Items;
 
-            //Initialize scope items
-            current.Scope = SnapshotTestData.TestScopeWith3CustomRecords;
+        Assert.That(snapshotItems, Has.All
+            .Property(nameof(SnapshotItem.Title)).EndWith("_test"));
+    }
 
-            Wait.UntilResponsive();
+    [Test]
+    public void CorrectlyRemoveWorkspace()
+    {
+        var target = Target;
+        var current = target.Current;
 
-            var workspaceItems = target.SnapshotCategories[0].Items;
-            var deleteItem = workspaceItems[2];
+        //Initialize scope items
+        current.Scope = SnapshotTestData.TestScopeWith3CustomRecords;
 
-            deleteItem.Remove();
+        Wait.UntilResponsive();
 
-            Wait.UntilResponsive();
+        var workspaceItems = target.SnapshotCategories[0].Items;
+        var deleteItem = workspaceItems[2];
 
-            workspaceItems = target.SnapshotCategories[0].Items;
+        deleteItem.Remove();
 
-            Assert.That(workspaceItems, Does.Not.Contains(deleteItem)
-                .Using<SnapshotItem, SnapshotItem>((x, y) => Equals(x.Title, y.Title)));
-        }
+        Wait.UntilResponsive();
+
+        workspaceItems = target.SnapshotCategories[0].Items;
+
+        Assert.That(workspaceItems, Does.Not.Contains(deleteItem)
+            .Using<SnapshotItem, SnapshotItem>((x, y) => Equals(x.Title, y.Title)));
     }
 }

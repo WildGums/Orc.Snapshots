@@ -1,20 +1,12 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SnapshotManagerFacts.SaveAsync.cs" company="WildGums">
-//   Copyright (c) 2008 - 2016 WildGums. All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
+﻿namespace Orc.Snapshots.Tests.Managers;
 
+using NUnit.Framework;
 
-namespace Orc.Snapshots.Tests.Managers
+public partial class SnapshotManagerFacts
 {
-    using NUnit.Framework;
-
-    public partial class SnapshotManagerFacts
+    [TestFixture]
+    public class TheSaveAsyncMethod
     {
-        [TestFixture]
-        public class TheSaveAsyncMethod
-        {
 
-        }
     }
 }
