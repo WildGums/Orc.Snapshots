@@ -117,7 +117,7 @@ public class Snapshot : ISnapshot
 
     public void ClearData(string key)
     {
-        SetData(key, Array.Empty<byte>());
+        SetData(key, []);
     }
 
     protected virtual async Task<List<KeyValuePair<string, byte[]>>> LoadSnapshotDataAsync(byte[] bytes)
@@ -131,7 +131,7 @@ public class Snapshot : ISnapshot
             {
                 foreach (var entry in archive.Entries)
                 {
-                    var fileName = entry.Name;
+                    var fileName = entry.FullName;
                     var key = fileName.Substring(0, fileName.Length - InternalFileExtension.Length).Replace("/", "\\");
                     var dataBytes = await entry.GetBytesAsync();
 
