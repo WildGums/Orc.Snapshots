@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net8.0-windows</TargetFrameworks>
+    <TargetFrameworks>net10.0-windows</TargetFrameworks>
     <AssemblyName>Orc.Snapshots.Example</AssemblyName>
     <RootNamespace>Orc.Snapshots.Example</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>

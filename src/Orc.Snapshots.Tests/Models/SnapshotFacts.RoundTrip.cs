@@ -1,4 +1,4 @@
-namespace Orc.Snapshots.Tests.Models;
+﻿namespace Orc.Snapshots.Tests;
 
 using System.Text;
 using System.Threading.Tasks;
@@ -162,21 +162,36 @@ public partial class SnapshotFacts
             using (var archive = new System.IO.Compression.ZipArchive(memoryStream, System.IO.Compression.ZipArchiveMode.Create, true))
             {
                 var entry1 = archive.CreateEntry("folder1/subfolder/file1.dat");
+
+#if NET10_0_OR_GREATER
+                using (var entryStream = await entry1.OpenAsync())
+#else
                 using (var entryStream = entry1.Open())
+#endif
                 {
                     var data = Encoding.UTF8.GetBytes("Data in nested folder");
                     await entryStream.WriteAsync(data, 0, data.Length);
                 }
 
                 var entry2 = archive.CreateEntry("folder2/file2.dat");
+
+#if NET10_0_OR_GREATER
+                using (var entryStream = await entry2.OpenAsync())
+#else
                 using (var entryStream = entry2.Open())
+#endif
                 {
                     var data = Encoding.UTF8.GetBytes("Data in folder2");
                     await entryStream.WriteAsync(data, 0, data.Length);
                 }
 
                 var entry3 = archive.CreateEntry("rootfile.dat");
+
+#if NET10_0_OR_GREATER
+                using (var entryStream = await entry3.OpenAsync())
+#else
                 using (var entryStream = entry3.Open())
+#endif
                 {
                     var data = Encoding.UTF8.GetBytes("Root level data");
                     await entryStream.WriteAsync(data, 0, data.Length);
