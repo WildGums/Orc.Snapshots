@@ -1,7 +1,8 @@
 ﻿[assembly: System.Resources.NeutralResourcesLanguage("en-US")]
-[assembly: System.Runtime.Versioning.TargetFramework(".NETCoreApp,Version=v8.0", FrameworkDisplayName=".NET 8.0")]
+[assembly: System.Runtime.Versioning.TargetFramework(".NETCoreApp,Version=v10.0", FrameworkDisplayName=".NET 10.0")]
 public static class ModuleInitializer
 {
+    [System.Runtime.CompilerServices.ModuleInitializer]
     public static void Initialize() { }
 }
 namespace Orc.Snapshots
@@ -167,10 +168,10 @@ namespace Orc.Snapshots
     {
         protected readonly Catel.IoC.IServiceLocator ServiceLocator;
         protected SnapshotProviderBase(Orc.Snapshots.ISnapshotManager snapshotManager, Catel.IoC.IServiceLocator serviceLocator) { }
-        public virtual string Name { get; set; }
+        public virtual string Name { get; protected set; }
+        public virtual object? Scope { get; set; }
         protected Orc.Snapshots.ISnapshotManager SnapshotManager { get; set; }
         public object? Tag { get; set; }
-        public virtual object? Scope { get; set; }
         public virtual System.Threading.Tasks.Task CreatedSnapshotAsync(Orc.Snapshots.ISnapshot snapshot) { }
         public virtual System.Threading.Tasks.Task CreatingSnapshotAsync(Orc.Snapshots.ISnapshot snapshot) { }
         public virtual System.Collections.Generic.List<string> GetNames() { }

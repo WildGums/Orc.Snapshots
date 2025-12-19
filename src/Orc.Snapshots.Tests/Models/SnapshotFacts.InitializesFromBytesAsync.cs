@@ -1,4 +1,4 @@
-﻿namespace Orc.Snapshots.Tests.Models;
+﻿namespace Orc.Snapshots.Tests;
 
 using System.IO;
 using System.Text;

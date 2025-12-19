@@ -1,0 +1,26 @@
+<Solution>
+  <Folder Name="/misc/">
+    <File Path="Directory.build.project.props" />
+    <File Path="Directory.build.props" />
+    <File Path="Directory.build.shared.explicit.props" />
+    <File Path="Directory.build.shared.implicit.props" />
+    <File Path="Directory.build.shared.mat.props" />
+    <File Path="Directory.build.targets" />
+    <File Path="GlobalSuppressions.cs" />
+    <File Path="MethodTimeLogger.cs" />
+    <File Path="nuget.config" />
+    <File Path="Orc.Snapshots.sln.DotSettings" />
+    <File Path="SolutionAssemblyInfo.cs" />
+  </Folder>
+  <Folder Name="/src/" />
+  <Folder Name="/src/Core/">
+    <Project Path="Orc.Snapshots.Xaml/Orc.Snapshots.Xaml.csproj" />
+    <Project Path="Orc.Snapshots/Orc.Snapshots.csproj" />
+  </Folder>
+  <Folder Name="/src/Example/">
+    <Project Path="Orc.Snapshots.Example/Orc.Snapshots.Example.csproj" />
+  </Folder>
+  <Folder Name="/src/Tests/">
+    <Project Path="Orc.Snapshots.Tests/Orc.Snapshots.Tests.csproj" />
+  </Folder>
+</Solution>
