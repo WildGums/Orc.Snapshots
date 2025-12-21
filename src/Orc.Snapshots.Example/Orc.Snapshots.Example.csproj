@@ -22,7 +22,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
     <PackageReference Include="LoadAssembliesOnStartup.Fody" Version="4.7.0" PrivateAssets="all" />
-    <PackageReference Include="Orc.Notifications" Version="5.1.0" />
+    <PackageReference Include="Orc.Notifications" Version="5.2.0" />
     <PackageReference Include="Orchestra.Shell.Ribbon.Fluent" Version="7.3.0" />
   </ItemGroup>
 
