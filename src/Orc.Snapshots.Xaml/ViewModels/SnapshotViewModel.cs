@@ -6,15 +6,14 @@ using Catel;
 using Catel.MVVM;
 using Catel.Services;
 
-public class SnapshotViewModel : ViewModelBase
+public class SnapshotViewModel : FeaturedViewModelBase
 {
     private readonly ILanguageService _languageService;
 
-    public SnapshotViewModel(ISnapshot snapshot, ILanguageService languageService)
+    public SnapshotViewModel(ISnapshot snapshot, IServiceProvider serviceProvider,
+        ILanguageService languageService)
+        : base(serviceProvider)
     {
-        ArgumentNullException.ThrowIfNull(snapshot);
-        ArgumentNullException.ThrowIfNull(languageService);
-
         DeferValidationUntilFirstSaveCall = true;
 
         _languageService = languageService;

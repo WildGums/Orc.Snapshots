@@ -99,6 +99,10 @@ namespace Orc.Snapshots.Converters
 }
 namespace Orc.Snapshots
 {
+    public static class OrcSnapshotsXamlModule
+    {
+        public static Microsoft.Extensions.DependencyInjection.IServiceCollection AddOrcSnapshotsXaml(this Microsoft.Extensions.DependencyInjection.IServiceCollection serviceCollection) { }
+    }
     public class SnapshotCategory
     {
         public SnapshotCategory() { }
@@ -116,11 +120,11 @@ namespace Orc.Snapshots
 }
 namespace Orc.Snapshots.ViewModels
 {
-    public class SnapshotViewModel : Catel.MVVM.ViewModelBase
+    public class SnapshotViewModel : Catel.MVVM.FeaturedViewModelBase
     {
         public static readonly Catel.Data.IPropertyData SnapshotProperty;
         public static readonly Catel.Data.IPropertyData SnapshotTitleProperty;
-        public SnapshotViewModel(Orc.Snapshots.ISnapshot snapshot, Catel.Services.ILanguageService languageService) { }
+        public SnapshotViewModel(Orc.Snapshots.ISnapshot snapshot, System.IServiceProvider serviceProvider, Catel.Services.ILanguageService languageService) { }
         [Catel.MVVM.Model]
         public Orc.Snapshots.ISnapshot Snapshot { get; }
         [Catel.MVVM.ViewModelToModel("Snapshot", "Title")]
@@ -133,7 +137,7 @@ namespace Orc.Snapshots.ViewModels
         public static readonly Catel.Data.IPropertyData MaxSnapshotAgeProperty;
         public static readonly Catel.Data.IPropertyData NumberOfSnapshotsToCleanupProperty;
         public static readonly Catel.Data.IPropertyData SnapshotsProperty;
-        public SnapshotsCleanupViewModel(Orc.Snapshots.ISnapshotManager snapshotManager, Catel.Services.ILanguageService languageService) { }
+        public SnapshotsCleanupViewModel(System.IServiceProvider serviceProvider, Orc.Snapshots.ISnapshotManager snapshotManager, Catel.Services.ILanguageService languageService) { }
         public bool IncludeAllInCleanup { get; set; }
         public int MaxSnapshotAge { get; set; }
         public int NumberOfSnapshotsToCleanup { get; set; }
@@ -146,15 +150,13 @@ namespace Orc.Snapshots.ViewModels
     {
         public static readonly Catel.Data.IPropertyData FilterProperty;
         public static readonly Catel.Data.IPropertyData HasSnapshotsProperty;
-        public static readonly Catel.Data.IPropertyData ScopeProperty;
         public static readonly Catel.Data.IPropertyData SnapshotCategoriesProperty;
-        public SnapshotsViewModel(Catel.Services.IUIVisualizerService uiVisualizerService, Catel.IoC.IServiceLocator serviceLocator, Catel.Services.IDispatcherService dispatcherService, Catel.Services.IMessageService messageService, Catel.Services.ILanguageService languageService) { }
+        public SnapshotsViewModel(Catel.Services.IUIVisualizerService uiVisualizerService, System.IServiceProvider serviceProvider, Catel.Services.IDispatcherService dispatcherService, Catel.Services.IMessageService messageService, Catel.Services.ILanguageService languageService, Orc.Snapshots.ISnapshotManager snapshotManager) { }
         public Catel.MVVM.TaskCommand<Orc.Snapshots.ISnapshot> EditSnapshot { get; }
         public string Filter { get; set; }
         public bool HasSnapshots { get; }
         public Catel.MVVM.TaskCommand<Orc.Snapshots.ISnapshot> RemoveSnapshot { get; }
         public Catel.MVVM.TaskCommand<Orc.Snapshots.ISnapshot> RestoreSnapshot { get; }
-        public object? Scope { get; set; }
         public System.Collections.Generic.List<Orc.Snapshots.SnapshotCategory> SnapshotCategories { get; }
         protected override System.Threading.Tasks.Task CloseAsync() { }
         protected override System.Threading.Tasks.Task InitializeAsync() { }
@@ -165,21 +167,26 @@ namespace Orc.Snapshots.Views
     public class SnapshotWindow : Catel.Windows.DataWindow, System.Windows.Markup.IComponentConnector
     {
         public SnapshotWindow() { }
-        public SnapshotWindow(Orc.Snapshots.ViewModels.SnapshotViewModel? viewModel) { }
+        [Microsoft.Extensions.DependencyInjection.ActivatorUtilitiesConstructor]
+        public SnapshotWindow(System.IServiceProvider serviceProvider, Catel.Services.IWrapControlService wrapControlService, Catel.Services.ILanguageService languageService) { }
+        public SnapshotWindow(Catel.MVVM.IViewModel? viewModel, System.IServiceProvider serviceProvider, Catel.Services.IWrapControlService wrapControlService, Catel.Services.ILanguageService languageService) { }
         public void InitializeComponent() { }
         protected override System.Windows.Automation.Peers.AutomationPeer OnCreateAutomationPeer() { }
     }
     public sealed class SnapshotsCleanupWindow : Catel.Windows.DataWindow, System.Windows.Markup.IComponentConnector
     {
         public SnapshotsCleanupWindow() { }
+        [Microsoft.Extensions.DependencyInjection.ActivatorUtilitiesConstructor]
+        public SnapshotsCleanupWindow(System.IServiceProvider serviceProvider, Catel.Services.IWrapControlService wrapControlService, Catel.Services.ILanguageService languageService) { }
+        public SnapshotsCleanupWindow(Catel.MVVM.IViewModel? viewModel, System.IServiceProvider serviceProvider, Catel.Services.IWrapControlService wrapControlService, Catel.Services.ILanguageService languageService) { }
         public void InitializeComponent() { }
     }
     public class SnapshotsView : Catel.Windows.Controls.UserControl, System.Windows.Markup.IComponentConnector
     {
-        public static readonly System.Windows.DependencyProperty ScopeProperty;
         public SnapshotsView() { }
-        [Catel.MVVM.Views.ViewToViewModel("", MappingType=Catel.MVVM.Views.ViewToViewModelMappingType.ViewToViewModel)]
-        public object? Scope { get; set; }
+        [Microsoft.Extensions.DependencyInjection.ActivatorUtilitiesConstructor]
+        public SnapshotsView(System.IServiceProvider serviceProvider, Catel.Services.IViewModelWrapperService viewModelWrapperService, Catel.MVVM.IDataContextSubscriptionService dataContextSubscriptionService) { }
+        public SnapshotsView(Catel.MVVM.IViewModel? viewModel, System.IServiceProvider serviceProvider, Catel.Services.IViewModelWrapperService viewModelWrapperService, Catel.MVVM.IDataContextSubscriptionService dataContextSubscriptionService) { }
         public void InitializeComponent() { }
         protected override System.Windows.Automation.Peers.AutomationPeer OnCreateAutomationPeer() { }
     }

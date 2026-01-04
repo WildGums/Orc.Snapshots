@@ -9,13 +9,13 @@ using Providers;
 public partial class SnapshotManagerFacts
 {
     [TestFixture]
-    public class TheAddProviderMethod
+    public class The_AddProvider_Method
     {
         [Test]
-        public void AddsProviderToProvidersList()
+        public void Adds_Provider_To_Providers_List()
         {
             var snapshotManager = CreateSnapshotManager();
-            var provider = new TestSnapshotProvider(snapshotManager, ServiceLocator.Default);
+            var provider = new TestSnapshotProvider(snapshotManager);
 
             Assert.That(snapshotManager.Providers.Count(), Is.EqualTo(0));
 
@@ -27,10 +27,10 @@ public partial class SnapshotManagerFacts
         }
 
         [Test]
-        public void RaisesSnapshotProviderAddedEvent()
+        public void Raises_Snapshot_Provider_Added_Event()
         {
             var snapshotManager = CreateSnapshotManager();
-            var provider = new TestSnapshotProvider(snapshotManager, ServiceLocator.Default);
+            var provider = new TestSnapshotProvider(snapshotManager);
 
             var isInvoked = false;
 

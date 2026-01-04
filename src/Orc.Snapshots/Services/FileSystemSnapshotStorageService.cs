@@ -8,24 +8,22 @@ using Catel;
 using Catel.Logging;
 using Catel.Services;
 using FileSystem;
+using Microsoft.Extensions.Logging;
 
 public class FileSystemSnapshotStorageService : SnapshotStorageServiceBase
 {
-    private static readonly ILog Log = LogManager.GetCurrentClassLogger();
-
     private const string SnapshotExtension = ".snp";
 
+    private readonly ILogger<FileSystemSnapshotStorageService> _logger;
     private readonly IDirectoryService _directoryService;
     private readonly IFileService _fileService;
     private readonly IAppDataService _appDataService;
 
-    public FileSystemSnapshotStorageService(IDirectoryService directoryService, IFileService fileService,
-        IAppDataService appDataService)
+    public FileSystemSnapshotStorageService(ILogger<FileSystemSnapshotStorageService> logger, 
+        IDirectoryService directoryService, IFileService fileService, IAppDataService appDataService)
+        : base(logger)
     {
-        ArgumentNullException.ThrowIfNull(directoryService);
-        ArgumentNullException.ThrowIfNull(fileService);
-        ArgumentNullException.ThrowIfNull(appDataService);
-
+        _logger = logger;
         _directoryService = directoryService;
         _fileService = fileService;
         _appDataService = appDataService;
@@ -39,7 +37,7 @@ public class FileSystemSnapshotStorageService : SnapshotStorageServiceBase
     {
         var directory = Directory;
 
-        Log.Debug($"Loading snapshots from '{directory}'");
+        _logger.LogDebug($"Loading snapshots from '{directory}'");
 
         var snapshots = new List<ISnapshot>();
 
@@ -55,7 +53,7 @@ public class FileSystemSnapshotStorageService : SnapshotStorageServiceBase
             }
         }
 
-        Log.Debug($"Loaded '{snapshots.Count}' snapshots from '{directory}'");
+        _logger.LogDebug($"Loaded '{snapshots.Count}' snapshots from '{directory}'");
 
         return snapshots;
     }
@@ -68,7 +66,7 @@ public class FileSystemSnapshotStorageService : SnapshotStorageServiceBase
 
         try
         {
-            Log.Debug($"Loading snapshot from '{source}'");
+            _logger.LogDebug($"Loading snapshot from '{source}'");
 
             var bytes = await _fileService.ReadAllBytesAsync(source);
             if (bytes is not null && bytes.Length > 0)
@@ -78,7 +76,7 @@ public class FileSystemSnapshotStorageService : SnapshotStorageServiceBase
         }
         catch (Exception ex)
         {
-            Log.Error(ex, $"Failed to load snapshot from '{source}'");
+            _logger.LogError(ex, $"Failed to load snapshot from '{source}'");
         }
 
         return result;
@@ -91,7 +89,7 @@ public class FileSystemSnapshotStorageService : SnapshotStorageServiceBase
         var directory = Directory;
         _directoryService.Create(directory);
 
-        Log.Debug("Deleting previous snapshot files");
+        _logger.LogDebug("Deleting previous snapshot files");
 
         var deleteCount = 0;
 
@@ -116,16 +114,16 @@ public class FileSystemSnapshotStorageService : SnapshotStorageServiceBase
                 }
                 else
                 {
-                    Log.Debug($"No need to delete '{snapshotFile}', snapshot is still in use");
+                    _logger.LogDebug($"No need to delete '{snapshotFile}', snapshot is still in use");
                 }
             }
             catch (Exception ex)
             {
-                Log.Warning(ex, $"Failed to delete file '{snapshotFile}'");
+                _logger.LogWarning(ex, $"Failed to delete file '{snapshotFile}'");
             }
         }
 
-        Log.Debug($"Deleted '{deleteCount}' snapshots, going to save new snapshots now");
+        _logger.LogDebug($"Deleted '{deleteCount}' snapshots, going to save new snapshots now");
 
         var saveCount = 0;
 
@@ -139,7 +137,7 @@ public class FileSystemSnapshotStorageService : SnapshotStorageServiceBase
             }
         }
 
-        Log.Debug($"Saved '{saveCount}' of '{snapshots.Count()}' snapshots to disk");
+        _logger.LogDebug($"Saved '{saveCount}' of '{snapshots.Count()}' snapshots to disk");
     }
 
     protected virtual async Task SaveSnapshotAsync(string source, ISnapshot snapshot)
@@ -147,7 +145,7 @@ public class FileSystemSnapshotStorageService : SnapshotStorageServiceBase
         Argument.IsNotNullOrEmpty(() => source);
         ArgumentNullException.ThrowIfNull(snapshot);
 
-        Log.Debug($"Saving snapshot '{snapshot}' to '{source}'");
+        _logger.LogDebug($"Saving snapshot '{snapshot}' to '{source}'");
 
         var bytes = await ConvertSnapshotToBytesAsync(snapshot);
         if (bytes is not null)

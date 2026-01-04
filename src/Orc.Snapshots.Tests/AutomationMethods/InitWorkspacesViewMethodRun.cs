@@ -1,5 +1,6 @@
 ﻿namespace Orc.Snapshots.Tests;
 
+using System;
 using System.Threading.Tasks;
 using System.Windows;
 using Catel.IoC;
@@ -17,47 +18,49 @@ public class InitSnapshotsViewMethodRun : NamedAutomationMethodRun
             return true;
         }
 
-#pragma warning disable IDISP001 // Dispose created
-        var serviceLocator = this.GetServiceLocator();
-#pragma warning restore IDISP001 // Dispose created
+        throw new NotImplementedException();
 
-        var languageService = serviceLocator.ResolveType<ILanguageService>();
-        languageService.RegisterLanguageSource(new LanguageResourceSource("Orc.Snapshots.Xaml", "Orc.Snapshots.Properties", "Resources"));
+//#pragma warning disable IDISP001 // Dispose created
+//        var serviceLocator = this.GetServiceLocator();
+//#pragma warning restore IDISP001 // Dispose created
 
-        serviceLocator.RegisterType<ISnapshotManager, SnapshotManager>();
-        serviceLocator.RegisterType<ISnapshotStorageService, SnapshotStorageServiceMock>();
+//        var languageService = serviceLocator.ResolveType<ILanguageService>();
+//        languageService.RegisterLanguageSource(new LanguageResourceSource("Orc.Snapshots.Xaml", "Orc.Snapshots.Properties", "Resources"));
 
-        foreach (var scope in SnapshotTestData.AvailableScopes)
-        {
-            RegisterScope(scope);
-        }
+//        serviceLocator.RegisterType<ISnapshotManager, SnapshotManager>();
+//        serviceLocator.RegisterType<ISnapshotStorageService, SnapshotStorageServiceMock>();
 
-#pragma warning disable IDISP004 // Don't ignore created IDisposable
-        var vm = this.GetTypeFactory().CreateRequiredInstanceWithParametersAndAutoCompletion<ViewModels.SnapshotsViewModel>();
-#pragma warning restore IDISP004 // Don't ignore created IDisposable
-        snapshotsView.DataContext = vm;
+//        foreach (var scope in SnapshotTestData.AvailableScopes)
+//        {
+//            RegisterScope(scope);
+//        }
 
-        return true;
+//#pragma warning disable IDISP004 // Don't ignore created IDisposable
+//        var vm = this.GetTypeFactory().CreateRequiredInstanceWithParametersAndAutoCompletion<ViewModels.SnapshotsViewModel>();
+//#pragma warning restore IDISP004 // Don't ignore created IDisposable
+//        snapshotsView.DataContext = vm;
+
+        //return true;
     }
 
-    private async void RegisterScope(object scope)
-    {
-#pragma warning disable IDISP001 // Dispose created
-        var serviceLocator = this.GetServiceLocator();
-        var typeFactory = this.GetTypeFactory();
-#pragma warning restore IDISP001 // Dispose created
+//    private async void RegisterScope(object scope)
+//    {
+//#pragma warning disable IDISP001 // Dispose created
+//        var serviceLocator = this.GetServiceLocator();
+//        var typeFactory = this.GetTypeFactory();
+//#pragma warning restore IDISP001 // Dispose created
 
-        var snapshotStorageService = new SnapshotStorageServiceMock
-        {
-            Scope = scope
-        };
-        serviceLocator.RegisterInstance(typeof(ISnapshotStorageService), snapshotStorageService, scope);
+//        var snapshotStorageService = new SnapshotStorageServiceMock
+//        {
+//            Scope = scope
+//        };
+//        serviceLocator.RegisterInstance(typeof(ISnapshotStorageService), snapshotStorageService, scope);
 
-        var snapshotManager = typeFactory.CreateInstanceWithParametersAndAutoCompletionWithTag<SnapshotManager>(scope);
-        snapshotManager.Scope = scope;
+//        var snapshotManager = typeFactory.CreateInstanceWithParametersAndAutoCompletionWithTag<SnapshotManager>(scope);
+//        snapshotManager.Scope = scope;
 
-        await Task.Run(async () => await snapshotManager.LoadAsync());
+//        await Task.Run(async () => await snapshotManager.LoadAsync());
 
-        serviceLocator.RegisterInstance(typeof(ISnapshotManager), snapshotManager, scope);
-    }
+//        serviceLocator.RegisterInstance(typeof(ISnapshotManager), snapshotManager, scope);
+//    }
 }

@@ -10,8 +10,7 @@ public interface ISnapshotManager
 {
     IEnumerable<ISnapshot> Snapshots { get; }
     IEnumerable<ISnapshotProvider> Providers { get; }
-
-    object? Scope { get; set; }
+    
 
     event AsyncEventHandler<CancelEventArgs>? LoadingAsync;
     event EventHandler<EventArgs>? Loaded;

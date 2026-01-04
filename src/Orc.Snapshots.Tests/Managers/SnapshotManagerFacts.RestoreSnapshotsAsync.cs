@@ -9,13 +9,13 @@ public partial class SnapshotManagerFacts
 {
 
     [TestFixture]
-    public class TheRestoreSnapshotAsyncMethod
+    public class The_RestoreSnapshotAsync_Method
     {
         [Test]
-        public async Task CreatesSnapshotAsync()
+        public async Task Restores_Snapshot_Async()
         {
             var snapshotManager = CreateSnapshotManager();
-            var provider = new TestSnapshotProvider(snapshotManager, ServiceLocator.Default);
+            var provider = new TestSnapshotProvider(snapshotManager);
 
             snapshotManager.AddProvider(provider);
 

@@ -2,12 +2,11 @@
 
 using System.IO;
 using System.Threading.Tasks;
-using Catel.IoC;
 
 public class TestSnapshotProvider : SnapshotProviderBase
 {
-    public TestSnapshotProvider(ISnapshotManager snapshotManager, IServiceLocator serviceLocator) 
-        : base(snapshotManager, serviceLocator)
+    public TestSnapshotProvider(ISnapshotManager snapshotManager) 
+        : base(snapshotManager)
     {
     }
 

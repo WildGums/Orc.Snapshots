@@ -9,26 +9,20 @@ using System.Threading.Tasks;
 using Catel;
 using Catel.IoC;
 using Catel.Logging;
+using Microsoft.Extensions.Logging;
 
 public class SnapshotManager : ISnapshotManager
 {
-    private static readonly ILog Log = LogManager.GetCurrentClassLogger();
-
-    private readonly IServiceLocator _serviceLocator;
+    private static readonly ILogger Logger = LogManager.GetLogger(typeof(SnapshotManager));
 
     private readonly List<ISnapshotProvider> _providers = new List<ISnapshotProvider>();
     private readonly List<ISnapshot> _snapshots = new List<ISnapshot>();
 
-    private ISnapshotStorageService _snapshotStorageService;
-    private object? _scope;
+    private readonly ISnapshotStorageService _snapshotStorageService;
 
-    public SnapshotManager(ISnapshotStorageService snapshotStorageService, IServiceLocator serviceLocator)
+    public SnapshotManager(ISnapshotStorageService snapshotStorageService)
     {
-        ArgumentNullException.ThrowIfNull(snapshotStorageService);
-        ArgumentNullException.ThrowIfNull(serviceLocator);
-
         _snapshotStorageService = snapshotStorageService;
-        _serviceLocator = serviceLocator;
 
         UniqueIdentifier = UniqueIdentifierHelper.GetUniqueIdentifier<SnapshotManager>();
     }
@@ -38,23 +32,6 @@ public class SnapshotManager : ISnapshotManager
     public IEnumerable<ISnapshotProvider> Providers
     {
         get { return _providers.ToArray(); }
-    }
-
-    public object? Scope
-    {
-        get { return _scope; }
-        set
-        {
-            _scope = value;
-
-            var snapshotStorageService = _serviceLocator.ResolveType<ISnapshotStorageService>(_scope);
-            if (snapshotStorageService is null)
-            {
-                return;
-            }
-
-            _snapshotStorageService = snapshotStorageService;
-        }
     }
 
     public IEnumerable<ISnapshot> Snapshots
@@ -83,7 +60,7 @@ public class SnapshotManager : ISnapshotManager
 
     public async Task<bool> LoadAsync()
     {
-        Log.Debug($"[{Scope}] Loading snapshots");
+        Logger.LogDebug($"Loading snapshots");
 
         var loadingAsync = LoadingAsync;
         if (loadingAsync is not null)
@@ -92,7 +69,7 @@ public class SnapshotManager : ISnapshotManager
             await loadingAsync(this, cancelEventArgs);
             if (cancelEventArgs.Cancel)
             {
-                Log.Info("Loading canceled by LoadingAsync event");
+                Logger.LogInformation("Loading canceled by LoadingAsync event");
                 return false;
             }
         }
@@ -107,14 +84,14 @@ public class SnapshotManager : ISnapshotManager
 
         Loaded?.Invoke(this, EventArgs.Empty);
 
-        Log.Info($"[{Scope}] Loaded '{snapshots.Count()}' snapshots");
+        Logger.LogInformation($"Loaded '{snapshots.Count()}' snapshots");
 
         return true;
     }
 
     public async Task<bool> SaveAsync()
     {
-        Log.Debug($"[{Scope}] Saving snapshots");
+        Logger.LogDebug($"Saving snapshots");
 
         var savingAsync = SavingAsync;
         if (savingAsync is not null)
@@ -123,7 +100,7 @@ public class SnapshotManager : ISnapshotManager
             await savingAsync(this, cancelEventArgs);
             if (cancelEventArgs.Cancel)
             {
-                Log.Info("Saving canceled by SavingAsync event");
+                Logger.LogInformation("Saving canceled by SavingAsync event");
                 return false;
             }
         }
@@ -139,7 +116,7 @@ public class SnapshotManager : ISnapshotManager
 
         Saved?.Invoke(this, EventArgs.Empty);
 
-        Log.Info($"[{Scope}] Saved '{snapshots.Count}' snapshots");
+        Logger.LogInformation($"Saved '{snapshots.Count}' snapshots");
 
         return true;
     }
@@ -149,7 +126,7 @@ public class SnapshotManager : ISnapshotManager
         ArgumentNullException.ThrowIfNull(snapshotProvider);
 
 #if DEBUG
-        Log.Debug($"[{Scope}] Adding provider {snapshotProvider.GetType()} to the SnapshotManager (Scope = '{Scope ?? "null"}')");
+        Logger.LogDebug($"Adding provider {snapshotProvider.GetType()} to the SnapshotManager");
 #endif
 
         lock (_providers)
@@ -165,7 +142,7 @@ public class SnapshotManager : ISnapshotManager
         ArgumentNullException.ThrowIfNull(snapshotProvider);
 
 #if DEBUG
-        Log.Debug($"[{Scope}] Removing provider {snapshotProvider.GetType()} from the SnapshotManager (Tag == \"{Scope ?? "null"}\")");
+        Logger.LogDebug($"Removing provider {snapshotProvider.GetType()} from the SnapshotManager");
 #endif
 
         var removed = false;
@@ -188,7 +165,7 @@ public class SnapshotManager : ISnapshotManager
     {
         ArgumentNullException.ThrowIfNull(snapshot);
 
-        Log.Info($"Creating snapshot '{snapshot}'");
+        Logger.LogInformation($"Creating snapshot '{snapshot}'");
 
         await SnapshotCreatingAsync.SafeInvokeAsync(this, new SnapshotEventArgs(snapshot));
 
@@ -201,13 +178,13 @@ public class SnapshotManager : ISnapshotManager
 
         foreach (var provider in providers)
         {
-            Log.Debug($"Creating data for snapshot '{snapshot}' using provider '{provider}'");
+            Logger.LogDebug($"Creating data for snapshot '{snapshot}' using provider '{provider}'");
 
             var names = provider.GetNames();
 
             foreach (var name in names)
             {
-                Log.Debug($"Creating data for snapshot '{snapshot}' using provider '{provider}::{name}'");
+                Logger.LogDebug($"Creating data for snapshot '{snapshot}' using provider '{provider}::{name}'");
 
                 byte[] providerData;
 
@@ -229,7 +206,7 @@ public class SnapshotManager : ISnapshotManager
 
         SnapshotCreated?.Invoke(this, new SnapshotEventArgs(snapshot));
 
-        Log.Info($"Created snapshot '{snapshot}'");
+        Logger.LogInformation($"Created snapshot '{snapshot}'");
 
         return snapshot;
     }
@@ -238,7 +215,7 @@ public class SnapshotManager : ISnapshotManager
     {
         ArgumentNullException.ThrowIfNull(snapshot);
 
-        Log.Info($"Restoring snapshot '{snapshot}'");
+        Logger.LogInformation($"Restoring snapshot '{snapshot}'");
 
         await SnapshotRestoringAsync.SafeInvokeAsync(this, new SnapshotEventArgs(snapshot));
 
@@ -251,13 +228,13 @@ public class SnapshotManager : ISnapshotManager
 
         foreach (var provider in providers)
         {
-            Log.Debug($"Restoring data for snapshot '{snapshot}' using provider '{provider}'");
+            Logger.LogDebug($"Restoring data for snapshot '{snapshot}' using provider '{provider}'");
 
             var names = provider.GetNames();
 
             foreach (var name in names)
             {
-                Log.Debug($"Restoring data for snapshot '{snapshot}' using provider '{provider}::{name}'");
+                Logger.LogDebug($"Restoring data for snapshot '{snapshot}' using provider '{provider}::{name}'");
 
                 var providerData = snapshot.GetData(name);
                 if (providerData is null)
@@ -279,7 +256,7 @@ public class SnapshotManager : ISnapshotManager
 
         SnapshotRestored?.Invoke(this, new SnapshotEventArgs(snapshot));
 
-        Log.Info($"Restored snapshot '{snapshot}'");
+        Logger.LogInformation($"Restored snapshot '{snapshot}'");
     }
 
     public void Add(ISnapshot snapshot)
@@ -288,7 +265,7 @@ public class SnapshotManager : ISnapshotManager
 
         if (!_snapshots.Contains(snapshot))
         {
-            Log.Debug($"[{Scope}] Adding snapshot '{snapshot}'");
+            Logger.LogDebug($"Adding snapshot '{snapshot}'");
 
             _snapshots.Add(snapshot);
 
@@ -301,11 +278,11 @@ public class SnapshotManager : ISnapshotManager
     {
         ArgumentNullException.ThrowIfNull(snapshot);
 
-        Log.Debug($"[{Scope}] Deleting snapshot '{snapshot}'");
+        Logger.LogDebug($"Deleting snapshot '{snapshot}'");
 
         if (!_snapshots.Contains(snapshot))
         {
-            Log.Debug($"[{Scope}] Can't delete snapshot '{snapshot}', snapshot is not managed by the manager");
+            Logger.LogDebug($"Can't delete snapshot '{snapshot}', snapshot is not managed by the manager");
             return false;
         }
 

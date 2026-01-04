@@ -9,13 +9,13 @@ using Providers;
 public partial class SnapshotManagerFacts
 {
     [TestFixture]
-    public class TheRemoveProviderMethod
+    public class The_RemoveProvider_Method
     {
         [Test]
-        public void RemovesProviderFromProvidersList()
+        public void Removes_Provider_From_Providers_List()
         {
             var snapshotManager = CreateSnapshotManager();
-            var provider = new TestSnapshotProvider(snapshotManager, ServiceLocator.Default);
+            var provider = new TestSnapshotProvider(snapshotManager);
 
             snapshotManager.AddProvider(provider);
 
@@ -28,10 +28,10 @@ public partial class SnapshotManagerFacts
         }
 
         [Test]
-        public void ReturnsFalseWhenProviderCannotBeRemoved()
+        public void Returns_False_When_Provider_Cannot_Be_Removed()
         {
             var snapshotManager = CreateSnapshotManager();
-            var provider = new TestSnapshotProvider(snapshotManager, ServiceLocator.Default);
+            var provider = new TestSnapshotProvider(snapshotManager);
 
             Assert.That(snapshotManager.Providers.Count(), Is.EqualTo(0));
 
@@ -42,10 +42,10 @@ public partial class SnapshotManagerFacts
         }
 
         [Test]
-        public void RaisesSnapshotProviderRemovedEvent()
+        public void Raises_SnapshotProviderRemoved_Event()
         {
             var snapshotManager = CreateSnapshotManager();
-            var provider = new TestSnapshotProvider(snapshotManager, ServiceLocator.Default);
+            var provider = new TestSnapshotProvider(snapshotManager);
 
             snapshotManager.AddProvider(provider);
 
