@@ -7,7 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Catel;
-using Catel.IoC;
 using Catel.Logging;
 using Microsoft.Extensions.Logging;
 
