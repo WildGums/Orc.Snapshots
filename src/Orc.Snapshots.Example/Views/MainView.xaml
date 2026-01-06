@@ -4,7 +4,8 @@
                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                    xmlns:catel="http://schemas.catelproject.com"
-                   xmlns:orccontrols="http://schemas.wildgums.com/orc/controls" 
+                   xmlns:orccontrols="http://schemas.wildgums.com/orc/controls"
+                   xmlns:orclogviewer="http://schemas.wildgums.com/orc/logviewer"
                    xmlns:orctheming="http://schemas.wildgums.com/orc/theming"
                    mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="400">
 
@@ -60,7 +61,7 @@
             </WrapPanel>
         </orccontrols:StackGrid>
 
-        <orccontrols:LogViewerControl Grid.Row="4" />
+        <orclogviewer:AdvancedLogViewerControl Grid.Row="4" />
     </Grid>
 
 </catel:UserControl>

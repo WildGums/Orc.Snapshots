@@ -8,8 +8,8 @@ using Catel;
 
 public interface ISnapshotManager
 {
-    IEnumerable<ISnapshot> Snapshots { get; }
-    IEnumerable<ISnapshotProvider> Providers { get; }
+    IReadOnlyList<ISnapshot> Snapshots { get; }
+    IReadOnlyList<ISnapshotProvider> Providers { get; }
     
 
     event AsyncEventHandler<CancelEventArgs>? LoadingAsync;

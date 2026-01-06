@@ -1,5 +1,6 @@
 ﻿namespace Orc.Snapshots.Example.ViewModels;
 
+using System;
 using System.Threading.Tasks;
 using Catel.MVVM;
 using Catel.Services;
@@ -11,20 +12,22 @@ public class RibbonViewModel : ViewModelBase
     private readonly ISnapshotManager _snapshotManager;
     private readonly IMessageService _messageService;
 
-    public RibbonViewModel(ISnapshotManager snapshotManager, IUIVisualizerService uiVisualizerService, IMessageService messageService)
+    public RibbonViewModel(IServiceProvider serviceProvider, ISnapshotManager snapshotManager,
+        IUIVisualizerService uiVisualizerService, IMessageService messageService)
+        : base(serviceProvider)
     {
         _snapshotManager = snapshotManager;
         _uiVisualizerService = uiVisualizerService;
         _messageService = messageService;
 
-        CreateSnapshot = new TaskCommand(OnCreateSnapshotExecuteAsync, OnCreateSnapshotCanExecute);
-        CleanupSnapshots = new TaskCommand(OnCleanupSnapshotsExecuteAsync);
+        CreateSnapshot = new TaskCommand(serviceProvider, OnCreateSnapshotExecuteAsync, OnCreateSnapshotCanExecute);
+        CleanupSnapshots = new TaskCommand(serviceProvider, OnCleanupSnapshotsExecuteAsync);
 
         Title = "Orc.Snapshots example";
     }
 
     public TaskCommand CreateSnapshot { get; }
-        
+
     private bool OnCreateSnapshotCanExecute()
     {
         return true;

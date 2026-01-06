@@ -12,15 +12,10 @@ public abstract class SnapshotProviderBase : ISnapshotProvider
     /// <summary>
     /// Initializes a new instance of the <see cref="SnapshotProviderBase" /> class.
     /// </summary>
-    /// <param name="snapshotManager">The snapshot manager.</param>
-    protected SnapshotProviderBase(ISnapshotManager snapshotManager)
+    protected SnapshotProviderBase()
     {
-        SnapshotManager = snapshotManager;
-
         Name = GetType().Name;
     }
-
-    protected ISnapshotManager SnapshotManager { get; set; }
 
     public virtual string Name { get; protected set; }
 
@@ -86,7 +81,7 @@ public abstract class SnapshotProviderBase : ISnapshotProvider
     /// Gets the names of the values that needs to be written to a stream.
     /// </summary>
     /// <returns></returns>
-    public virtual List<string> GetNames()
+    public virtual IReadOnlyList<string> GetNames()
     {
         return new List<string>(new[] { Name });
     }

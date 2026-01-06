@@ -1,6 +1,8 @@
 ﻿namespace Orc.Snapshots.Models;
 
-public class Project
+using Catel.IoC;
+
+public class Project : IConstructAtStartup
 {
     public Project()
     {

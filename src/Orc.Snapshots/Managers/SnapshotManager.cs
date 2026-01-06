@@ -19,21 +19,22 @@ public class SnapshotManager : ISnapshotManager
 
     private readonly ISnapshotStorageService _snapshotStorageService;
 
-    public SnapshotManager(ISnapshotStorageService snapshotStorageService)
+    public SnapshotManager(ISnapshotStorageService snapshotStorageService, IEnumerable<ISnapshotProvider> snapshotProviders)
     {
         _snapshotStorageService = snapshotStorageService;
+        _providers.AddRange(snapshotProviders);
 
         UniqueIdentifier = UniqueIdentifierHelper.GetUniqueIdentifier<SnapshotManager>();
     }
 
     public int UniqueIdentifier { get; private set; }
 
-    public IEnumerable<ISnapshotProvider> Providers
+    public IReadOnlyList<ISnapshotProvider> Providers
     {
         get { return _providers.ToArray(); }
     }
 
-    public IEnumerable<ISnapshot> Snapshots
+    public IReadOnlyList<ISnapshot> Snapshots
     {
         get { return _snapshots.ToArray(); }
     }

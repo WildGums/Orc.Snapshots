@@ -15,7 +15,7 @@ public interface ISnapshotProvider
     /// Gets the names of the values that needs to be written to a stream.
     /// </summary>
     /// <returns></returns>
-    List<string> GetNames();
+    IReadOnlyList<string> GetNames();
 
     /// <summary>
     /// Called when a snapshot manager is about to create a snapshot.
