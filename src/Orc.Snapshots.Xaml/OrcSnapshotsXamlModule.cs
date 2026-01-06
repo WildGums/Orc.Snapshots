@@ -1,4 +1,4 @@
-﻿namespace Orc.Snapshots
+﻿namespace Orc
 {
     using Catel.Services;
     using Microsoft.Extensions.DependencyInjection;
