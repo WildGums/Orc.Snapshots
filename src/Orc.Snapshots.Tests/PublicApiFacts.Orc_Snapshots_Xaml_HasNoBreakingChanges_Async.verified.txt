@@ -10,6 +10,13 @@ public static class ModuleInitializer
     [System.Runtime.CompilerServices.ModuleInitializer]
     public static void Initialize() { }
 }
+namespace Orc
+{
+    public static class OrcSnapshotsXamlModule
+    {
+        public static Microsoft.Extensions.DependencyInjection.IServiceCollection AddOrcSnapshotsXaml(this Microsoft.Extensions.DependencyInjection.IServiceCollection serviceCollection) { }
+    }
+}
 namespace Orc.Snapshots.Automation
 {
     [Orc.Automation.AutomatedControl(ControlTypeName="Pane")]
@@ -99,10 +106,6 @@ namespace Orc.Snapshots.Converters
 }
 namespace Orc.Snapshots
 {
-    public static class OrcSnapshotsXamlModule
-    {
-        public static Microsoft.Extensions.DependencyInjection.IServiceCollection AddOrcSnapshotsXaml(this Microsoft.Extensions.DependencyInjection.IServiceCollection serviceCollection) { }
-    }
     public class SnapshotCategory
     {
         public SnapshotCategory() { }

@@ -15,7 +15,7 @@ public partial class SnapshotManagerFacts
         public async Task Creates_Snapshot()
         {
             var snapshotManager = CreateSnapshotManager();
-            var provider = new TestSnapshotProvider(snapshotManager);
+            var provider = new TestSnapshotProvider();
 
             snapshotManager.AddProvider(provider);
 

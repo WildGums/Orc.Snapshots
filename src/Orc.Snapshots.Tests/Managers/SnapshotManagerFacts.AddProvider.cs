@@ -15,7 +15,7 @@ public partial class SnapshotManagerFacts
         public void Adds_Provider_To_Providers_List()
         {
             var snapshotManager = CreateSnapshotManager();
-            var provider = new TestSnapshotProvider(snapshotManager);
+            var provider = new TestSnapshotProvider();
 
             Assert.That(snapshotManager.Providers.Count(), Is.EqualTo(0));
 
@@ -30,7 +30,7 @@ public partial class SnapshotManagerFacts
         public void Raises_Snapshot_Provider_Added_Event()
         {
             var snapshotManager = CreateSnapshotManager();
-            var provider = new TestSnapshotProvider(snapshotManager);
+            var provider = new TestSnapshotProvider();
 
             var isInvoked = false;
 

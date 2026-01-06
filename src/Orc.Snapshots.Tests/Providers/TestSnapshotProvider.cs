@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 public class TestSnapshotProvider : SnapshotProviderBase
 {
-    public TestSnapshotProvider(ISnapshotManager snapshotManager) 
-        : base(snapshotManager)
+    public TestSnapshotProvider() 
+        : base()
     {
     }
 

@@ -15,7 +15,7 @@ public partial class SnapshotManagerFacts
         public void Removes_Provider_From_Providers_List()
         {
             var snapshotManager = CreateSnapshotManager();
-            var provider = new TestSnapshotProvider(snapshotManager);
+            var provider = new TestSnapshotProvider();
 
             snapshotManager.AddProvider(provider);
 
@@ -31,7 +31,7 @@ public partial class SnapshotManagerFacts
         public void Returns_False_When_Provider_Cannot_Be_Removed()
         {
             var snapshotManager = CreateSnapshotManager();
-            var provider = new TestSnapshotProvider(snapshotManager);
+            var provider = new TestSnapshotProvider();
 
             Assert.That(snapshotManager.Providers.Count(), Is.EqualTo(0));
 
@@ -45,7 +45,7 @@ public partial class SnapshotManagerFacts
         public void Raises_SnapshotProviderRemoved_Event()
         {
             var snapshotManager = CreateSnapshotManager();
-            var provider = new TestSnapshotProvider(snapshotManager);
+            var provider = new TestSnapshotProvider();
 
             snapshotManager.AddProvider(provider);
 
