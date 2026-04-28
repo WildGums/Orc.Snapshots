@@ -8,10 +8,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Catel;
 using Catel.Logging;
+using Microsoft.Extensions.Logging;
 
 public class Snapshot : ISnapshot
 {
-    private static readonly ILog Log = LogManager.GetCurrentClassLogger();
+    private static readonly ILogger Logger = LogManager.GetLogger(typeof(Snapshot));
 
     private const string InternalFileExtension = ".dat";
     private readonly Dictionary<string, byte[]> _data = new Dictionary<string, byte[]>();
@@ -76,7 +77,7 @@ public class Snapshot : ISnapshot
     {
         if (_isDirty)
         {
-            Log.Debug($"Data for '{this}' is outdated, generating new data");
+            Logger.LogDebug($"Data for '{this}' is outdated, generating new data");
 
             _allData = await SaveSnapshotDataAsync(_data.ToList());
             _contentHash = Md5Helper.ComputeMd5(_allData);
@@ -93,7 +94,7 @@ public class Snapshot : ISnapshot
         {
             if (!_data.TryGetValue(key, out var data))
             {
-                Log.Warning($"Key '{key}' not found in snapshot");
+                Logger.LogWarning($"Key '{key}' not found in snapshot");
 
                 data = Array.Empty<byte>();
             }

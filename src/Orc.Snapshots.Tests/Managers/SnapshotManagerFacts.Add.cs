@@ -6,11 +6,9 @@ using System.Linq;
 
 public partial class SnapshotManagerFacts
 {
-    #region Nested type: TheAddMethod
     [TestFixture]
-    public class TheAddMethod
+    public class The_Add_Method
     {
-        #region Methods
         [Test]
         public void AddsSnapshotToSnapshotsList()
         {
@@ -67,7 +65,5 @@ public partial class SnapshotManagerFacts
 
             Assert.That(isInvoked, Is.True);
         }
-        #endregion
     }
-    #endregion
 }

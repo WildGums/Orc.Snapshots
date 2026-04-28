@@ -2,11 +2,8 @@
 
 public sealed partial class SnapshotsCleanupWindow
 {
-    /// <summary>
-    /// Initializes a new instance of the <see cref="SnapshotsCleanupWindow"/> class.
-    /// </summary>
-    public SnapshotsCleanupWindow()
+    partial void OnInitializingComponent()
     {
-        InitializeComponent();
+        Mode = Catel.Windows.DataWindowMode.Close;
     }
 }

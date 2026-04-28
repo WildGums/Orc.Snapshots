@@ -1,13 +1,18 @@
 ﻿namespace Orc.Snapshots.Tests.Managers;
 
-using Catel.IoC;
+using Microsoft.Extensions.DependencyInjection;
 
 public partial class SnapshotManagerFacts
 {
-    private static ISnapshotManager CreateSnapshotManager(IServiceLocator serviceLocator = null)
+    private static ISnapshotManager CreateSnapshotManager()
     {
-        var snapshotStorageService = new InMemorySnapshotStorageService();
-        var snapshotManager = new SnapshotManager(snapshotStorageService, serviceLocator ?? ServiceLocator.Default);
+        var serviceCollection = ServiceCollectionHelper.CreateServiceCollection();
+
+        serviceCollection.AddSingleton<ISnapshotStorageService, InMemorySnapshotStorageService>();
+
+        using var serviceProvider = serviceCollection.BuildServiceProvider();
+
+        var snapshotManager = serviceProvider.GetRequiredService<ISnapshotManager>();
 
         return snapshotManager;
     }

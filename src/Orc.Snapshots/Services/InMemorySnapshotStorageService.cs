@@ -5,16 +5,23 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Catel;
 using Catel.Logging;
+using Microsoft.Extensions.Logging;
 
 public class InMemorySnapshotStorageService : SnapshotStorageServiceBase
 {
-    private static readonly ILog Log = LogManager.GetCurrentClassLogger();
+    private readonly ILogger<InMemorySnapshotStorageService> _logger;
 
     private readonly Dictionary<string, byte[]> _snapshots = new Dictionary<string, byte[]>();
 
+    public InMemorySnapshotStorageService(ILogger<InMemorySnapshotStorageService> logger)
+        : base(logger)
+    {
+        _logger = logger;
+    }
+
     public override async Task<IEnumerable<ISnapshot>> LoadSnapshotsAsync()
     {
-        Log.Debug($"Loading snapshots");
+        _logger.LogDebug($"Loading snapshots");
 
         var snapshots = new List<ISnapshot>();
 
@@ -27,7 +34,7 @@ public class InMemorySnapshotStorageService : SnapshotStorageServiceBase
             }
         }
 
-        Log.Debug($"Loaded '{snapshots.Count}' snapshots");
+        _logger.LogDebug($"Loaded '{snapshots.Count}' snapshots");
 
         return snapshots;
     }
@@ -40,7 +47,7 @@ public class InMemorySnapshotStorageService : SnapshotStorageServiceBase
 
         try
         {
-            Log.Debug($"Loading snapshot from '{source}'");
+            _logger.LogDebug($"Loading snapshot from '{source}'");
 
             if (_snapshots.TryGetValue(source, out var bytes))
             {
@@ -49,7 +56,7 @@ public class InMemorySnapshotStorageService : SnapshotStorageServiceBase
         }
         catch (Exception ex)
         {
-            Log.Error(ex, $"Failed to load snapshot from '{source}'");
+            _logger.LogError(ex, $"Failed to load snapshot from '{source}'");
         }
 
         return result;
@@ -59,7 +66,7 @@ public class InMemorySnapshotStorageService : SnapshotStorageServiceBase
     {
         ArgumentNullException.ThrowIfNull(snapshots);
 
-        Log.Debug("Deleting previous snapshot files");
+        _logger.LogDebug("Deleting previous snapshot files");
 
         _snapshots.Clear();
 
@@ -74,7 +81,7 @@ public class InMemorySnapshotStorageService : SnapshotStorageServiceBase
         Argument.IsNotNullOrEmpty(() => source);
         ArgumentNullException.ThrowIfNull(snapshot);
 
-        Log.Debug($"Saving snapshot '{snapshot}' to '{source}'");
+        _logger.LogDebug($"Saving snapshot '{snapshot}' to '{source}'");
 
         var bytes = await ConvertSnapshotToBytesAsync(snapshot);
         if (bytes is not null)

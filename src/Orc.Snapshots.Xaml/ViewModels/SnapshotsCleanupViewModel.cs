@@ -9,18 +9,18 @@ using Catel;
 using Catel.Logging;
 using Catel.MVVM;
 using Catel.Services;
+using Microsoft.Extensions.Logging;
 
 public class SnapshotsCleanupViewModel : ViewModelBase
 {
-    private static readonly ILog Log = LogManager.GetCurrentClassLogger();
+    private static readonly ILogger Logger = LogManager.GetLogger(typeof(SnapshotsCleanupViewModel));
 
     private readonly ISnapshotManager _snapshotManager;
 
-    public SnapshotsCleanupViewModel(ISnapshotManager snapshotManager, ILanguageService languageService)
+    public SnapshotsCleanupViewModel(IServiceProvider serviceProvider,
+        ISnapshotManager snapshotManager, ILanguageService languageService)
+        : base(serviceProvider)
     {
-        ArgumentNullException.ThrowIfNull(snapshotManager);
-        ArgumentNullException.ThrowIfNull(languageService);
-
         _snapshotManager = snapshotManager;
 
         Snapshots = new List<SnapshotCleanup>(from snapshot in _snapshotManager.Snapshots
@@ -61,7 +61,7 @@ public class SnapshotsCleanupViewModel : ViewModelBase
 
     protected override async Task<bool> SaveAsync()
     {
-        Log.Info("Cleaning up snapshots");
+        Logger.LogInformation("Cleaning up snapshots");
 
         foreach (var snapshotCleanup in Snapshots)
         {
@@ -69,7 +69,7 @@ public class SnapshotsCleanupViewModel : ViewModelBase
             {
                 var snapshot = snapshotCleanup.Snapshot;
 
-                Log.Info($"Cleaning up snapshot '{snapshot}'");
+                Logger.LogInformation($"Cleaning up snapshot '{snapshot}'");
 
                 _snapshotManager.Remove(snapshot);
             }
@@ -77,7 +77,7 @@ public class SnapshotsCleanupViewModel : ViewModelBase
 
         await _snapshotManager.SaveAsync();
 
-        Log.Info("Cleaned up snapshots");
+        Logger.LogInformation("Cleaned up snapshots");
 
         return true;
     }

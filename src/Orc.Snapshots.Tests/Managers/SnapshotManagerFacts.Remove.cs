@@ -7,10 +7,10 @@ using NUnit.Framework;
 public partial class SnapshotManagerFacts
 {
     [TestFixture]
-    public class TheRemoveMethod
+    public class The_Remove_Method
     {
         [Test]
-        public void RemovesSnapshotFromSnapshotsList()
+        public void Removes_Snapshot_From_Snapshots_List()
         {
             var snapshot = new Snapshot
             {
@@ -29,7 +29,7 @@ public partial class SnapshotManagerFacts
         }
 
         [Test]
-        public void ReturnsFalseWhenSnapshotCannotBeRemoved()
+        public void Returns_False_When_Snapshot_Cannot_Be_Removed()
         {
             var snapshot = new Snapshot
             {
@@ -47,7 +47,7 @@ public partial class SnapshotManagerFacts
         }
 
         [Test]
-        public void RaisesSnapshotRemovedEvent()
+        public void Raises_SnapshotRemoved_Event()
         {
             var snapshot = new Snapshot
             {
@@ -70,7 +70,7 @@ public partial class SnapshotManagerFacts
         }
 
         [Test]
-        public void RaisesSnapshotsChangedEvent()
+        public void Raises_SnapshotsChanged_Event()
         {
             var snapshot = new Snapshot
             {

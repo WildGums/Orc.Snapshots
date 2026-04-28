@@ -5,7 +5,7 @@ using NUnit.Framework;
 public partial class SnapshotManagerFacts
 {
     [TestFixture]
-    public class TheSaveAsyncMethod
+    public class The_SaveAsync_Method
     {
 
     }

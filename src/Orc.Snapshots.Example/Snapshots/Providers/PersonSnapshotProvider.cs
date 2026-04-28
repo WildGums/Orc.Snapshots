@@ -3,18 +3,14 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using Catel.IoC;
 using Models;
 
 public class PersonSnapshotProvider : SnapshotProviderBase
 {
     private readonly Project _project;
 
-    public PersonSnapshotProvider(Project project, ISnapshotManager snapshotManager, IServiceLocator serviceLocator) 
-        : base(snapshotManager, serviceLocator)
+    public PersonSnapshotProvider(Project project)
     {
-        ArgumentNullException.ThrowIfNull(project);
-
         _project = project;
     }
 

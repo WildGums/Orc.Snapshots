@@ -5,41 +5,37 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Catel;
-using Catel.IoC;
+using Catel.Data;
 using Catel.Logging;
 using Catel.MVVM;
 using Catel.Services;
-using Catel.Data;
+using Microsoft.Extensions.Logging;
 
 public class SnapshotsViewModel : ViewModelBase
 {
-    private static readonly ILog Log = LogManager.GetCurrentClassLogger();
+    private static readonly ILogger Logger = LogManager.GetLogger(typeof(SnapshotsViewModel));
 
-    private ISnapshotManager? _snapshotManager;
+    private readonly ISnapshotManager _snapshotManager;
     private readonly IUIVisualizerService _uiVisualizerService;
-    private readonly IServiceLocator _serviceLocator;
     private readonly IMessageService _messageService;
     private readonly ILanguageService _languageService;
 
-    public SnapshotsViewModel(IUIVisualizerService uiVisualizerService, IServiceLocator serviceLocator,
-        IDispatcherService dispatcherService, IMessageService messageService, ILanguageService languageService)
+    public SnapshotsViewModel(IUIVisualizerService uiVisualizerService, IServiceProvider serviceProvider,
+        IDispatcherService dispatcherService, IMessageService messageService, ILanguageService languageService,
+        ISnapshotManager snapshotManager)
+        : base(serviceProvider)
     {
-        ArgumentNullException.ThrowIfNull(uiVisualizerService);
-        ArgumentNullException.ThrowIfNull(serviceLocator);
-        ArgumentNullException.ThrowIfNull(messageService);
-        ArgumentNullException.ThrowIfNull(languageService);
-
         _uiVisualizerService = uiVisualizerService;
-        _serviceLocator = serviceLocator;
         _messageService = messageService;
         _languageService = languageService;
+        _snapshotManager = snapshotManager;
 
         SnapshotCategories = new List<SnapshotCategory>();
         Filter = string.Empty;
 
-        RestoreSnapshot = new TaskCommand<ISnapshot>(OnRestoreSnapshotExecuteAsync, OnRestoreSnapshotCanExecute);
-        EditSnapshot = new TaskCommand<ISnapshot>(OnEditSnapshotExecuteAsync, OnEditSnapshotCanExecute);
-        RemoveSnapshot = new TaskCommand<ISnapshot>(OnRemoveSnapshotExecuteAsync, OnRemoveSnapshotCanExecute);
+        RestoreSnapshot = new TaskCommand<ISnapshot>(serviceProvider, OnRestoreSnapshotExecuteAsync, OnRestoreSnapshotCanExecute);
+        EditSnapshot = new TaskCommand<ISnapshot>(serviceProvider, OnEditSnapshotExecuteAsync, OnEditSnapshotCanExecute);
+        RemoveSnapshot = new TaskCommand<ISnapshot>(serviceProvider, OnRemoveSnapshotExecuteAsync, OnRemoveSnapshotCanExecute);
     }
 
     public bool HasSnapshots { get; private set; }
@@ -47,8 +43,6 @@ public class SnapshotsViewModel : ViewModelBase
     public List<SnapshotCategory> SnapshotCategories { get; private set; }
 
     public string Filter { get; set; }
-
-    public object? Scope { get; set; }
 
     public TaskCommand<ISnapshot> RestoreSnapshot { get; private set; }
 
@@ -64,7 +58,7 @@ public class SnapshotsViewModel : ViewModelBase
             return;
         }
 
-        Log.Info($"Restoring snapshot '{snapshot}'");
+        Logger.LogInformation($"Restoring snapshot '{snapshot}'");
 
         var snapshotManager = _snapshotManager;
         if (snapshotManager is not null)
@@ -156,30 +150,20 @@ public class SnapshotsViewModel : ViewModelBase
         UpdateSnapshots();
     }
 
-#pragma warning disable AsyncFixer03 // Avoid fire & forget async void methods
-#pragma warning disable AvoidAsyncVoid
-    private async void OnScopeChanged()
-    {
-        var scope = Scope;
-
-        Log.Debug($"Scope has changed to '{scope}'");
-
-        await DeactivateSnapshotManagerAsync();
-        ActivateSnapshotManager();
-    }
-#pragma warning restore AsyncFixer03 // Avoid fire & forget async void methods
-#pragma warning restore AvoidAsyncVoid
-
     protected override async Task InitializeAsync()
     {
         await base.InitializeAsync();
 
-        ActivateSnapshotManager();
+        _snapshotManager.Loaded += OnSnapshotsLoaded;
+        _snapshotManager.SnapshotsChanged += OnSnapshotsChanged;
+
+        UpdateSnapshots();
     }
 
     protected override async Task CloseAsync()
     {
-        await DeactivateSnapshotManagerAsync(false);
+        _snapshotManager.Loaded -= OnSnapshotsLoaded;
+        _snapshotManager.SnapshotsChanged -= OnSnapshotsChanged;
 
         await base.CloseAsync();
     }
@@ -188,7 +172,7 @@ public class SnapshotsViewModel : ViewModelBase
     {
         var snapshotManager = _snapshotManager;
 
-        Log.Debug($"Snapshots have been loaded, updating snapshots, current snapshot manager scope is '{snapshotManager?.Scope}'");
+        Logger.LogDebug($"Snapshots have been loaded, updating snapshots");
 
         UpdateSnapshots();
     }
@@ -197,65 +181,9 @@ public class SnapshotsViewModel : ViewModelBase
     {
         var snapshotManager = _snapshotManager;
 
-        Log.Debug($"Snapshots have changed, updating snapshots, current snapshot manager scope is '{snapshotManager?.Scope}'");
+        Logger.LogDebug($"Snapshots have changed, updating snapshots");
 
         UpdateSnapshots();
-    }
-
-    private void SetSnapshotManager(ISnapshotManager? snapshotManager)
-    {
-        var previousSnapshotManager = _snapshotManager;
-        if (ReferenceEquals(snapshotManager, previousSnapshotManager))
-        {
-            return;
-        }
-
-        if (previousSnapshotManager is not null)
-        {
-            previousSnapshotManager.Loaded -= OnSnapshotsLoaded;
-            previousSnapshotManager.SnapshotsChanged -= OnSnapshotsChanged;
-        }
-
-        Log.Debug($"Updating current snapshot manager with scope '{snapshotManager?.Scope}' to new instance with '{snapshotManager?.Snapshots.Count() ?? 0}' snapshots");
-
-        _snapshotManager = snapshotManager;
-
-        if (snapshotManager is not null)
-        {
-            snapshotManager.Loaded += OnSnapshotsLoaded;
-            snapshotManager.SnapshotsChanged += OnSnapshotsChanged;
-        }
-    }
-
-    private void ActivateSnapshotManager()
-    {
-        var scope = Scope;
-
-        Log.Debug($"Activating snapshot manager using scope '{scope}'");
-
-        var snapshotManager = _serviceLocator.ResolveType<ISnapshotManager>(scope);
-        SetSnapshotManager(snapshotManager);
-
-        UpdateSnapshots();
-    }
-
-    private async Task DeactivateSnapshotManagerAsync(bool setToNull = true)
-    {
-        Log.Debug($"Deactivating snapshot manager");
-
-        var snapshotManager = _snapshotManager;
-        if (snapshotManager is not null)
-        {
-            snapshotManager.Loaded -= OnSnapshotsLoaded;
-            snapshotManager.SnapshotsChanged -= OnSnapshotsChanged;
-
-            if (setToNull)
-            {
-                _snapshotManager = null;
-            }
-        }
-
-        SnapshotCategories.Clear();
     }
 
     private void UpdateSnapshots()
@@ -298,7 +226,7 @@ public class SnapshotsViewModel : ViewModelBase
             }
         }
 
-        Log.Debug($"Updating available snapshots using snapshot manager with scope '{snapshotManager.Scope}', '{finalItems.Count}' snapshot categories available");
+        Logger.LogDebug($"Updating available snapshots using snapshot manager, '{finalItems.Count}' snapshot categories available");
 
         SnapshotCategories = finalItems;
     }

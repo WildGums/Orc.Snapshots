@@ -3,18 +3,14 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using Catel.IoC;
 using Models;
 
 public class CompanySnapshotProvider : SnapshotProviderBase
 {
     private readonly Project _project;
 
-    public CompanySnapshotProvider(Project project, ISnapshotManager snapshotManager, IServiceLocator serviceLocator) 
-        : base(snapshotManager, serviceLocator)
+    public CompanySnapshotProvider(Project project)
     {
-        ArgumentNullException.ThrowIfNull(project);
-
         _project = project;
     }
 
@@ -24,7 +20,7 @@ public class CompanySnapshotProvider : SnapshotProviderBase
         {
             var company = _project.Company;
 
-            await writer.WriteAsync(company.Name);
+            await writer.WriteLineAsync(company.Name);
         }
     }
 

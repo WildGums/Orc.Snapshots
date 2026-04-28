@@ -8,12 +8,18 @@ using System.IO.Compression;
 using System.Threading.Tasks;
 using Catel;
 using Catel.Logging;
+using Microsoft.Extensions.Logging;
 
 public abstract class SnapshotStorageServiceBase : ISnapshotStorageService
 {
-    private static readonly ILog Log = LogManager.GetCurrentClassLogger();
+    private readonly ILogger _logger;
 
     private const string MetadataSplitter = "=";
+
+    protected SnapshotStorageServiceBase(ILogger logger)
+    {
+        _logger = logger;
+    }
 
     public abstract Task<IEnumerable<ISnapshot>> LoadSnapshotsAsync();
     public abstract Task SaveSnapshotsAsync(IEnumerable<ISnapshot> snapshots);
@@ -22,7 +28,7 @@ public abstract class SnapshotStorageServiceBase : ISnapshotStorageService
     {
         if (bytes is null || bytes.Length == 0)
         {
-            Log.Warning("No bytes in snapshot data, cannot convert bytes to snapshot");
+            _logger.LogWarning("No bytes in snapshot data, cannot convert bytes to snapshot");
             return null;
         }
 

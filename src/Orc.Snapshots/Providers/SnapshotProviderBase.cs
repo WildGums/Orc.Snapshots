@@ -1,53 +1,20 @@
 ﻿namespace Orc.Snapshots;
 
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using Catel.Data;
-using Catel.IoC;
 
 /// <summary>
 /// Base implementation for snapshot providers.
 /// </summary>
 public abstract class SnapshotProviderBase : ISnapshotProvider
 {
-    protected readonly IServiceLocator ServiceLocator;
-
-    private object? _scope;
-
     /// <summary>
     /// Initializes a new instance of the <see cref="SnapshotProviderBase" /> class.
     /// </summary>
-    /// <param name="snapshotManager">The snapshot manager.</param>
-    /// <param name="serviceLocator">The service locator.</param>
-    protected SnapshotProviderBase(ISnapshotManager snapshotManager, IServiceLocator serviceLocator)
+    protected SnapshotProviderBase()
     {
-        ArgumentNullException.ThrowIfNull(snapshotManager);
-        ArgumentNullException.ThrowIfNull(serviceLocator);
-
-        ServiceLocator = serviceLocator;
-        SnapshotManager = snapshotManager;
-
         Name = GetType().Name;
-    }
-
-    protected ISnapshotManager SnapshotManager { get; set; }
-
-    public virtual object? Scope
-    {
-        get { return _scope; }
-        set
-        {
-            var snapshotManager = ServiceLocator.ResolveType<ISnapshotManager>(value);
-            if (snapshotManager is null)
-            {
-                throw new PropertyNotNullableException("SnapshotManager", typeof(ISnapshotManager));
-            }
-
-            SnapshotManager = snapshotManager;
-            _scope = value;
-        }
     }
 
     public virtual string Name { get; protected set; }
@@ -114,7 +81,7 @@ public abstract class SnapshotProviderBase : ISnapshotProvider
     /// Gets the names of the values that needs to be written to a stream.
     /// </summary>
     /// <returns></returns>
-    public virtual List<string> GetNames()
+    public virtual IReadOnlyList<string> GetNames()
     {
         return new List<string>(new[] { Name });
     }

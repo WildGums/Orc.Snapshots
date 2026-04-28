@@ -2,18 +2,16 @@
 
 using System;
 using System.Linq;
+using Catel.IoC;
 using Notifications;
 
-internal class ShowNotificationOnSnapshotEventsWatcher
+internal class ShowNotificationOnSnapshotEventsWatcher : IConstructAtStartup
 {
     private readonly ISnapshotManager _snapshotManager;
     private readonly INotificationService _notificationService;
 
     public ShowNotificationOnSnapshotEventsWatcher(ISnapshotManager snapshotManager, INotificationService notificationService)
     {
-        ArgumentNullException.ThrowIfNull(snapshotManager);
-        ArgumentNullException.ThrowIfNull(notificationService);
-
         _snapshotManager = snapshotManager;
         _notificationService = notificationService;
 

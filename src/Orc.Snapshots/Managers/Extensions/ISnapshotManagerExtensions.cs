@@ -5,15 +5,16 @@ using System.Linq;
 using System.Threading.Tasks;
 using Catel;
 using Catel.IoC;
+using Microsoft.Extensions.DependencyInjection;
 
 public static class ISnapshotManagerExtensions
 {
-    public static void AddProvider<TSnapshotProvider>(this ISnapshotManager snapshotManager)
+    public static void AddProvider<TSnapshotProvider>(this ISnapshotManager snapshotManager, IServiceProvider serviceProvider)
         where TSnapshotProvider : ISnapshotProvider
     {
         ArgumentNullException.ThrowIfNull(snapshotManager);
 
-        var snapshotProvider = TypeFactory.Default.CreateRequiredInstance<TSnapshotProvider>();
+        var snapshotProvider = ActivatorUtilities.CreateInstance<TSnapshotProvider>(serviceProvider);
         snapshotManager.AddProvider(snapshotProvider);
     }
 

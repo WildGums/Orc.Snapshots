@@ -6,25 +6,9 @@ using ViewModels;
 
 public partial class SnapshotWindow
 {
-    /// <summary>
-    /// Initializes a new instance of the <see cref="SnapshotWindow"/> class.
-    /// </summary>
-    public SnapshotWindow()
-        : this(null)
+    partial void OnInitializingComponent()
     {
-    }
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="SnapshotWindow"/> class.
-    /// </summary>
-    /// <param name="viewModel">The view model to inject.</param>
-    /// <remarks>
-    /// This constructor can be used to use view-model injection.
-    /// </remarks>
-    public SnapshotWindow(SnapshotViewModel? viewModel)
-        : base(viewModel)
-    {
-        InitializeComponent();
+        Mode = Catel.Windows.DataWindowMode.OkCancel;
     }
 
     protected override AutomationPeer OnCreateAutomationPeer()

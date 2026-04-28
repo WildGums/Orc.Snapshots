@@ -9,13 +9,13 @@ using Providers;
 public partial class SnapshotManagerFacts
 {
     [TestFixture]
-    public class TheCreateSnapshotAsyncMethod
+    public class The_CreateSnapshotAsync_Method
     {
         [Test]
-        public async Task CreatesSnapshotAsync()
+        public async Task Creates_Snapshot()
         {
             var snapshotManager = CreateSnapshotManager();
-            var provider = new TestSnapshotProvider(snapshotManager, ServiceLocator.Default);
+            var provider = new TestSnapshotProvider();
 
             snapshotManager.AddProvider(provider);
 

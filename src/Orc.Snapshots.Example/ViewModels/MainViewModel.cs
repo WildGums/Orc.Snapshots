@@ -1,26 +1,21 @@
 ﻿namespace Orc.Snapshots.Example.ViewModels;
 
 using System;
-using Catel.Logging;
 using Catel.MVVM;
 using Models;
 
-/// <summary>
-/// MainWindow view model.
-/// </summary>
 public class MainViewModel : ViewModelBase
 {
-    private static readonly ILog Log = LogManager.GetCurrentClassLogger();
-
-    public MainViewModel(Project project)
+    public MainViewModel(Project project, IServiceProvider serviceProvider)
+        : base(serviceProvider)
     {
         ArgumentNullException.ThrowIfNull(project);
 
         Person = project.Person;
         Company = project.Company;
 
-        FillData = new Command(OnFillDataExecute);
-        ClearData = new Command(OnClearDataExecute);
+        FillData = new Command(serviceProvider, OnFillDataExecute);
+        ClearData = new Command(serviceProvider, OnClearDataExecute);
     }
 
     public Person Person { get; }
@@ -31,9 +26,9 @@ public class MainViewModel : ViewModelBase
 
     private void OnFillDataExecute()
     {
-        Person.FirstName = "Geert";
-        Person.LastName = "van Horrik";
-        Company.Name = "CatenaLogic";
+        Person.FirstName = "John";
+        Person.LastName = "Doe";
+        Company.Name = "Some company";
     }
 
     public Command ClearData { get; }
