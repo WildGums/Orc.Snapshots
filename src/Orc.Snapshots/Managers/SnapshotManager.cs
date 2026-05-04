@@ -60,7 +60,7 @@ public class SnapshotManager : ISnapshotManager
 
     public async Task<bool> LoadAsync()
     {
-        Logger.LogDebug($"Loading snapshots");
+        Logger.LogDebug("Loading snapshots");
 
         var loadingAsync = LoadingAsync;
         if (loadingAsync is not null)
@@ -84,14 +84,14 @@ public class SnapshotManager : ISnapshotManager
 
         Loaded?.Invoke(this, EventArgs.Empty);
 
-        Logger.LogInformation($"Loaded '{snapshots.Count()}' snapshots");
+        Logger.LogInformation("Loaded '{SnapshotCount}' snapshots", snapshots.Count());
 
         return true;
     }
 
     public async Task<bool> SaveAsync()
     {
-        Logger.LogDebug($"Saving snapshots");
+        Logger.LogDebug("Saving snapshots");
 
         var savingAsync = SavingAsync;
         if (savingAsync is not null)
@@ -116,7 +116,7 @@ public class SnapshotManager : ISnapshotManager
 
         Saved?.Invoke(this, EventArgs.Empty);
 
-        Logger.LogInformation($"Saved '{snapshots.Count}' snapshots");
+        Logger.LogInformation("Saved '{SnapshotCount}' snapshots", snapshots.Count);
 
         return true;
     }
@@ -126,7 +126,7 @@ public class SnapshotManager : ISnapshotManager
         ArgumentNullException.ThrowIfNull(snapshotProvider);
 
 #if DEBUG
-        Logger.LogDebug($"Adding provider {snapshotProvider.GetType()} to the SnapshotManager");
+        Logger.LogDebug("Adding provider {ProviderType} to the SnapshotManager", snapshotProvider.GetType());
 #endif
 
         lock (_providers)
@@ -142,7 +142,7 @@ public class SnapshotManager : ISnapshotManager
         ArgumentNullException.ThrowIfNull(snapshotProvider);
 
 #if DEBUG
-        Logger.LogDebug($"Removing provider {snapshotProvider.GetType()} from the SnapshotManager");
+        Logger.LogDebug("Removing provider {ProviderType} from the SnapshotManager", snapshotProvider.GetType());
 #endif
 
         var removed = false;
@@ -165,7 +165,7 @@ public class SnapshotManager : ISnapshotManager
     {
         ArgumentNullException.ThrowIfNull(snapshot);
 
-        Logger.LogInformation($"Creating snapshot '{snapshot}'");
+        Logger.LogInformation("Creating snapshot '{Snapshot}'", snapshot);
 
         await SnapshotCreatingAsync.SafeInvokeAsync(this, new SnapshotEventArgs(snapshot));
 
@@ -178,13 +178,13 @@ public class SnapshotManager : ISnapshotManager
 
         foreach (var provider in providers)
         {
-            Logger.LogDebug($"Creating data for snapshot '{snapshot}' using provider '{provider}'");
+            Logger.LogDebug("Creating data for snapshot '{Snapshot}' using provider '{Provider}'", snapshot, provider);
 
             var names = provider.GetNames();
 
             foreach (var name in names)
             {
-                Logger.LogDebug($"Creating data for snapshot '{snapshot}' using provider '{provider}::{name}'");
+                Logger.LogDebug("Creating data for snapshot '{Snapshot}' using provider '{Provider}::{Name}'", snapshot, provider, name);
 
                 byte[] providerData;
 
@@ -206,7 +206,7 @@ public class SnapshotManager : ISnapshotManager
 
         SnapshotCreated?.Invoke(this, new SnapshotEventArgs(snapshot));
 
-        Logger.LogInformation($"Created snapshot '{snapshot}'");
+        Logger.LogInformation("Created snapshot '{Snapshot}'", snapshot);
 
         return snapshot;
     }
@@ -215,7 +215,7 @@ public class SnapshotManager : ISnapshotManager
     {
         ArgumentNullException.ThrowIfNull(snapshot);
 
-        Logger.LogInformation($"Restoring snapshot '{snapshot}'");
+        Logger.LogInformation("Restoring snapshot '{Snapshot}'", snapshot);
 
         await SnapshotRestoringAsync.SafeInvokeAsync(this, new SnapshotEventArgs(snapshot));
 
@@ -228,13 +228,13 @@ public class SnapshotManager : ISnapshotManager
 
         foreach (var provider in providers)
         {
-            Logger.LogDebug($"Restoring data for snapshot '{snapshot}' using provider '{provider}'");
+            Logger.LogDebug("Restoring data for snapshot '{Snapshot}' using provider '{Provider}'", snapshot, provider);
 
             var names = provider.GetNames();
 
             foreach (var name in names)
             {
-                Logger.LogDebug($"Restoring data for snapshot '{snapshot}' using provider '{provider}::{name}'");
+                Logger.LogDebug("Restoring data for snapshot '{Snapshot}' using provider '{Provider}::{Name}'", snapshot, provider, name);
 
                 var providerData = snapshot.GetData(name);
                 if (providerData is null)
@@ -256,7 +256,7 @@ public class SnapshotManager : ISnapshotManager
 
         SnapshotRestored?.Invoke(this, new SnapshotEventArgs(snapshot));
 
-        Logger.LogInformation($"Restored snapshot '{snapshot}'");
+        Logger.LogInformation("Restored snapshot '{Snapshot}'", snapshot);
     }
 
     public void Add(ISnapshot snapshot)
@@ -265,7 +265,7 @@ public class SnapshotManager : ISnapshotManager
 
         if (!_snapshots.Contains(snapshot))
         {
-            Logger.LogDebug($"Adding snapshot '{snapshot}'");
+            Logger.LogDebug("Adding snapshot '{Snapshot}'", snapshot);
 
             _snapshots.Add(snapshot);
 
@@ -278,11 +278,11 @@ public class SnapshotManager : ISnapshotManager
     {
         ArgumentNullException.ThrowIfNull(snapshot);
 
-        Logger.LogDebug($"Deleting snapshot '{snapshot}'");
+        Logger.LogDebug("Deleting snapshot '{Snapshot}'", snapshot);
 
         if (!_snapshots.Contains(snapshot))
         {
-            Logger.LogDebug($"Can't delete snapshot '{snapshot}', snapshot is not managed by the manager");
+            Logger.LogDebug("Can't delete snapshot '{Snapshot}', snapshot is not managed by the manager", snapshot);
             return false;
         }
 
