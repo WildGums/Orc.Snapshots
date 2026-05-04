@@ -77,7 +77,7 @@ public class Snapshot : ISnapshot
     {
         if (_isDirty)
         {
-            Logger.LogDebug($"Data for '{this}' is outdated, generating new data");
+            Logger.LogDebug("Data for '{Snapshot}' is outdated, generating new data", this);
 
             _allData = await SaveSnapshotDataAsync(_data.ToList());
             _contentHash = Md5Helper.ComputeMd5(_allData);
@@ -94,7 +94,7 @@ public class Snapshot : ISnapshot
         {
             if (!_data.TryGetValue(key, out var data))
             {
-                Logger.LogWarning($"Key '{key}' not found in snapshot");
+                Logger.LogWarning("Key '{Key}' not found in snapshot", key);
 
                 data = Array.Empty<byte>();
             }

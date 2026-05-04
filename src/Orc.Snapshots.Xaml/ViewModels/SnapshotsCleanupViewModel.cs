@@ -69,7 +69,7 @@ public class SnapshotsCleanupViewModel : ViewModelBase
             {
                 var snapshot = snapshotCleanup.Snapshot;
 
-                Logger.LogInformation($"Cleaning up snapshot '{snapshot}'");
+                Logger.LogInformation("Cleaning up snapshot '{Snapshot}'", snapshot);
 
                 _snapshotManager.Remove(snapshot);
             }

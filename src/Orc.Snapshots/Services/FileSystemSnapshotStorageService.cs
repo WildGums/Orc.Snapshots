@@ -37,7 +37,7 @@ public class FileSystemSnapshotStorageService : SnapshotStorageServiceBase
     {
         var directory = Directory;
 
-        _logger.LogDebug($"Loading snapshots from '{directory}'");
+        _logger.LogDebug("Loading snapshots from '{Directory}'", directory);
 
         var snapshots = new List<ISnapshot>();
 
@@ -53,7 +53,7 @@ public class FileSystemSnapshotStorageService : SnapshotStorageServiceBase
             }
         }
 
-        _logger.LogDebug($"Loaded '{snapshots.Count}' snapshots from '{directory}'");
+        _logger.LogDebug("Loaded '{SnapshotCount}' snapshots from '{Directory}'", snapshots.Count, directory);
 
         return snapshots;
     }
@@ -66,7 +66,7 @@ public class FileSystemSnapshotStorageService : SnapshotStorageServiceBase
 
         try
         {
-            _logger.LogDebug($"Loading snapshot from '{source}'");
+            _logger.LogDebug("Loading snapshot from '{Source}'", source);
 
             var bytes = await _fileService.ReadAllBytesAsync(source);
             if (bytes is not null && bytes.Length > 0)
@@ -76,7 +76,7 @@ public class FileSystemSnapshotStorageService : SnapshotStorageServiceBase
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, $"Failed to load snapshot from '{source}'");
+            _logger.LogError(ex, "Failed to load snapshot from '{Source}'", source);
         }
 
         return result;
@@ -114,16 +114,16 @@ public class FileSystemSnapshotStorageService : SnapshotStorageServiceBase
                 }
                 else
                 {
-                    _logger.LogDebug($"No need to delete '{snapshotFile}', snapshot is still in use");
+                    _logger.LogDebug("No need to delete '{SnapshotFile}', snapshot is still in use", snapshotFile);
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogWarning(ex, $"Failed to delete file '{snapshotFile}'");
+                _logger.LogWarning(ex, "Failed to delete file '{SnapshotFile}'", snapshotFile);
             }
         }
 
-        _logger.LogDebug($"Deleted '{deleteCount}' snapshots, going to save new snapshots now");
+        _logger.LogDebug("Deleted '{DeleteCount}' snapshots, going to save new snapshots now", deleteCount);
 
         var saveCount = 0;
 
@@ -137,7 +137,7 @@ public class FileSystemSnapshotStorageService : SnapshotStorageServiceBase
             }
         }
 
-        _logger.LogDebug($"Saved '{saveCount}' of '{snapshots.Count()}' snapshots to disk");
+        _logger.LogDebug("Saved '{SaveCount}' of '{TotalCount}' snapshots to disk", saveCount, snapshots.Count());
     }
 
     protected virtual async Task SaveSnapshotAsync(string source, ISnapshot snapshot)
@@ -145,7 +145,7 @@ public class FileSystemSnapshotStorageService : SnapshotStorageServiceBase
         Argument.IsNotNullOrEmpty(() => source);
         ArgumentNullException.ThrowIfNull(snapshot);
 
-        _logger.LogDebug($"Saving snapshot '{snapshot}' to '{source}'");
+        _logger.LogDebug("Saving snapshot '{Snapshot}' to '{Source}'", snapshot, source);
 
         var bytes = await ConvertSnapshotToBytesAsync(snapshot);
         if (bytes is not null)

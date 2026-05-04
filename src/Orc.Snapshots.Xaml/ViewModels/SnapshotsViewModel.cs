@@ -58,7 +58,7 @@ public class SnapshotsViewModel : ViewModelBase
             return;
         }
 
-        Logger.LogInformation($"Restoring snapshot '{snapshot}'");
+        Logger.LogInformation("Restoring snapshot '{Snapshot}'", snapshot);
 
         var snapshotManager = _snapshotManager;
         if (snapshotManager is not null)
@@ -172,7 +172,7 @@ public class SnapshotsViewModel : ViewModelBase
     {
         var snapshotManager = _snapshotManager;
 
-        Logger.LogDebug($"Snapshots have been loaded, updating snapshots");
+        Logger.LogDebug("Snapshots have been loaded, updating snapshots");
 
         UpdateSnapshots();
     }
@@ -181,7 +181,7 @@ public class SnapshotsViewModel : ViewModelBase
     {
         var snapshotManager = _snapshotManager;
 
-        Logger.LogDebug($"Snapshots have changed, updating snapshots");
+        Logger.LogDebug("Snapshots have changed, updating snapshots");
 
         UpdateSnapshots();
     }
@@ -226,7 +226,7 @@ public class SnapshotsViewModel : ViewModelBase
             }
         }
 
-        Logger.LogDebug($"Updating available snapshots using snapshot manager, '{finalItems.Count}' snapshot categories available");
+        Logger.LogDebug("Updating available snapshots using snapshot manager, '{SnapshotCategoryCount}' snapshot categories available", finalItems.Count);
 
         SnapshotCategories = finalItems;
     }

@@ -21,7 +21,7 @@ public class InMemorySnapshotStorageService : SnapshotStorageServiceBase
 
     public override async Task<IEnumerable<ISnapshot>> LoadSnapshotsAsync()
     {
-        _logger.LogDebug($"Loading snapshots");
+        _logger.LogDebug("Loading snapshots");
 
         var snapshots = new List<ISnapshot>();
 
@@ -34,7 +34,7 @@ public class InMemorySnapshotStorageService : SnapshotStorageServiceBase
             }
         }
 
-        _logger.LogDebug($"Loaded '{snapshots.Count}' snapshots");
+        _logger.LogDebug("Loaded '{SnapshotCount}' snapshots", snapshots.Count);
 
         return snapshots;
     }
@@ -47,7 +47,7 @@ public class InMemorySnapshotStorageService : SnapshotStorageServiceBase
 
         try
         {
-            _logger.LogDebug($"Loading snapshot from '{source}'");
+            _logger.LogDebug("Loading snapshot from '{Source}'", source);
 
             if (_snapshots.TryGetValue(source, out var bytes))
             {
@@ -56,7 +56,7 @@ public class InMemorySnapshotStorageService : SnapshotStorageServiceBase
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, $"Failed to load snapshot from '{source}'");
+            _logger.LogError(ex, "Failed to load snapshot from '{Source}'", source);
         }
 
         return result;
@@ -81,7 +81,7 @@ public class InMemorySnapshotStorageService : SnapshotStorageServiceBase
         Argument.IsNotNullOrEmpty(() => source);
         ArgumentNullException.ThrowIfNull(snapshot);
 
-        _logger.LogDebug($"Saving snapshot '{snapshot}' to '{source}'");
+        _logger.LogDebug("Saving snapshot '{Snapshot}' to '{Source}'", snapshot, source);
 
         var bytes = await ConvertSnapshotToBytesAsync(snapshot);
         if (bytes is not null)
